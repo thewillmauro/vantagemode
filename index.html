@@ -1543,9 +1543,11 @@
     section { padding: 80px 24px; }
 
     /* Hero */
-    .hero { padding: 0 24px; min-height: 100svh; }
+    .hero { padding: 0 24px; min-height: 100svh; align-items: flex-start; padding-top: 80px; }
     .hero-reel-count, .hero-scroll { display: none; }
-    .hero-title { font-size: clamp(64px, 14vw, 120px); }
+    .hero-title { font-size: clamp(48px, 12vw, 100px); margin-bottom: 20px; }
+    .hero-sub { font-size: 14px; margin-bottom: 32px; }
+    .hero-content { max-width: 100%; }
 
     /* Ticker */
     .ticker-item { padding: 0 24px; font-size: 14px; }
@@ -1663,8 +1665,8 @@
   @media (max-width: 480px) {
     nav { padding: 16px 20px; }
     section { padding: 64px 20px; }
-    .hero { padding: 0 20px; }
-    .hero-title { font-size: clamp(46px, 17vw, 68px); }
+    .hero { padding: 0 20px; padding-top: 70px; }
+    .hero-title { font-size: clamp(40px, 14vw, 60px); }
 
     .platform-grid { grid-template-columns: 1fr; }
 
