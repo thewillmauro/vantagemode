@@ -1098,16 +1098,17 @@
   }
   .founder-inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
+    grid-template-columns: 400px 1fr;
+    gap: 80px;
     align-items: center;
     position: relative;
     z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   .founder-image-wrap {
     position: relative;
     padding: 12px;
-    max-width: 400px;
   }
   .founder-image-frame {
     position: relative;
@@ -1607,9 +1608,10 @@
 
     /* Founder */
     .founder { padding: 80px 24px; }
-    .founder-inner { grid-template-columns: 1fr; gap: 48px; }
+    .founder-inner { grid-template-columns: 1fr; gap: 48px; max-width: 100%; }
+    .founder-image-wrap { max-width: 320px; margin: 0 auto; }
     .founder::after { display: none; }
-    .founder-image-frame { aspect-ratio: 3/2; }
+    .founder-image-frame { aspect-ratio: 3/4; }
     .founder-image-frame img { object-position: center 20%; }
 
     /* CTA */
