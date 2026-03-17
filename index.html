@@ -3585,7 +3585,7 @@
       wizardData.budget = wizardModal.querySelector('#wizBudget').value;
       wizardData.message = wizardModal.querySelector('#wizMessage').value.trim();
 
-      // Submit via mailto fallback (replace with Formspree later)
+      // Submit via hidden mailto link (non-blocking)
       const subject = encodeURIComponent('New Project Inquiry: ' + wizardData.service);
       const body = encodeURIComponent(
         'Service: ' + wizardData.service +
@@ -3596,7 +3596,9 @@
         '\nBudget: ' + wizardData.budget +
         '\nMessage: ' + wizardData.message
       );
-      window.open('mailto:thewillmauro@gmail.com?subject=' + subject + '&body=' + body, '_blank');
+      const mailLink = document.createElement('a');
+      mailLink.href = 'mailto:thewillmauro@gmail.com?subject=' + subject + '&body=' + body;
+      mailLink.click();
       showWizardStep(4);
     }
   });
