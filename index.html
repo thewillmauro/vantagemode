@@ -1439,6 +1439,290 @@
   .sow-submitted-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 8px; }
   .sow-submitted-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
+  /* ── PROJECT WIZARD MODAL ── */
+  .project-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: rgba(8,8,8,0.97);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .project-modal.open {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+  }
+  .project-modal-inner {
+    max-width: 680px;
+    width: 90%;
+    padding: 60px 0;
+    position: relative;
+  }
+  .wizard-close {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: color 0.3s;
+    padding: 8px;
+  }
+  .wizard-close:hover { color: var(--gold); }
+  .wizard-progress {
+    width: 100%;
+    height: 2px;
+    background: var(--surface);
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wizard-progress-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 33%;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wizard-step-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .wizard-step-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .wizard-step-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .wizard-step {
+    display: none;
+  }
+  .wizard-step.active {
+    display: block;
+    animation: wizardFadeIn 0.5s ease forwards;
+  }
+  @keyframes wizardFadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Service selection cards */
+  .service-select-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .service-select-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-select-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .service-select-card:hover {
+    background: var(--surface2);
+    border-color: rgba(201,168,76,0.2);
+  }
+  .service-select-card.selected {
+    border-color: var(--gold);
+    background: var(--surface2);
+  }
+  .service-select-card.selected::before {
+    transform: scaleX(1);
+  }
+  .ssc-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .ssc-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .ssc-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Wizard form fields */
+  .wizard-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .wizard-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .wizard-field label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .wizard-field input,
+  .wizard-field select,
+  .wizard-field textarea {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 14px 16px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .wizard-field input:focus,
+  .wizard-field select:focus,
+  .wizard-field textarea:focus {
+    border-color: var(--gold);
+  }
+  .wizard-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6458' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  .wizard-field select option { background: var(--surface2); }
+  .wizard-field textarea {
+    resize: none;
+    height: 100px;
+    line-height: 1.6;
+  }
+  .wizard-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .wizard-error {
+    font-size: 11px;
+    color: var(--red-accent);
+    margin-top: -8px;
+    display: none;
+  }
+
+  /* Wizard nav */
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  }
+  .wizard-back {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: color 0.3s;
+    padding: 12px 0;
+  }
+  .wizard-back:hover { color: var(--white); }
+  .wizard-back.hidden { visibility: hidden; }
+  .wizard-next {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 14px 36px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .wizard-next:hover { background: var(--gold-bright); }
+
+  /* Success step */
+  .wizard-success {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .wizard-success-icon {
+    font-size: 48px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    animation: wizardSuccessPulse 1.2s ease forwards;
+  }
+  @keyframes wizardSuccessPulse {
+    0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+    60% { opacity: 1; transform: scale(1.15) rotate(2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .wizard-success-title {
+    font-family: var(--font-display);
+    font-size: 48px;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .wizard-success-msg {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto 32px;
+  }
+  .wizard-success-close {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white);
+    padding: 12px 32px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .wizard-success-close:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
   /* ── FAQ ── */
   .faq { background: var(--deep); }
   .faq-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; align-items: start; }
@@ -1529,6 +1813,18 @@
     color: var(--black) !important;
     padding: 16px 48px !important;
     font-weight: 500;
+  }
+
+  /* Wizard responsive */
+  @media (max-width: 900px) {
+    .service-select-grid { grid-template-columns: repeat(2, 1fr); }
+    .wizard-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .service-select-grid { grid-template-columns: 1fr; }
+    .project-modal-inner { padding: 40px 0; }
+    .wizard-step-title { font-size: 28px; }
+    .wizard-success-title { font-size: 36px; }
   }
 
   /* ─── TABLET (max 1100px) ─── */
@@ -1782,7 +2078,7 @@
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#founder">About</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">Start a Project</a>
+  <a href="#" class="nav-cta open-wizard">Start a Project</a>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
@@ -1795,7 +2091,7 @@
   <a href="#streamlive" class="mobile-link">StreamLive</a>
   <a href="#pricing" class="mobile-link">Pricing</a>
   <a href="#founder" class="mobile-link">About</a>
-  <a href="#cta" class="mobile-cta mobile-link">Start a Project</a>
+  <a href="#" class="mobile-cta mobile-link open-wizard">Start a Project</a>
 </div>
 
 <!-- HERO -->
@@ -1812,7 +2108,7 @@
     </h1>
     <p class="hero-sub">We craft cinematic video content that transforms brands and events into unforgettable visual narratives built for every screen, every platform, every scroll. Based in Princeton, NJ. Available everywhere.</p>
     <div class="hero-actions">
-      <a href="#process" class="btn-primary"><span>See Our Process</span></a>
+      <a href="#" class="btn-primary open-wizard"><span>Start a Project</span></a>
       <a href="#services" class="btn-outline">
         <span class="play-icon">
           <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><polygon points="0,0 10,6 0,12"/></svg>
@@ -2891,6 +3187,139 @@
   <span>Built by Vantage Mode ✦ <a href="https://vantagemode.com" style="color:var(--gold-dim);text-decoration:none;">vantagemode.com</a></span>
 </div>
 
+<!-- PROJECT WIZARD MODAL -->
+<div class="project-modal" id="projectWizard">
+  <div class="project-modal-inner">
+    <button class="wizard-close">ESC</button>
+    <div class="wizard-progress"><div class="wizard-progress-fill"></div></div>
+    <div class="wizard-step-label">STEP 1 OF 3</div>
+
+    <!-- Step 1: Service Selection -->
+    <div class="wizard-step active" data-step="1">
+      <div class="wizard-step-title">WHAT ARE YOU LOOKING FOR?</div>
+      <div class="wizard-step-sub">Select the service that best fits your project.</div>
+      <div class="service-select-grid">
+        <div class="service-select-card" data-service="Brand Film">
+          <div class="ssc-icon">🎬</div>
+          <div class="ssc-name">Brand Film</div>
+          <div class="ssc-desc">Cinematic storytelling for your brand</div>
+        </div>
+        <div class="service-select-card" data-service="Social Content Package">
+          <div class="ssc-icon">📱</div>
+          <div class="ssc-name">Social Content</div>
+          <div class="ssc-desc">Monthly content for every platform</div>
+        </div>
+        <div class="service-select-card" data-service="Event Coverage">
+          <div class="ssc-icon">🎤</div>
+          <div class="ssc-name">Event Coverage</div>
+          <div class="ssc-desc">Multi-camera capture &amp; same-day edits</div>
+        </div>
+        <div class="service-select-card" data-service="Product / Ad Video">
+          <div class="ssc-icon">🛍️</div>
+          <div class="ssc-name">Product &amp; Ads</div>
+          <div class="ssc-desc">UGC-style, demos &amp; ad creative</div>
+        </div>
+        <div class="service-select-card" data-service="Live Streaming (StreamLive)">
+          <div class="ssc-icon">📡</div>
+          <div class="ssc-name">StreamLive</div>
+          <div class="ssc-desc">Multi-platform live broadcasting</div>
+        </div>
+        <div class="service-select-card" data-service="Rapid-Launch Website">
+          <div class="ssc-icon">🌐</div>
+          <div class="ssc-name">Rapid-Launch Website</div>
+          <div class="ssc-desc">Premium sites shipped fast</div>
+        </div>
+        <div class="service-select-card" data-service="Full Creative Partnership">
+          <div class="ssc-icon">✦</div>
+          <div class="ssc-name">Not Sure Yet</div>
+          <div class="ssc-desc">Let's figure it out together</div>
+        </div>
+      </div>
+      <div class="wizard-error" id="wizardErr1">Please select a service to continue.</div>
+      <div class="wizard-nav">
+        <button class="wizard-back hidden">← Back</button>
+        <button class="wizard-next">NEXT</button>
+      </div>
+    </div>
+
+    <!-- Step 2: About You -->
+    <div class="wizard-step" data-step="2">
+      <div class="wizard-step-title">TELL US ABOUT YOU</div>
+      <div class="wizard-step-sub">So we know who we're working with.</div>
+      <div class="wizard-fields">
+        <div class="wizard-field">
+          <label for="wizName">Your Name *</label>
+          <input type="text" id="wizName" placeholder="First and last name">
+        </div>
+        <div class="wizard-field">
+          <label for="wizEmail">Email *</label>
+          <input type="email" id="wizEmail" placeholder="you@company.com">
+        </div>
+        <div class="wizard-field">
+          <label for="wizBrand">Brand / Company</label>
+          <input type="text" id="wizBrand" placeholder="Your brand or company name">
+        </div>
+      </div>
+      <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
+      <div class="wizard-nav">
+        <button class="wizard-back">← BACK</button>
+        <button class="wizard-next">NEXT</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Project Details -->
+    <div class="wizard-step" data-step="3">
+      <div class="wizard-step-title">PROJECT DETAILS</div>
+      <div class="wizard-step-sub">Help us understand the scope so we can hit the ground running.</div>
+      <div class="wizard-fields">
+        <div class="wizard-row">
+          <div class="wizard-field">
+            <label for="wizTimeline">Timeline</label>
+            <select id="wizTimeline">
+              <option value="">Select timeline</option>
+              <option value="ASAP">ASAP</option>
+              <option value="1-2 Weeks">1–2 Weeks</option>
+              <option value="1 Month">Within a Month</option>
+              <option value="2-3 Months">2–3 Months</option>
+              <option value="Flexible">Flexible</option>
+            </select>
+          </div>
+          <div class="wizard-field">
+            <label for="wizBudget">Budget Range</label>
+            <select id="wizBudget">
+              <option value="">Select budget</option>
+              <option value="Under $2,500">Under $2,500</option>
+              <option value="$2,500 - $5,000">$2,500 – $5,000</option>
+              <option value="$5,000 - $10,000">$5,000 – $10,000</option>
+              <option value="$10,000 - $25,000">$10,000 – $25,000</option>
+              <option value="$25,000+">$25,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="wizard-field">
+          <label for="wizMessage">Tell Us About Your Project</label>
+          <textarea id="wizMessage" placeholder="What's the vision? Any key dates, goals, or details we should know?"></textarea>
+        </div>
+      </div>
+      <div class="wizard-nav">
+        <button class="wizard-back">← BACK</button>
+        <button class="wizard-next">SUBMIT BRIEF</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="wizard-step" data-step="4">
+      <div class="wizard-success">
+        <div class="wizard-success-icon">✦</div>
+        <div class="wizard-success-title">WE'LL BE IN TOUCH</div>
+        <div class="wizard-success-msg">Thanks for reaching out. We'll review your brief and get back to you within 24 hours with next steps.</div>
+        <button class="wizard-success-close">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Custom cursor
   const cursor = document.getElementById('cursor');
@@ -3054,6 +3483,128 @@
       item.style.pointerEvents = show ? 'auto' : 'none';
     });
   }
+
+  // ── PROJECT WIZARD ──
+  const wizardModal = document.getElementById('projectWizard');
+  const wizardSteps = wizardModal.querySelectorAll('.wizard-step');
+  const wizardFill = wizardModal.querySelector('.wizard-progress-fill');
+  const wizardLabel = wizardModal.querySelector('.wizard-step-label');
+  const wizardBack = wizardModal.querySelector('.wizard-back');
+  const wizardNext = wizardModal.querySelector('.wizard-next');
+  let wizardCurrent = 1;
+  let wizardData = { service: '', name: '', email: '', brand: '', timeline: '', budget: '', message: '' };
+
+  function openWizard() {
+    wizardCurrent = 1;
+    wizardData = { service: '', name: '', email: '', brand: '', timeline: '', budget: '', message: '' };
+    wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+    wizardModal.querySelectorAll('input, textarea').forEach(f => f.value = '');
+    wizardModal.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    showWizardStep(1);
+    wizardModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeWizard() {
+    wizardModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showWizardStep(n) {
+    wizardCurrent = n;
+    wizardSteps.forEach(s => s.classList.remove('active'));
+    const target = wizardModal.querySelector('[data-step="' + n + '"]');
+    if (target) target.classList.add('active');
+    wizardFill.style.width = n === 4 ? '100%' : (n * 33.33) + '%';
+    wizardLabel.textContent = n <= 3 ? 'STEP ' + n + ' OF 3' : '';
+    wizardBack.classList.toggle('hidden', n === 1 || n === 4);
+    wizardNext.style.display = n === 4 ? 'none' : '';
+    wizardNext.textContent = n === 3 ? 'SUBMIT BRIEF' : 'NEXT';
+  }
+
+  // Open wizard from all triggers
+  document.querySelectorAll('.open-wizard').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      // Close mobile menu if open
+      const mm = document.getElementById('mobileMenu');
+      if (mm.classList.contains('open')) {
+        mm.classList.remove('open');
+        document.getElementById('hamburger').classList.remove('open');
+        document.body.style.position = '';
+        document.body.style.width = '';
+      }
+      openWizard();
+    });
+  });
+
+  // Close wizard
+  wizardModal.querySelector('.wizard-close').addEventListener('click', closeWizard);
+  wizardModal.addEventListener('click', e => {
+    if (e.target === wizardModal) closeWizard();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && wizardModal.classList.contains('open')) closeWizard();
+  });
+  wizardModal.querySelector('.wizard-success-close').addEventListener('click', closeWizard);
+
+  // Service card selection
+  wizardModal.querySelectorAll('.service-select-card').forEach(card => {
+    card.addEventListener('click', () => {
+      wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      wizardData.service = card.dataset.service;
+    });
+  });
+
+  // Back button
+  wizardBack.addEventListener('click', () => {
+    if (wizardCurrent > 1) showWizardStep(wizardCurrent - 1);
+  });
+
+  // Next / Submit
+  wizardNext.addEventListener('click', () => {
+    const errEls = wizardModal.querySelectorAll('.wizard-error');
+    errEls.forEach(e => e.style.display = 'none');
+
+    if (wizardCurrent === 1) {
+      if (!wizardData.service) {
+        wizardModal.querySelector('#wizardErr1').style.display = 'block';
+        return;
+      }
+      showWizardStep(2);
+    } else if (wizardCurrent === 2) {
+      const name = wizardModal.querySelector('#wizName').value.trim();
+      const email = wizardModal.querySelector('#wizEmail').value.trim();
+      const brand = wizardModal.querySelector('#wizBrand').value.trim();
+      if (!name || !email) {
+        wizardModal.querySelector('#wizardErr2').style.display = 'block';
+        return;
+      }
+      wizardData.name = name;
+      wizardData.email = email;
+      wizardData.brand = brand;
+      showWizardStep(3);
+    } else if (wizardCurrent === 3) {
+      wizardData.timeline = wizardModal.querySelector('#wizTimeline').value;
+      wizardData.budget = wizardModal.querySelector('#wizBudget').value;
+      wizardData.message = wizardModal.querySelector('#wizMessage').value.trim();
+
+      // Submit via mailto fallback (replace with Formspree later)
+      const subject = encodeURIComponent('New Project Inquiry: ' + wizardData.service);
+      const body = encodeURIComponent(
+        'Service: ' + wizardData.service +
+        '\nName: ' + wizardData.name +
+        '\nEmail: ' + wizardData.email +
+        '\nBrand: ' + wizardData.brand +
+        '\nTimeline: ' + wizardData.timeline +
+        '\nBudget: ' + wizardData.budget +
+        '\nMessage: ' + wizardData.message
+      );
+      window.open('mailto:thewillmauro@gmail.com?subject=' + subject + '&body=' + body, '_blank');
+      showWizardStep(4);
+    }
+  });
 
   // Hamburger menu
   const hamburger = document.getElementById('hamburger');
