@@ -3236,10 +3236,6 @@
         </div>
       </div>
       <div class="wizard-error" id="wizardErr1">Please select a service to continue.</div>
-      <div class="wizard-nav">
-        <button class="wizard-back hidden">← Back</button>
-        <button class="wizard-next">NEXT</button>
-      </div>
     </div>
 
     <!-- Step 2: About You -->
@@ -3261,10 +3257,6 @@
         </div>
       </div>
       <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
-      <div class="wizard-nav">
-        <button class="wizard-back">← BACK</button>
-        <button class="wizard-next">NEXT</button>
-      </div>
     </div>
 
     <!-- Step 3: Project Details -->
@@ -3301,10 +3293,6 @@
           <textarea id="wizMessage" placeholder="What's the vision? Any key dates, goals, or details we should know?"></textarea>
         </div>
       </div>
-      <div class="wizard-nav">
-        <button class="wizard-back">← BACK</button>
-        <button class="wizard-next">SUBMIT BRIEF</button>
-      </div>
     </div>
 
     <!-- Step 4: Success -->
@@ -3315,6 +3303,12 @@
         <div class="wizard-success-msg">Thanks for reaching out. We'll review your brief and get back to you within 24 hours with next steps.</div>
         <button class="wizard-success-close">Close</button>
       </div>
+    </div>
+
+    <!-- Shared nav (outside steps) -->
+    <div class="wizard-nav" id="wizardNav">
+      <button class="wizard-back hidden" id="wizardBackBtn">← BACK</button>
+      <button class="wizard-next" id="wizardNextBtn">NEXT</button>
     </div>
 
   </div>
@@ -3489,8 +3483,9 @@
   const wizardSteps = wizardModal.querySelectorAll('.wizard-step');
   const wizardFill = wizardModal.querySelector('.wizard-progress-fill');
   const wizardLabel = wizardModal.querySelector('.wizard-step-label');
-  const wizardBack = wizardModal.querySelector('.wizard-back');
-  const wizardNext = wizardModal.querySelector('.wizard-next');
+  const wizardNav = document.getElementById('wizardNav');
+  const wizardBack = document.getElementById('wizardBackBtn');
+  const wizardNext = document.getElementById('wizardNextBtn');
   let wizardCurrent = 1;
   let wizardData = { service: '', name: '', email: '', brand: '', timeline: '', budget: '', message: '' };
 
@@ -3517,8 +3512,8 @@
     if (target) target.classList.add('active');
     wizardFill.style.width = n === 4 ? '100%' : (n * 33.33) + '%';
     wizardLabel.textContent = n <= 3 ? 'STEP ' + n + ' OF 3' : '';
-    wizardBack.classList.toggle('hidden', n === 1 || n === 4);
-    wizardNext.style.display = n === 4 ? 'none' : '';
+    wizardNav.style.display = n === 4 ? 'none' : 'flex';
+    wizardBack.classList.toggle('hidden', n === 1);
     wizardNext.textContent = n === 3 ? 'SUBMIT BRIEF' : 'NEXT';
   }
 
