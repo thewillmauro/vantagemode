@@ -2168,7 +2168,7 @@
 <nav>
   <a href="#" class="nav-logo">VANTAGE<span>MODE</span></a>
   <ul class="nav-links">
-    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#products">Work</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#streamlive">StreamLive</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -2427,8 +2427,8 @@
 </section>
 
 
-<!-- PORTFOLIO -->
-<section class="portfolio" id="portfolio">
+<!-- PORTFOLIO (hidden) -->
+<section class="portfolio" id="portfolio" style="display:none;">
   <div class="portfolio-header reveal">
     <div>
       <p class="section-label">Selected Work</p>
@@ -2573,35 +2573,6 @@
     </div>
   </div>
 
-  <!-- CONTENT MATRIX -->
-  <div class="content-matrix reveal">
-    <div class="matrix-title">Content <span>Format Matrix</span></div>
-    <div class="matrix-grid">
-      <div class="matrix-header empty"></div>
-      <div class="matrix-header">TIKTOK / REELS</div>
-      <div class="matrix-header">YOUTUBE</div>
-      <div class="matrix-header">LINKEDIN</div>
-      <div class="matrix-header">WEBSITE / ADS</div>
-
-      <div class="matrix-row-label">Brand Film</div>
-      <div class="matrix-cell" data-platform="TikTok / Reels"><div class="cell-format">Teaser Cut</div><div class="cell-duration">15–30s vertical</div><div class="cell-note">Hook + emotional peak</div><div class="cell-bar" style="width:60%"></div></div>
-      <div class="matrix-cell" data-platform="YouTube"><div class="cell-format">Full Film</div><div class="cell-duration">2–5 min 16:9</div><div class="cell-note">Full narrative arc</div><div class="cell-bar" style="width:100%"></div></div>
-      <div class="matrix-cell" data-platform="LinkedIn"><div class="cell-format">Thought Cut</div><div class="cell-duration">60–90s square</div><div class="cell-note">Mission-driven angle</div><div class="cell-bar" style="width:70%"></div></div>
-      <div class="matrix-cell" data-platform="Website / Ads"><div class="cell-format">Hero Video</div><div class="cell-duration">30–60s autoplay</div><div class="cell-note">No-sound optimized</div><div class="cell-bar" style="width:80%"></div></div>
-
-      <div class="matrix-row-label">Event</div>
-      <div class="matrix-cell" data-platform="TikTok / Reels"><div class="cell-format">Highlights Reel</div><div class="cell-duration">30–60s vertical</div><div class="cell-note">Energy + moments</div><div class="cell-bar" style="width:80%"></div></div>
-      <div class="matrix-cell" data-platform="YouTube"><div class="cell-format">Full Recap</div><div class="cell-duration">3–8 min 16:9</div><div class="cell-note">Full event story</div><div class="cell-bar" style="width:90%"></div></div>
-      <div class="matrix-cell" data-platform="LinkedIn"><div class="cell-format">Speaker Clips</div><div class="cell-duration">60–120s</div><div class="cell-note">Key insights</div><div class="cell-bar" style="width:65%"></div></div>
-      <div class="matrix-cell" data-platform="Website / Ads"><div class="cell-format">Case Study</div><div class="cell-duration">60–90s</div><div class="cell-note">Result-focused</div><div class="cell-bar" style="width:75%"></div></div>
-
-      <div class="matrix-row-label">Product</div>
-      <div class="matrix-cell" data-platform="TikTok / Reels"><div class="cell-format">UGC Style</div><div class="cell-duration">15–30s vertical</div><div class="cell-note">Native feel</div><div class="cell-bar" style="width:90%"></div></div>
-      <div class="matrix-cell" data-platform="YouTube"><div class="cell-format">Demo / Review</div><div class="cell-duration">3–5 min</div><div class="cell-note">SEO-optimized</div><div class="cell-bar" style="width:85%"></div></div>
-      <div class="matrix-cell" data-platform="LinkedIn"><div class="cell-format">B2B Demo</div><div class="cell-duration">90–120s</div><div class="cell-note">ROI-focused pitch</div><div class="cell-bar" style="width:70%"></div></div>
-      <div class="matrix-cell" data-platform="Website / Ads"><div class="cell-format">Ad Creative</div><div class="cell-duration">6–30s</div><div class="cell-note">Multi-variant testing</div><div class="cell-bar" style="width:95%"></div></div>
-    </div>
-  </div>
 </section>
 
 <!-- STREAMLIVE -->
@@ -2709,6 +2680,49 @@
         <span class="product-tag">$79/week</span>
       </div>
       <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="product-cta">Visit Adboard →</a>
+    </div>
+  </div>
+
+  <!-- Adboard Demo Mockup -->
+  <div style="max-width:1200px;margin:64px auto 0;" class="reveal">
+    <div class="stream-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dots">
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+        </div>
+        <div class="mockup-url">adboard-nine.vercel.app</div>
+        <div style="display:flex;align-items:center;gap:5px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);padding:4px 10px;border-radius:20px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);animation:liveBlink 1.5s ease-in-out infinite;"></div>
+          Live
+        </div>
+      </div>
+      <div class="mockup-screen" style="aspect-ratio:16/8;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(0,112,243,0.06) 0%, transparent 60%);"></div>
+        <div style="position:relative;z-index:1;text-align:center;padding:40px;">
+          <div style="font-family:var(--font-display);font-size:clamp(28px,4vw,48px);letter-spacing:0.06em;color:var(--white);margin-bottom:8px;">ADBOARD</div>
+          <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);">Screens already in every business. Now they work for you.</div>
+        </div>
+      </div>
+      <div class="mockup-stats">
+        <div class="stat-block">
+          <div class="stat-val">$79</div>
+          <div class="stat-lbl">Per Week</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">65%</div>
+          <div class="stat-lbl">Revenue Share</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">5min</div>
+          <div class="stat-lbl">Setup Time</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-val">QR+Geo</div>
+          <div class="stat-lbl">Attribution</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
