@@ -1439,6 +1439,95 @@
   .sow-submitted-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 8px; }
   .sow-submitted-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
+  /* ── PRODUCTS (Powered by VM) ── */
+  .products-section {
+    background: var(--deep);
+    padding: 120px 60px;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .product-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover {
+    border-color: rgba(201,168,76,0.25);
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: left;
+  }
+  .product-card:hover::before {
+    transform: scaleX(1);
+  }
+  .product-badge {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .product-name {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .product-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+  .product-tag {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .product-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+  .product-cta:hover {
+    gap: 14px;
+  }
+
   /* ── PROJECT WIZARD MODAL ── */
   .project-modal {
     position: fixed;
@@ -1813,6 +1902,13 @@
     color: var(--black) !important;
     padding: 16px 48px !important;
     font-weight: 500;
+  }
+
+  /* Products responsive */
+  @media (max-width: 900px) {
+    .products-section { padding: 80px 24px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .product-card { padding: 36px 28px; }
   }
 
   /* Wizard responsive */
@@ -2584,6 +2680,38 @@
   </div>
 </section>
 
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div style="text-align:center;margin-bottom:64px;">
+    <p class="section-label reveal">Our Products</p>
+    <h2 class="section-title reveal">BUILT BY<br><span class="italic">Vantage Mode</span></h2>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-badge">Live Broadcasting Platform</div>
+      <div class="product-name">STREAMLIVE</div>
+      <div class="product-desc">Our proprietary multi-destination live broadcasting platform. One production, deployed simultaneously to YouTube, Instagram, TikTok, LinkedIn, and any custom RTMP destination. Professional-grade streaming without the complexity.</div>
+      <div class="product-tags">
+        <span class="product-tag">Multi-Platform</span>
+        <span class="product-tag">Branded Overlays</span>
+        <span class="product-tag">Real-Time Switching</span>
+      </div>
+      <a href="https://strmlive.com" target="_blank" rel="noopener" class="product-cta">Visit StreamLive →</a>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-badge">Local Ad Network</div>
+      <div class="product-name">ADBOARD</div>
+      <div class="product-desc">A digital out-of-home advertising network that turns existing screens in local businesses — bar TVs, lobby monitors, gym displays — into targeted ad placements. Advertisers reach nearby customers, screen owners earn passive income.</div>
+      <div class="product-tags">
+        <span class="product-tag">DOOH Advertising</span>
+        <span class="product-tag">Attribution Tracking</span>
+        <span class="product-tag">$79/week</span>
+      </div>
+      <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="product-cta">Visit Adboard →</a>
+    </div>
+  </div>
+</section>
 
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
