@@ -1439,6 +1439,218 @@
   .sow-submitted-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 8px; }
   .sow-submitted-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
+  /* ── ADBOARD SECTION ── */
+  .adboard-section {
+    background: #080c14;
+    position: relative;
+    overflow: hidden;
+  }
+  .adboard-section::before {
+    content: 'ADBOARD';
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 280px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,145,0,0.04);
+    letter-spacing: 0.02em;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .adboard-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .adboard-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,145,0,0.08);
+    border: 1px solid rgba(255,145,0,0.2);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ff9100;
+    margin-bottom: 32px;
+  }
+  .adboard-badge .ab-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ff9100;
+    animation: liveBlink 1.5s ease-in-out infinite;
+  }
+  .adboard-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 100px);
+    letter-spacing: 0.04em;
+    color: #fff;
+    line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .adboard-title span { color: #ff9100; }
+  .adboard-desc {
+    font-size: 16px;
+    color: rgba(201,216,232,0.55);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+  .ab-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .ab-feature {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 16px;
+    transition: all 0.3s;
+  }
+  .ab-feature:hover {
+    background: rgba(255,145,0,0.05);
+    border-color: rgba(255,145,0,0.15);
+  }
+  .ab-feature-icon { font-size: 18px; margin-bottom: 8px; }
+  .ab-feature-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .ab-feature-desc {
+    font-size: 11px;
+    color: rgba(201,216,232,0.4);
+    line-height: 1.5;
+  }
+  .ab-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff9100, #ff6b00);
+    color: #080c14;
+    padding: 14px 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: var(--font-body);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+  }
+  .ab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,145,0,0.25);
+  }
+
+  /* Bulletin Demo */
+  .bulletin-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bulletin-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.3s;
+  }
+  .bulletin-card:hover {
+    border-color: rgba(255,145,0,0.2);
+  }
+  .bulletin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .bulletin-location {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.35);
+  }
+  .bulletin-type-badge {
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .bulletin-biz {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .bulletin-cat {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.3);
+    margin-bottom: 8px;
+  }
+  .bulletin-msg {
+    font-size: 13px;
+    color: rgba(201,216,232,0.6);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .bulletin-cta-btn {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #ff9100, #ff6b00);
+    color: #080c14;
+    margin-bottom: 10px;
+  }
+  .bulletin-footer {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 8px;
+  }
+  /* Bulletin ticker */
+  .bulletin-ticker {
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 10px 0;
+  }
+  .bulletin-ticker-track {
+    display: flex;
+    gap: 32px;
+    animation: bulletinScroll 20s linear infinite;
+    white-space: nowrap;
+  }
+  .bulletin-ticker-item {
+    font-size: 11px;
+    color: rgba(201,216,232,0.4);
+    flex-shrink: 0;
+  }
+  .bulletin-ticker-item strong {
+    color: #ff9100;
+    font-weight: 500;
+  }
+  @keyframes bulletinScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
   /* ── PRODUCTS (Powered by VM) ── */
   .products-section {
     background: var(--deep);
@@ -1902,6 +2114,17 @@
     color: var(--black) !important;
     padding: 16px 48px !important;
     font-weight: 500;
+  }
+
+  /* Adboard responsive */
+  @media (max-width: 1100px) {
+    .adboard-inner { grid-template-columns: 1fr; gap: 48px; }
+    .adboard-section { padding: 80px 24px; }
+    .adboard-section::before { font-size: 140px; }
+  }
+  @media (max-width: 480px) {
+    .ab-features { grid-template-columns: 1fr; }
+    .adboard-title { font-size: 40px; }
   }
 
   /* Products responsive */
@@ -2652,6 +2875,104 @@
 </section>
 
 
+<!-- ADBOARD -->
+<section class="adboard-section" id="adboard">
+  <div class="adboard-inner">
+    <div class="reveal">
+      <div class="adboard-badge">
+        <div class="ab-dot"></div>
+        Powered by Adboard
+      </div>
+      <h2 class="adboard-title">LOCAL<br>SCREENS<br><span>MONETIZED</span></h2>
+      <p class="adboard-desc">Every bar TV, waiting room display, and gym screen is a wasted opportunity. Adboard turns them into a hyper-local advertising network — connecting businesses with nearby customers on screens they already see every day.</p>
+      <div class="ab-features">
+        <div class="ab-feature">
+          <div class="ab-feature-icon">📺</div>
+          <div class="ab-feature-title">Any Existing Screen</div>
+          <div class="ab-feature-desc">Smart TVs, Fire Sticks, tablets. No new hardware needed.</div>
+        </div>
+        <div class="ab-feature">
+          <div class="ab-feature-icon">📍</div>
+          <div class="ab-feature-title">Hyper-Local Targeting</div>
+          <div class="ab-feature-desc">Reach customers within blocks of your business.</div>
+        </div>
+        <div class="ab-feature">
+          <div class="ab-feature-icon">💰</div>
+          <div class="ab-feature-title">65% Revenue Share</div>
+          <div class="ab-feature-desc">Screen owners earn passive income from idle displays.</div>
+        </div>
+        <div class="ab-feature">
+          <div class="ab-feature-icon">📊</div>
+          <div class="ab-feature-title">Full Attribution</div>
+          <div class="ab-feature-desc">QR codes, geo-fencing, promo tracking, and search lift.</div>
+        </div>
+      </div>
+      <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="ab-btn">Visit Adboard</a>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <!-- Bulletin In Action -->
+      <div class="bulletin-demo">
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#ff9100;margin-bottom:4px;">Bulletin — Live on the Network</div>
+
+        <div class="bulletin-card">
+          <div class="bulletin-header">
+            <div class="bulletin-location">Princeton, NJ</div>
+            <div class="bulletin-type-badge" style="background:rgba(255,145,0,0.1);color:#ff9100;border:1px solid rgba(255,145,0,0.25);">🏷️ Sale/Promo</div>
+          </div>
+          <div class="bulletin-biz">Sunrise Bakery</div>
+          <div class="bulletin-cat">Food & Drink</div>
+          <div class="bulletin-msg">Fresh sourdough loaves — buy 2 get 1 free this weekend only! Come in before noon for the best selection.</div>
+          <div class="bulletin-cta-btn">Get Directions</div>
+          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 2 min ago</div>
+        </div>
+
+        <div class="bulletin-card">
+          <div class="bulletin-header">
+            <div class="bulletin-location">Princeton, NJ</div>
+            <div class="bulletin-type-badge" style="background:rgba(0,180,197,0.1);color:#00b4c5;border:1px solid rgba(0,180,197,0.25);">🎉 Event</div>
+          </div>
+          <div class="bulletin-biz">The Harbor Grill</div>
+          <div class="bulletin-cat">Restaurant & Bar</div>
+          <div class="bulletin-msg">Live jazz every Friday 7–10 PM. No cover charge. Reserve your table now.</div>
+          <div class="bulletin-cta-btn">RSVP</div>
+          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 8 min ago</div>
+        </div>
+
+        <div class="bulletin-card">
+          <div class="bulletin-header">
+            <div class="bulletin-location">Princeton, NJ</div>
+            <div class="bulletin-type-badge" style="background:rgba(224,64,160,0.1);color:#e040a0;border:1px solid rgba(224,64,160,0.25);">💼 Now Hiring</div>
+          </div>
+          <div class="bulletin-biz">Downtown Boutique</div>
+          <div class="bulletin-cat">Retail</div>
+          <div class="bulletin-msg">Hiring part-time sales associates. Flexible hours, employee discount. Walk-ins welcome.</div>
+          <div class="bulletin-cta-btn">Learn More</div>
+          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 15 min ago</div>
+        </div>
+
+        <!-- Live Activity Ticker -->
+        <div class="bulletin-ticker">
+          <div class="bulletin-ticker-track">
+            <div class="bulletin-ticker-item"><strong>Sunrise Bakery</strong> posted a promo</div>
+            <div class="bulletin-ticker-item"><strong>The Harbor Grill</strong> posted an event</div>
+            <div class="bulletin-ticker-item"><strong>Downtown Boutique</strong> is hiring</div>
+            <div class="bulletin-ticker-item"><strong>FitZone Gym</strong> posted a grand opening</div>
+            <div class="bulletin-ticker-item"><strong>Main St. Coffee</strong> posted a promo</div>
+            <div class="bulletin-ticker-item"><strong>Princeton Yoga</strong> posted an event</div>
+            <div class="bulletin-ticker-item"><strong>Sunrise Bakery</strong> posted a promo</div>
+            <div class="bulletin-ticker-item"><strong>The Harbor Grill</strong> posted an event</div>
+            <div class="bulletin-ticker-item"><strong>Downtown Boutique</strong> is hiring</div>
+            <div class="bulletin-ticker-item"><strong>FitZone Gym</strong> posted a grand opening</div>
+            <div class="bulletin-ticker-item"><strong>Main St. Coffee</strong> posted a promo</div>
+            <div class="bulletin-ticker-item"><strong>Princeton Yoga</strong> posted an event</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PRODUCTS -->
 <section class="products-section" id="products">
   <div style="text-align:center;margin-bottom:64px;">
@@ -2673,98 +2994,17 @@
     <div class="product-card reveal reveal-delay-2">
       <div class="product-badge">Local Ad Network</div>
       <div class="product-name">ADBOARD</div>
-      <div class="product-desc">A digital out-of-home advertising network that turns existing screens in local businesses — bar TVs, lobby monitors, gym displays — into targeted ad placements. Advertisers reach nearby customers, screen owners earn passive income.</div>
+      <div class="product-desc">A digital out-of-home advertising network that turns existing screens in local businesses into targeted ad placements for nearby customers.</div>
       <div class="product-tags">
         <span class="product-tag">DOOH Advertising</span>
         <span class="product-tag">Attribution Tracking</span>
         <span class="product-tag">$79/week</span>
       </div>
-      <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="product-cta">Visit Adboard →</a>
+      <a href="#adboard" class="product-cta">Learn More →</a>
     </div>
   </div>
 
-  <!-- Adboard Demo Mockup -->
-  <div style="max-width:1200px;margin:64px auto 0;" class="reveal">
-    <div class="stream-mockup">
-      <div class="mockup-bar">
-        <div class="mockup-dots">
-          <div class="mockup-dot"></div>
-          <div class="mockup-dot"></div>
-          <div class="mockup-dot"></div>
-        </div>
-        <div class="mockup-url">adboard-nine.vercel.app</div>
-        <div style="display:flex;align-items:center;gap:5px;background:rgba(255,145,0,0.15);border:1px solid rgba(255,145,0,0.3);padding:4px 10px;border-radius:20px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#ff9100;">
-          Live
-        </div>
-      </div>
-      <!-- Adboard App UI -->
-      <div style="background:#080c14;padding:0;">
-        <!-- Adboard Nav -->
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(255,255,255,0.06);">
-          <div style="font-family:var(--font-display);font-size:18px;letter-spacing:0.08em;color:#fff;">AD<span style="color:#ff9100;">BOARD</span></div>
-          <div style="display:flex;gap:20px;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,216,232,0.5);">
-            <span>How It Works</span>
-            <span>Pricing</span>
-            <span>Use Cases</span>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,216,232,0.6);padding:6px 12px;">Log In</div>
-            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#080c14;background:linear-gradient(135deg,#ff9100,#ff6b00);padding:6px 14px;border-radius:4px;">Get Started</div>
-          </div>
-        </div>
-        <!-- Adboard Hero -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:40px 24px 32px;align-items:center;">
-          <!-- Left: Hero text -->
-          <div>
-            <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#ff9100;margin-bottom:12px;">Local Digital Advertising Network</div>
-            <div style="font-family:var(--font-display);font-size:clamp(18px,2.5vw,28px);letter-spacing:0.03em;color:#fff;line-height:1.15;margin-bottom:12px;">Screens already in<br>every business. Now<br>they work for you.</div>
-            <div style="font-size:11px;color:rgba(201,216,232,0.5);line-height:1.6;margin-bottom:16px;max-width:320px;">Every bar TV, waiting room display, and gym screen is a wasted opportunity. Adboard connects them to local advertisers.</div>
-            <div style="display:flex;gap:8px;">
-              <div style="font-size:10px;color:#080c14;background:linear-gradient(135deg,#ff9100,#ff6b00);padding:8px 16px;border-radius:4px;letter-spacing:0.08em;">Get Started Free</div>
-              <div style="font-size:10px;color:rgba(201,216,232,0.6);padding:8px 16px;border:1px solid rgba(255,255,255,0.12);border-radius:4px;letter-spacing:0.08em;">See How It Works</div>
-            </div>
-          </div>
-          <!-- Right: Bulletin Form -->
-          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:20px;">
-            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#ff9100;margin-bottom:14px;">Create your Bulletin post</div>
-            <div style="margin-bottom:10px;">
-              <div style="font-size:9px;color:rgba(201,216,232,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Business Name</div>
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:8px 10px;font-size:11px;color:rgba(201,216,232,0.3);">Your business name</div>
-            </div>
-            <div style="margin-bottom:10px;">
-              <div style="font-size:9px;color:rgba(201,216,232,0.4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Message</div>
-              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:8px 10px;height:48px;font-size:11px;color:rgba(201,216,232,0.3);">What do you want to announce?</div>
-            </div>
-            <div style="display:flex;gap:6px;margin-bottom:12px;">
-              <div style="font-size:9px;padding:5px 10px;border:1px solid rgba(255,145,0,0.4);border-radius:12px;color:#ff9100;background:rgba(255,145,0,0.08);">Sale/Promo</div>
-              <div style="font-size:9px;padding:5px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:rgba(201,216,232,0.4);">Event</div>
-              <div style="font-size:9px;padding:5px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:rgba(201,216,232,0.4);">Hiring</div>
-            </div>
-            <div style="font-size:10px;color:#080c14;background:linear-gradient(135deg,#ff9100,#ff6b00);padding:8px;border-radius:4px;text-align:center;letter-spacing:0.08em;">Post to Network — Free</div>
-          </div>
-        </div>
-        <!-- Adboard Stats Bar -->
-        <div style="display:flex;justify-content:center;gap:40px;padding:16px 24px 20px;border-top:1px solid rgba(255,255,255,0.04);">
-          <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:20px;color:#ff9100;">2.4M+</div>
-            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,216,232,0.35);">Monthly Impressions</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:20px;color:#ff9100;">180+</div>
-            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,216,232,0.35);">Publisher Screens</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:20px;color:#ff9100;">65%</div>
-            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,216,232,0.35);">Revenue Share</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-family:var(--font-display);font-size:20px;color:#ff9100;">$79/wk</div>
-            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,216,232,0.35);">Starting Price</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </section>
 
 <!-- TESTIMONIALS -->
