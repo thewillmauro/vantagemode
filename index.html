@@ -2122,9 +2122,34 @@
     .adboard-section { padding: 80px 24px; }
     .adboard-section::before { font-size: 140px; }
   }
+  @media (max-width: 768px) {
+    .adboard-section { padding: 64px 16px; }
+    .adboard-section::before { font-size: 80px; }
+    .adboard-inner { gap: 36px; }
+    .adboard-title { font-size: clamp(36px, 10vw, 56px); }
+    .adboard-desc { font-size: 14px; margin-bottom: 24px; }
+    .ab-features { grid-template-columns: 1fr; gap: 8px; }
+    .ab-feature { padding: 14px; }
+    .ab-feature-title { font-size: 11px; }
+    .ab-feature-desc { font-size: 10px; }
+    .bulletin-card { padding: 16px; }
+    .bulletin-biz { font-size: 16px; }
+    .bulletin-msg { font-size: 12px; }
+    .bulletin-header { flex-wrap: wrap; gap: 6px; }
+    .bulletin-demo { gap: 10px; }
+    .bulletin-ticker { padding: 8px 0; }
+    .bulletin-ticker-item { font-size: 10px; }
+  }
   @media (max-width: 480px) {
-    .ab-features { grid-template-columns: 1fr; }
-    .adboard-title { font-size: 40px; }
+    .adboard-section { padding: 48px 14px; }
+    .adboard-title { font-size: 32px; }
+    .adboard-desc { font-size: 13px; }
+    .bulletin-card { padding: 14px; }
+    .bulletin-biz { font-size: 14px; }
+    .bulletin-msg { font-size: 11px; line-height: 1.4; }
+    .bulletin-cta-btn { font-size: 8px; padding: 5px 12px; }
+    .bulletin-footer { font-size: 7px; }
+    .ab-btn { padding: 12px 24px; font-size: 10px; }
   }
 
   /* Products responsive */
@@ -2385,11 +2410,6 @@
     #cta > div:last-child { grid-template-columns: 1fr !important; }
   }
 
-  /* Adboard section mobile */
-  @media (max-width: 768px) {
-    .adboard-section { padding: 80px 20px !important; }
-    .adboard-section .streamlive-inner { grid-template-columns: 1fr !important; }
-  }
 
   /* Global overflow prevention */
   html, body { overflow-x: hidden; }
