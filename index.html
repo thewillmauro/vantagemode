@@ -2378,56 +2378,94 @@
     .nav-mobile-menu a { font-size: 36px; padding: 12px 24px; }
   }
 
-  /* ── INLINE SECTION FIXES ── */
-
-  /* Pricing cards stack on mobile */
-  @media (max-width: 768px) {
-    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-    #pricing .reveal[style*="padding:32px 40px"] { padding: 24px 20px !important; }
-  }
-
-  /* CTA top banner */
-  @media (max-width: 768px) {
-    #cta > div:first-child { padding: 60px 24px !important; flex-direction: column !important; gap: 32px !important; }
-    #cta > div:nth-child(2) { padding: 40px 24px !important; }
-    #cta > div:nth-child(2) > div { grid-template-columns: 1fr !important; }
-    #cta > div:last-child { padding: 28px 24px !important; grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
-    #contactForm { grid-template-columns: 1fr !important; }
-    .pricing-grid { grid-template-columns: 1fr !important; }
-    #pricing > div:last-child { grid-template-columns: 1fr !important; }
-  }
-  @media (max-width: 480px) {
-    #cta > div:last-child { grid-template-columns: 1fr !important; }
-    .founder-career-row { grid-template-columns: 60px 1fr !important; gap: 12px !important; }
-  }
-  #pricing > div:last-child > div { min-width: 0; }
-
-  /* Contact info strip — stack on smaller screens */
-  @media (max-width: 900px) {
-    #cta > div:last-child { grid-template-columns: 1fr 1fr !important; }
-  }
-  @media (max-width: 600px) {
-    #cta > div:last-child { grid-template-columns: 1fr !important; }
-  }
-
+  /* ── COMPREHENSIVE MOBILE FIXES ── */
 
   /* Global overflow prevention */
   html, body { overflow-x: hidden; }
   img, video, iframe { max-width: 100%; height: auto; }
 
-  /* Founder bio text mobile */
+  /* ── TABLET (max 900px) ── */
+  @media (max-width: 900px) {
+    /* Pricing cards stack */
+    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+    /* CTA contact info strip */
+    #cta > div:last-child { grid-template-columns: 1fr 1fr !important; padding: 32px 24px !important; }
+
+    /* Founder career rows */
+    .founder-career-row { grid-template-columns: 70px 1fr !important; gap: 14px !important; }
+  }
+
+  /* ── MOBILE (max 768px) ── */
   @media (max-width: 768px) {
+    /* CTA top banner */
+    #cta > div:first-child { padding: 60px 20px !important; flex-direction: column !important; gap: 32px !important; }
+    #cta > div:first-child h2 { font-size: clamp(40px, 10vw, 60px) !important; }
+
+    /* CTA contact form strip */
+    #cta > div:nth-child(2) { padding: 40px 20px !important; }
+    #contactForm { grid-template-columns: 1fr !important; }
+
+    /* CTA contact info strip */
+    #cta > div:last-child { grid-template-columns: 1fr 1fr !important; padding: 28px 20px !important; gap: 20px !important; }
+
+    /* Pricing section */
+    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    #pricing .reveal[style*="padding:32px 40px"] { padding: 24px 20px !important; }
+    #pricing div[style*="padding:48px 36px"] { padding: 32px 20px !important; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
+    #pricing > div:last-child { grid-template-columns: 1fr !important; }
+    .pricing-note { font-size: 14px !important; }
+
+    /* Founder */
     .founder-bio { font-size: 13px !important; }
     .founder-quote { font-size: 18px !important; }
     .founder-credentials { gap: 6px !important; }
     .credential-tag { font-size: 10px !important; padding: 6px 12px !important; }
+    .founder-career-row { grid-template-columns: 60px 1fr !important; gap: 12px !important; }
+
+    /* StreamLive mockup */
+    .mockup-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+
+    /* Clients strip */
+    .clients-label { font-size: 9px !important; }
+
+    /* FAQ */
+    .faq-inner { gap: 32px !important; }
+
+    /* Contact form submit row */
+    #contactForm > div[style*="grid-column"] { flex-direction: column !important; align-items: flex-start !important; }
+    .sow-submit { width: 100% !important; text-align: center !important; }
+
+    /* All CTA child divs padding */
+    .cta-section > div[style*="padding"] { padding-left: 20px !important; padding-right: 20px !important; }
   }
 
-  /* Services section mobile */
+  /* ── SMALL MOBILE (max 480px) ── */
   @media (max-width: 480px) {
+    /* CTA contact info strip - full stack */
+    #cta > div:last-child { grid-template-columns: 1fr !important; padding: 24px 16px !important; }
+
+    /* Founder */
+    .founder-career-row { grid-template-columns: 50px 1fr !important; gap: 10px !important; }
+
+    /* Services */
     .service-item-title { font-size: 22px !important; }
     .service-item { padding: 24px 20px !important; }
+
+    /* Pricing inline cards */
+    #pricing div[style*="font-size:32px"] { font-size: 24px !important; }
+
+    /* Process steps */
+    .step-title { font-size: 16px !important; }
+    .step-desc { font-size: 12px !important; }
+
+    /* FAQ */
+    .faq-answer-inner { font-size: 13px !important; }
   }
+
+  #pricing > div:last-child > div { min-width: 0; }
+
 </style>
 </head>
 <body>
