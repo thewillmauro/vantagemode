@@ -2354,6 +2354,13 @@
   }
 
   /* ── INLINE SECTION FIXES ── */
+
+  /* Pricing cards stack on mobile */
+  @media (max-width: 768px) {
+    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    #pricing .reveal[style*="padding:32px 40px"] { padding: 24px 20px !important; }
+  }
+
   /* CTA top banner */
   @media (max-width: 768px) {
     #cta > div:first-child { padding: 60px 24px !important; flex-direction: column !important; gap: 32px !important; }
@@ -2362,22 +2369,44 @@
     #cta > div:last-child { padding: 28px 24px !important; grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
     #contactForm { grid-template-columns: 1fr !important; }
     .pricing-grid { grid-template-columns: 1fr !important; }
-    /* Pricing comparison note */
     #pricing > div:last-child { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 480px) {
     #cta > div:last-child { grid-template-columns: 1fr !important; }
-    /* Career timeline */
     .founder-career-row { grid-template-columns: 60px 1fr !important; gap: 12px !important; }
   }
-  /* Pricing note comparison - always readable */
   #pricing > div:last-child > div { min-width: 0; }
-  /* Contact strip */
+
+  /* Contact info strip — stack on smaller screens */
   @media (max-width: 900px) {
     #cta > div:last-child { grid-template-columns: 1fr 1fr !important; }
   }
   @media (max-width: 600px) {
     #cta > div:last-child { grid-template-columns: 1fr !important; }
+  }
+
+  /* Adboard section mobile */
+  @media (max-width: 768px) {
+    .adboard-section { padding: 80px 20px !important; }
+    .adboard-section .streamlive-inner { grid-template-columns: 1fr !important; }
+  }
+
+  /* Global overflow prevention */
+  html, body { overflow-x: hidden; }
+  img, video, iframe { max-width: 100%; height: auto; }
+
+  /* Founder bio text mobile */
+  @media (max-width: 768px) {
+    .founder-bio { font-size: 13px !important; }
+    .founder-quote { font-size: 18px !important; }
+    .founder-credentials { gap: 6px !important; }
+    .credential-tag { font-size: 10px !important; padding: 6px 12px !important; }
+  }
+
+  /* Services section mobile */
+  @media (max-width: 480px) {
+    .service-item-title { font-size: 22px !important; }
+    .service-item { padding: 24px 20px !important; }
   }
 </style>
 </head>
@@ -3303,37 +3332,37 @@
 
     <!-- Step 1: Service Selection -->
     <div class="wizard-step active" data-step="1">
-      <div class="wizard-step-title">WHAT ARE YOU LOOKING FOR?</div>
-      <div class="wizard-step-sub">Select the service that best fits your project.</div>
+      <div class="wizard-step-title">WHAT CAN WE<br><span class="italic">help with?</span></div>
+      <div class="wizard-step-sub">Select the area that best describes what you need.</div>
       <div class="service-select-grid">
         <div class="service-select-card" data-service="Video Marketing">
           <div class="ssc-icon">🎬</div>
           <div class="ssc-name">Video Marketing</div>
-          <div class="ssc-desc">Brand films, campaigns, events, ad creative</div>
+          <div class="ssc-desc">Brand films, ad creative, event coverage, live streaming</div>
         </div>
         <div class="service-select-card" data-service="Custom Software">
           <div class="ssc-icon">💻</div>
           <div class="ssc-name">Custom Software</div>
-          <div class="ssc-desc">Web platforms, SaaS, tools, AI apps</div>
+          <div class="ssc-desc">Web apps, SaaS platforms, internal tools, AI products</div>
         </div>
         <div class="service-select-card" data-service="Both">
           <div class="ssc-icon">✦</div>
-          <div class="ssc-name">Both</div>
-          <div class="ssc-desc">Video + software together</div>
+          <div class="ssc-name">Video + Software</div>
+          <div class="ssc-desc">A combined engagement across both disciplines</div>
         </div>
         <div class="service-select-card" data-service="Not Sure Yet">
           <div class="ssc-icon">💬</div>
-          <div class="ssc-name">Not Sure Yet</div>
-          <div class="ssc-desc">Let's figure it out together</div>
+          <div class="ssc-name">Just Want to Talk</div>
+          <div class="ssc-desc">Not sure yet — let's have a conversation</div>
         </div>
       </div>
-      <div class="wizard-error" id="wizardErr1">Please select a service to continue.</div>
+      <div class="wizard-error" id="wizardErr1">Please select an option to continue.</div>
     </div>
 
     <!-- Step 2: About You -->
     <div class="wizard-step" data-step="2">
-      <div class="wizard-step-title">TELL US ABOUT YOU</div>
-      <div class="wizard-step-sub">So we know who we're working with.</div>
+      <div class="wizard-step-title">WHO ARE<br><span class="italic">you?</span></div>
+      <div class="wizard-step-sub">Tell us a bit about yourself so we can tailor the conversation.</div>
       <div class="wizard-fields">
         <div class="wizard-field">
           <label for="wizName">Your Name *</label>
@@ -3344,8 +3373,8 @@
           <input type="email" id="wizEmail" placeholder="you@company.com">
         </div>
         <div class="wizard-field">
-          <label for="wizBrand">Brand / Company</label>
-          <input type="text" id="wizBrand" placeholder="Your brand or company name">
+          <label for="wizBrand">Company / Organization</label>
+          <input type="text" id="wizBrand" placeholder="Your company or organization name">
         </div>
       </div>
       <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
@@ -3353,36 +3382,36 @@
 
     <!-- Step 3: Project Details -->
     <div class="wizard-step" data-step="3">
-      <div class="wizard-step-title">PROJECT DETAILS</div>
-      <div class="wizard-step-sub">Help us understand the scope so we can hit the ground running.</div>
+      <div class="wizard-step-title">TELL US<br><span class="italic">more</span></div>
+      <div class="wizard-step-sub">Share as much or as little as you'd like. We'll figure out the rest on a call.</div>
       <div class="wizard-fields">
         <div class="wizard-row">
           <div class="wizard-field">
-            <label for="wizTimeline">Timeline</label>
+            <label for="wizTimeline">When do you need this?</label>
             <select id="wizTimeline">
               <option value="">Select timeline</option>
-              <option value="ASAP">ASAP</option>
+              <option value="ASAP">As soon as possible</option>
               <option value="1-2 Weeks">1–2 Weeks</option>
-              <option value="1 Month">Within a Month</option>
-              <option value="2-3 Months">2–3 Months</option>
-              <option value="Flexible">Flexible</option>
+              <option value="1-2 Months">1–2 Months</option>
+              <option value="This Quarter">This Quarter</option>
+              <option value="Just Exploring">Just Exploring</option>
             </select>
           </div>
           <div class="wizard-field">
             <label for="wizBudget">Budget Range</label>
             <select id="wizBudget">
-              <option value="">Select budget</option>
-              <option value="Under $2,500">Under $2,500</option>
-              <option value="$2,500 - $5,000">$2,500 – $5,000</option>
-              <option value="$5,000 - $10,000">$5,000 – $10,000</option>
-              <option value="$10,000 - $25,000">$10,000 – $25,000</option>
-              <option value="$25,000+">$25,000+</option>
+              <option value="">Select range</option>
+              <option value="Under $5K">Under $5K</option>
+              <option value="$5K - $15K">$5K – $15K</option>
+              <option value="$15K - $50K">$15K – $50K</option>
+              <option value="$50K+">$50K+</option>
+              <option value="Not Sure">Not Sure Yet</option>
             </select>
           </div>
         </div>
         <div class="wizard-field">
-          <label for="wizMessage">Tell Us About Your Project</label>
-          <textarea id="wizMessage" placeholder="What's the vision? Any key dates, goals, or details we should know?"></textarea>
+          <label for="wizMessage">What's on your mind?</label>
+          <textarea id="wizMessage" placeholder="What are you trying to build, launch, or solve? Any goals, deadlines, or context that would help us understand your vision."></textarea>
         </div>
       </div>
     </div>
@@ -3391,8 +3420,8 @@
     <div class="wizard-step" data-step="4">
       <div class="wizard-success">
         <div class="wizard-success-icon">✦</div>
-        <div class="wizard-success-title">WE'LL BE IN TOUCH</div>
-        <div class="wizard-success-msg">Thanks for reaching out. We'll review your brief and get back to you within 24 hours with next steps.</div>
+        <div class="wizard-success-title">GOT IT</div>
+        <div class="wizard-success-msg">Thanks for reaching out. We'll review everything and follow up within 24 hours to schedule a call.</div>
         <button class="wizard-success-close">Close</button>
       </div>
     </div>
@@ -3606,7 +3635,7 @@
     wizardLabel.textContent = n <= 3 ? 'STEP ' + n + ' OF 3' : '';
     wizardNav.style.display = n === 4 ? 'none' : 'flex';
     wizardBack.classList.toggle('hidden', n === 1);
-    wizardNext.textContent = n === 3 ? 'SUBMIT BRIEF' : 'NEXT';
+    wizardNext.textContent = n === 3 ? 'SEND INQUIRY' : 'NEXT';
   }
 
   // Open wizard from all triggers
@@ -3678,15 +3707,15 @@
       wizardData.message = wizardModal.querySelector('#wizMessage').value.trim();
 
       // Submit via hidden mailto link (non-blocking)
-      const subject = encodeURIComponent('New Project Inquiry: ' + wizardData.service);
+      const subject = encodeURIComponent('New Inquiry: ' + wizardData.service + ' — ' + wizardData.name);
       const body = encodeURIComponent(
-        'Service: ' + wizardData.service +
+        'Interest: ' + wizardData.service +
         '\nName: ' + wizardData.name +
         '\nEmail: ' + wizardData.email +
-        '\nBrand: ' + wizardData.brand +
+        '\nCompany: ' + wizardData.brand +
         '\nTimeline: ' + wizardData.timeline +
         '\nBudget: ' + wizardData.budget +
-        '\nMessage: ' + wizardData.message
+        '\nDetails: ' + wizardData.message
       );
       const mailLink = document.createElement('a');
       mailLink.href = 'mailto:thewillmauro@gmail.com?subject=' + subject + '&body=' + body;
