@@ -1460,11 +1460,16 @@
   }
   .adboard-inner {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: start;
     position: relative;
     z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .adboard-inner > div {
+    min-width: 0;
   }
   .adboard-badge {
     display: inline-flex;
@@ -1554,6 +1559,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
   }
   .bulletin-card {
     background: rgba(255,255,255,0.03);
