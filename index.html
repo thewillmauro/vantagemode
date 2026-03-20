@@ -1724,6 +1724,144 @@
     100% { transform: translateX(-50%); }
   }
 
+  /* ── AUTOMATION SECTION ── */
+  .automation-section {
+    background: var(--deep);
+    position: relative;
+    overflow: hidden;
+  }
+  .automation-section::before {
+    content: 'AUTOMATE';
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 280px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(107,100,88,0.06);
+    letter-spacing: 0.02em;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .automation-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .automation-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .automation-header .section-label { color: var(--gold); }
+  .automation-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 640px;
+    margin: 24px auto 0;
+  }
+  .automation-cycle {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-bottom: 64px;
+  }
+  .auto-step {
+    background: var(--surface);
+    padding: 40px 28px;
+    position: relative;
+    text-align: center;
+    transition: background 0.4s;
+  }
+  .auto-step:hover {
+    background: var(--surface2);
+  }
+  .auto-step-num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .auto-step-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .auto-step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .auto-step-arrow {
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    font-size: 14px;
+    z-index: 2;
+    font-weight: 700;
+  }
+  .auto-step:last-child .auto-step-arrow { display: none; }
+  .automation-examples {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .auto-example {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 24px;
+    transition: border-color 0.3s;
+  }
+  .auto-example:hover {
+    border-color: rgba(201,168,76,0.2);
+  }
+  .auto-example-icon {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+  .auto-example-title {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .auto-example-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Automation responsive */
+  @media (max-width: 1100px) {
+    .automation-cycle { grid-template-columns: repeat(2, 1fr); }
+    .auto-step:nth-child(2) .auto-step-arrow { display: none; }
+    .automation-examples { grid-template-columns: 1fr 1fr; }
+    .automation-section::before { font-size: 140px; }
+  }
+  @media (max-width: 768px) {
+    .automation-cycle { grid-template-columns: 1fr; }
+    .auto-step-arrow { display: none !important; }
+    .auto-step { text-align: left; padding: 28px 24px; }
+    .automation-examples { grid-template-columns: 1fr; }
+    .automation-section::before { display: none; }
+    .automation-desc { font-size: 14px; }
+  }
+
   /* ── PRODUCTS (Powered by VM) ── */
   .products-section {
     background: var(--gold);
@@ -3257,6 +3395,77 @@
 
 
 
+
+<!-- AUTOMATION -->
+<section class="automation-section" id="automation">
+  <div class="automation-inner">
+    <div class="automation-header">
+      <p class="section-label reveal">How It Works</p>
+      <h2 class="section-title reveal">AUTOMATE<br><span class="italic">everything</span></h2>
+      <p class="automation-desc reveal">We audit your operations, identify the manual bottlenecks, and build connected systems that run themselves. Here's how every automation engagement works.</p>
+    </div>
+
+    <div class="automation-cycle reveal">
+      <div class="auto-step">
+        <div class="auto-step-num">01</div>
+        <div class="auto-step-title">AUDIT</div>
+        <div class="auto-step-desc">We map your current workflows, tools, and pain points. Every manual task, disconnected system, and repetitive process gets documented.</div>
+        <div class="auto-step-arrow">→</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-step-num">02</div>
+        <div class="auto-step-title">DESIGN</div>
+        <div class="auto-step-desc">We architect the automated system - which tools connect, where AI agents take over, and how data flows between platforms without human intervention.</div>
+        <div class="auto-step-arrow">→</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-step-num">03</div>
+        <div class="auto-step-title">BUILD</div>
+        <div class="auto-step-desc">We implement the integrations, configure the AI agents, wire up the APIs, and build custom logic. Everything gets tested end-to-end before going live.</div>
+        <div class="auto-step-arrow">→</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-step-num">04</div>
+        <div class="auto-step-title">OPTIMIZE</div>
+        <div class="auto-step-desc">We monitor performance, refine triggers, and expand the system over time. Automation gets smarter and handles more as your business scales.</div>
+      </div>
+    </div>
+
+    <p class="section-label reveal" style="text-align:center;margin-bottom:32px;">What We Automate</p>
+    <div class="automation-examples reveal">
+      <div class="auto-example">
+        <div class="auto-example-icon">📥</div>
+        <div class="auto-example-title">Lead Pipelines</div>
+        <div class="auto-example-desc">Capture leads from forms, ads, and social - auto-enrich, score, route to CRM, and trigger follow-up sequences without lifting a finger.</div>
+      </div>
+      <div class="auto-example">
+        <div class="auto-example-icon">🤖</div>
+        <div class="auto-example-title">AI Agents</div>
+        <div class="auto-example-desc">Custom AI assistants that handle customer support, qualify prospects, summarize meetings, draft proposals, and process documents 24/7.</div>
+      </div>
+      <div class="auto-example">
+        <div class="auto-example-icon">🔗</div>
+        <div class="auto-example-title">System Integrations</div>
+        <div class="auto-example-desc">Connect your CRM, email, billing, project management, and internal tools so data syncs automatically across your entire stack.</div>
+      </div>
+      <div class="auto-example">
+        <div class="auto-example-icon">📊</div>
+        <div class="auto-example-title">Reporting Dashboards</div>
+        <div class="auto-example-desc">Auto-generated reports that pull from every source - sales, marketing, ops - and land in your inbox or Slack without anyone building a spreadsheet.</div>
+      </div>
+      <div class="auto-example">
+        <div class="auto-example-icon">📧</div>
+        <div class="auto-example-title">Email & Outreach</div>
+        <div class="auto-example-desc">Triggered email sequences, personalized follow-ups, and drip campaigns that fire based on behavior, not a calendar reminder.</div>
+      </div>
+      <div class="auto-example">
+        <div class="auto-example-icon">⚙️</div>
+        <div class="auto-example-title">Internal Operations</div>
+        <div class="auto-example-desc">Onboarding flows, invoice generation, task routing, approval chains, and team notifications - all the work that shouldn't require a human.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- PRICING -->
 <section class="pricing" id="pricing">
