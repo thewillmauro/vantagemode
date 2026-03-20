@@ -219,6 +219,73 @@
     opacity: 0;
     animation: fadeUp 0.8s ease 1.4s forwards;
   }
+
+  /* Hero Pillars */
+  .hero-pillars {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: 56px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.8s forwards;
+  }
+  .hero-pillar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .pillar-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+    background: rgba(201,168,76,0.04);
+  }
+  .pillar-label {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--white);
+  }
+  .pillar-cycle {
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+  .pillar-cycle-track {
+    display: flex;
+    flex-direction: column;
+    animation: pillarCycle 8s ease-in-out infinite;
+  }
+  .pillar-cycle-track span {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+  .hero-pillar-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  @keyframes pillarCycle {
+    0%, 20% { transform: translateY(0); }
+    25%, 45% { transform: translateY(-20px); }
+    50%, 70% { transform: translateY(-40px); }
+    75%, 95% { transform: translateY(-60px); }
+    100% { transform: translateY(-80px); }
+  }
+
   .btn-primary {
     background: var(--gold);
     color: var(--black);
@@ -2279,6 +2346,8 @@
     .hero-eyebrow { font-size: 10px; }
     .hero-sub { font-size: 14px; }
     .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .hero-pillars { flex-direction: column; align-items: flex-start; gap: 24px; margin-top: 40px; }
+    .hero-pillar-divider { width: 100%; height: 1px; }
     .btn-primary { padding: 14px 32px; font-size: 11px; }
 
     /* Section titles */
@@ -2416,6 +2485,8 @@
     .hero-sub { font-size: 14px !important; max-width: 100% !important; }
     .hero-content { max-width: 100% !important; }
     .hero-actions { flex-direction: column !important; align-items: flex-start !important; gap: 14px !important; }
+    .hero-pillars { flex-direction: column !important; align-items: flex-start !important; gap: 20px !important; margin-top: 36px !important; }
+    .hero-pillar-divider { width: 80px !important; height: 1px !important; }
 
     /* Platform grid - 1 column on mobile */
     .platform-grid { grid-template-columns: 1fr !important; }
@@ -2611,6 +2682,41 @@
         </span>
         View Reel
       </a>
+    </div>
+
+    <!-- Hero Pillars -->
+    <div class="hero-pillars">
+      <div class="hero-pillar">
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polygon points="10,8 10,12 14,10" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div class="pillar-label">Video</div>
+        <div class="pillar-cycle">
+          <div class="pillar-cycle-track">
+            <span>Brand Films</span>
+            <span>Ad Creative</span>
+            <span>Live Events</span>
+            <span>Product Launches</span>
+            <span>Brand Films</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-pillar-divider"></div>
+      <div class="hero-pillar">
+        <div class="pillar-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+        </div>
+        <div class="pillar-label">Software</div>
+        <div class="pillar-cycle">
+          <div class="pillar-cycle-track">
+            <span>Web Platforms</span>
+            <span>SaaS Products</span>
+            <span>AI Tools</span>
+            <span>Custom Apps</span>
+            <span>Web Platforms</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
