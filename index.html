@@ -2119,12 +2119,12 @@
   /* Adboard responsive */
   @media (max-width: 1100px) {
     .adboard-inner { grid-template-columns: 1fr; gap: 48px; }
-    .adboard-section { padding: 80px 24px; }
-    .adboard-section::before { font-size: 140px; }
+    .adboard-section { padding: 80px 24px; overflow: visible; }
+    .adboard-section::before { display: none; }
   }
   @media (max-width: 768px) {
-    .adboard-section { padding: 64px 16px; }
-    .adboard-section::before { font-size: 80px; }
+    .adboard-section { padding: 64px 16px; overflow: visible; }
+    .adboard-section::before { display: none; }
     .adboard-inner { gap: 36px; }
     .adboard-title { font-size: clamp(36px, 10vw, 56px); }
     .adboard-desc { font-size: 14px; margin-bottom: 24px; }
