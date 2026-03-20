@@ -1726,10 +1726,17 @@
 
   /* ── PRODUCTS (Powered by VM) ── */
   .products-section {
-    background: var(--surface);
+    background: var(--gold);
     padding: 120px 60px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .products-section .section-label {
+    color: rgba(0,0,0,0.45);
+  }
+  .products-section .section-title {
+    color: var(--black);
+  }
+  .products-section .section-title .italic {
+    color: rgba(0,0,0,0.7);
   }
   .products-grid {
     display: grid;
@@ -1739,17 +1746,18 @@
     margin: 0 auto;
   }
   .product-card {
-    background: var(--surface2);
+    background: var(--black);
     border: 1px solid rgba(255,255,255,0.08);
     padding: 48px 40px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.4s;
+    transition: border-color 0.4s, transform 0.4s;
     display: flex;
     flex-direction: column;
   }
   .product-card:hover {
-    border-color: rgba(201,168,76,0.25);
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
   }
   .product-card::before {
     content: '';
