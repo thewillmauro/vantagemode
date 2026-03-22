@@ -2284,32 +2284,25 @@
     gap: 12px;
   }
   .wizard-error {
-    font-size: 12px;
+    display: none;
+    font-size: 13px;
     font-weight: 500;
     color: var(--white);
     background: rgba(230, 57, 70, 0.12);
     border: 1px solid rgba(230, 57, 70, 0.3);
     border-left: 3px solid var(--red-accent);
     border-radius: 4px;
-    padding: 10px 14px;
-    margin-top: 8px;
-    display: flex;
+    padding: 12px 16px;
+    margin-top: 4px;
+    margin-bottom: 16px;
     align-items: center;
-    gap: 8px;
-    opacity: 0;
-    transform: translateY(-4px);
-    pointer-events: none;
-    max-height: 0;
-    padding: 0 14px;
-    margin: 0;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 10px;
   }
   .wizard-error::before {
     content: '!';
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: var(--red-accent);
     color: var(--white);
@@ -2320,13 +2313,7 @@
     justify-content: center;
   }
   .wizard-error.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    max-height: 60px;
-    padding: 10px 14px;
-    margin-top: 4px;
-    margin-bottom: 12px;
+    display: flex;
   }
   /* Invalid field highlight */
   .wizard-input-error {
