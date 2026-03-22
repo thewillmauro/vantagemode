@@ -2284,10 +2284,63 @@
     gap: 12px;
   }
   .wizard-error {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+    background: rgba(230, 57, 70, 0.12);
+    border: 1px solid rgba(230, 57, 70, 0.3);
+    border-left: 3px solid var(--red-accent);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    max-height: 0;
+    padding: 0 14px;
+    margin: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wizard-error::before {
+    content: '!';
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--red-accent);
+    color: var(--white);
     font-size: 11px;
-    color: var(--red-accent);
-    margin-top: -8px;
-    display: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wizard-error.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 60px;
+    padding: 10px 14px;
+    margin-top: 8px;
+  }
+  /* Invalid field highlight */
+  .wizard-input-error {
+    border-color: rgba(230, 57, 70, 0.5) !important;
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.1) !important;
+  }
+  @keyframes wizardShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  .wizard-shake {
+    animation: wizardShake 0.4s ease;
   }
 
   /* Wizard nav */
@@ -4389,23 +4442,50 @@
     if (wizardCurrent > 1) showWizardStep(wizardCurrent - 1);
   });
 
+  // Helper to show wizard error with animation
+  function showWizardError(el) {
+    el.classList.add('visible');
+    el.classList.remove('wizard-shake');
+    void el.offsetWidth; // force reflow
+    el.classList.add('wizard-shake');
+  }
+  function hideWizardErrors() {
+    wizardModal.querySelectorAll('.wizard-error').forEach(e => e.classList.remove('visible', 'wizard-shake'));
+    wizardModal.querySelectorAll('.wizard-input-error').forEach(e => e.classList.remove('wizard-input-error'));
+  }
+
+  // Clear field errors on input
+  wizardModal.querySelectorAll('input, textarea, select').forEach(field => {
+    field.addEventListener('input', () => {
+      field.classList.remove('wizard-input-error');
+      const step = field.closest('.wizard-step');
+      if (step) {
+        const err = step.querySelector('.wizard-error');
+        if (err) err.classList.remove('visible', 'wizard-shake');
+      }
+    });
+  });
+
   // Next / Submit
   wizardNext.addEventListener('click', () => {
-    const errEls = wizardModal.querySelectorAll('.wizard-error');
-    errEls.forEach(e => e.style.display = 'none');
+    hideWizardErrors();
 
     if (wizardCurrent === 1) {
       if (!wizardData.service) {
-        wizardModal.querySelector('#wizardErr1').style.display = 'block';
+        showWizardError(wizardModal.querySelector('#wizardErr1'));
         return;
       }
       showWizardStep(2);
     } else if (wizardCurrent === 2) {
-      const name = wizardModal.querySelector('#wizName').value.trim();
-      const email = wizardModal.querySelector('#wizEmail').value.trim();
+      const nameInput = wizardModal.querySelector('#wizName');
+      const emailInput = wizardModal.querySelector('#wizEmail');
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
       const brand = wizardModal.querySelector('#wizBrand').value.trim();
       if (!name || !email) {
-        wizardModal.querySelector('#wizardErr2').style.display = 'block';
+        if (!name) nameInput.classList.add('wizard-input-error');
+        if (!email) emailInput.classList.add('wizard-input-error');
+        showWizardError(wizardModal.querySelector('#wizardErr2'));
         return;
       }
       wizardData.name = name;
