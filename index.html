@@ -2004,25 +2004,105 @@
   }
   .wizard-close:hover { color: var(--gold); }
   .wizard-progress {
-    width: 100%;
-    height: 2px;
-    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 48px;
     position: relative;
-    overflow: hidden;
+    gap: 0;
   }
-  .wizard-progress-fill {
+  .wizard-progress-step {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .wizard-progress-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .wizard-progress-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--surface2);
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .wizard-progress-circle .check-icon {
+    display: none;
+    width: 14px;
+    height: 14px;
+  }
+  .wizard-progress-name {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 0.4s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
+  }
+  .wizard-progress-line {
+    width: 80px;
+    height: 2px;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+    margin: 0 8px;
+    margin-bottom: 22px;
+  }
+  .wizard-progress-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
+    width: 0%;
     background: var(--gold);
-    width: 33%;
     transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .wizard-step-label {
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
+  .wizard-progress-line.filled::after {
+    width: 100%;
+  }
+  /* Active step */
+  .wizard-progress-node.active .wizard-progress-circle {
+    border-color: var(--gold);
     color: var(--gold);
-    margin-bottom: 12px;
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.2), 0 0 40px rgba(201, 168, 76, 0.08);
+  }
+  .wizard-progress-node.active .wizard-progress-name {
+    color: var(--gold);
+  }
+  /* Completed step */
+  .wizard-progress-node.completed .wizard-progress-circle {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--black);
+  }
+  .wizard-progress-node.completed .wizard-progress-circle .step-num {
+    display: none;
+  }
+  .wizard-progress-node.completed .wizard-progress-circle .check-icon {
+    display: block;
+  }
+  .wizard-progress-node.completed .wizard-progress-name {
+    color: var(--gold-dim);
+  }
+  .wizard-step-label {
+    display: none;
   }
   .wizard-step-title {
     font-family: var(--font-display);
@@ -2053,16 +2133,17 @@
   .service-select-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
   .service-select-card {
     background: var(--surface);
     border: 1px solid rgba(255,255,255,0.06);
-    padding: 24px 20px;
+    padding: 28px 22px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    border-radius: 4px;
   }
   .service-select-card::before {
     content: '';
@@ -2071,22 +2152,68 @@
     height: 2px;
     background: var(--gold);
     transform: scaleX(0);
+    transform-origin: left;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Selected check indicator */
+  .service-select-card::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .service-select-card:hover {
     background: var(--surface2);
     border-color: rgba(201,168,76,0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .service-select-card:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
   }
   .service-select-card.selected {
     border-color: var(--gold);
-    background: var(--surface2);
+    background: rgba(201,168,76,0.08);
+    box-shadow: 0 0 24px rgba(201,168,76,0.12), inset 0 0 30px rgba(201,168,76,0.03);
   }
   .service-select-card.selected::before {
     transform: scaleX(1);
   }
+  .service-select-card.selected::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .service-select-card.selected .ssc-icon {
+    transform: scale(1.15);
+  }
+  .service-select-card.selected .ssc-name {
+    color: var(--gold);
+  }
+  /* Dim unselected cards when one is selected */
+  .service-select-grid.has-selection .service-select-card:not(.selected) {
+    opacity: 0.5;
+  }
+  .service-select-grid.has-selection .service-select-card:not(.selected):hover {
+    opacity: 0.85;
+  }
   .ssc-icon {
-    font-size: 24px;
-    margin-bottom: 12px;
+    font-size: 28px;
+    margin-bottom: 14px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .ssc-name {
     font-family: var(--font-display);
@@ -2094,6 +2221,7 @@
     letter-spacing: 0.08em;
     color: var(--white);
     margin-bottom: 4px;
+    transition: color 0.3s ease;
   }
   .ssc-desc {
     font-size: 11px;
@@ -2155,13 +2283,27 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
-  .wizard-error {
-    font-size: 11px;
-    color: var(--red-accent);
-    margin-top: -8px;
-    display: none;
+  /* Invalid field highlight */
+  .wizard-input-error {
+    border-color: rgba(230, 57, 70, 0.5) !important;
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.1) !important;
   }
-
+  .wizard-field-error {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--red-accent);
+    letter-spacing: 0.04em;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin: 0;
+  }
+  .wizard-field-error.visible {
+    max-height: 30px;
+    opacity: 1;
+    margin-top: 12px;
+  }
   /* Wizard nav */
   .wizard-nav {
     display: flex;
@@ -2386,12 +2528,16 @@
   @media (max-width: 900px) {
     .service-select-grid { grid-template-columns: repeat(2, 1fr); }
     .wizard-row { grid-template-columns: 1fr; }
+    .wizard-progress-line { width: 48px; }
   }
   @media (max-width: 480px) {
     .service-select-grid { grid-template-columns: 1fr; }
     .project-modal-inner { padding: 40px 0; }
     .wizard-step-title { font-size: 28px; }
     .wizard-success-title { font-size: 36px; }
+    .wizard-progress-line { width: 32px; margin: 0 4px; margin-bottom: 22px; }
+    .wizard-progress-circle { width: 30px; height: 30px; font-size: 12px; }
+    .wizard-progress-name { font-size: 8px; letter-spacing: 0.15em; }
   }
 
   /* ─── TABLET (max 1100px) ─── */
@@ -2825,12 +2971,6 @@
     <p class="hero-sub">Vantage Mode is a consultancy that builds three things: cinematic video campaigns, custom software, and business automation - fast, premium, and on strategy.</p>
     <div class="hero-actions">
       <a href="#" class="btn-primary open-wizard"><span>Start a Project</span></a>
-      <a href="#services" class="btn-outline">
-        <span class="play-icon">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><polygon points="0,0 10,6 0,12"/></svg>
-        </span>
-        View Reel
-      </a>
     </div>
 
     <!-- Hero Pillars -->
@@ -3845,8 +3985,38 @@
 <div class="project-modal" id="projectWizard">
   <div class="project-modal-inner">
     <button class="wizard-close">ESC</button>
-    <div class="wizard-progress"><div class="wizard-progress-fill"></div></div>
-    <div class="wizard-step-label">STEP 1 OF 3</div>
+    <div class="wizard-progress">
+      <div class="wizard-progress-step">
+        <div class="wizard-progress-node active" data-pstep="1">
+          <div class="wizard-progress-circle">
+            <span class="step-num">1</span>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="wizard-progress-name">Service</div>
+        </div>
+        <div class="wizard-progress-line" data-pline="1"></div>
+      </div>
+      <div class="wizard-progress-step">
+        <div class="wizard-progress-node" data-pstep="2">
+          <div class="wizard-progress-circle">
+            <span class="step-num">2</span>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="wizard-progress-name">About You</div>
+        </div>
+        <div class="wizard-progress-line" data-pline="2"></div>
+      </div>
+      <div class="wizard-progress-step">
+        <div class="wizard-progress-node" data-pstep="3">
+          <div class="wizard-progress-circle">
+            <span class="step-num">3</span>
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="wizard-progress-name">Details</div>
+        </div>
+      </div>
+    </div>
+    <div class="wizard-step-label"></div>
 
     <!-- Step 1: Service Selection -->
     <div class="wizard-step active" data-step="1">
@@ -3879,7 +4049,7 @@
           <div class="ssc-desc">Not sure yet - let's have a conversation</div>
         </div>
       </div>
-      <div class="wizard-error" id="wizardErr1">Please select an option to continue.</div>
+      <div class="wizard-field-error" id="wizardServiceError"></div>
     </div>
 
     <!-- Step 2: About You -->
@@ -3895,12 +4065,12 @@
           <label for="wizEmail">Email *</label>
           <input type="email" id="wizEmail" placeholder="you@company.com">
         </div>
+        <div class="wizard-field-error" id="wizardFieldError"></div>
         <div class="wizard-field">
           <label for="wizBrand">Company / Organization</label>
           <input type="text" id="wizBrand" placeholder="Your company or organization name">
         </div>
       </div>
-      <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
     </div>
 
     <!-- Step 3: Project Details -->
@@ -4125,8 +4295,8 @@
   // ── PROJECT WIZARD ──
   const wizardModal = document.getElementById('projectWizard');
   const wizardSteps = wizardModal.querySelectorAll('.wizard-step');
-  const wizardFill = wizardModal.querySelector('.wizard-progress-fill');
-  const wizardLabel = wizardModal.querySelector('.wizard-step-label');
+  const wizardProgressNodes = wizardModal.querySelectorAll('.wizard-progress-node');
+  const wizardProgressLines = wizardModal.querySelectorAll('.wizard-progress-line');
   const wizardNav = document.getElementById('wizardNav');
   const wizardBack = document.getElementById('wizardBackBtn');
   const wizardNext = document.getElementById('wizardNextBtn');
@@ -4137,6 +4307,8 @@
     wizardCurrent = 1;
     wizardData = { service: '', name: '', email: '', brand: '', timeline: '', budget: '', message: '' };
     wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+    wizardModal.querySelector('.service-select-grid').classList.remove('has-selection');
+    if (wizardAutoAdvanceTimer) clearTimeout(wizardAutoAdvanceTimer);
     wizardModal.querySelectorAll('input, textarea').forEach(f => f.value = '');
     wizardModal.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
     showWizardStep(1);
@@ -4154,9 +4326,20 @@
     wizardSteps.forEach(s => s.classList.remove('active'));
     const target = wizardModal.querySelector('[data-step="' + n + '"]');
     if (target) target.classList.add('active');
-    wizardFill.style.width = n === 4 ? '100%' : (n * 33.33) + '%';
-    wizardLabel.textContent = n <= 3 ? 'STEP ' + n + ' OF 3' : '';
+    // Update stepper nodes and lines
+    wizardProgressNodes.forEach(node => {
+      const s = parseInt(node.dataset.pstep);
+      node.classList.remove('active', 'completed');
+      if (s < n) node.classList.add('completed');
+      else if (s === n && n <= 3) node.classList.add('active');
+      else if (n === 4) node.classList.add('completed');
+    });
+    wizardProgressLines.forEach(line => {
+      const l = parseInt(line.dataset.pline);
+      line.classList.toggle('filled', l < n);
+    });
     wizardNav.style.display = n === 4 ? 'none' : 'flex';
+    wizardModal.querySelector('.wizard-progress').style.display = n === 4 ? 'none' : 'flex';
     wizardBack.classList.toggle('hidden', n === 1);
     wizardNext.textContent = n === 3 ? 'SEND INQUIRY' : 'NEXT';
   }
@@ -4187,12 +4370,24 @@
   });
   wizardModal.querySelector('.wizard-success-close').addEventListener('click', closeWizard);
 
-  // Service card selection
+  // Service card selection with auto-advance
+  let wizardAutoAdvanceTimer = null;
+  const serviceGrid = wizardModal.querySelector('.service-select-grid');
   wizardModal.querySelectorAll('.service-select-card').forEach(card => {
     card.addEventListener('click', () => {
+      // Clear any pending auto-advance
+      if (wizardAutoAdvanceTimer) clearTimeout(wizardAutoAdvanceTimer);
+      // Clear error
+      hideWizardErrors();
+      // Update selection
       wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
+      serviceGrid.classList.add('has-selection');
       wizardData.service = card.dataset.service;
+      // Auto-advance to step 2 after brief pause
+      wizardAutoAdvanceTimer = setTimeout(() => {
+        showWizardStep(2);
+      }, 600);
     });
   });
 
@@ -4201,23 +4396,47 @@
     if (wizardCurrent > 1) showWizardStep(wizardCurrent - 1);
   });
 
+  // Error elements per step
+  const wizardServiceError = wizardModal.querySelector('#wizardServiceError');
+  const wizardFieldError = wizardModal.querySelector('#wizardFieldError');
+  function showStepError(el, msg) {
+    el.textContent = msg;
+    el.classList.add('visible');
+  }
+  function hideWizardErrors() {
+    wizardServiceError.classList.remove('visible');
+    wizardFieldError.classList.remove('visible');
+    wizardModal.querySelectorAll('.wizard-input-error').forEach(e => e.classList.remove('wizard-input-error'));
+  }
+
+  // Clear field errors on input
+  wizardModal.querySelectorAll('input, textarea, select').forEach(field => {
+    field.addEventListener('input', () => {
+      field.classList.remove('wizard-input-error');
+      hideWizardErrors();
+    });
+  });
+
   // Next / Submit
   wizardNext.addEventListener('click', () => {
-    const errEls = wizardModal.querySelectorAll('.wizard-error');
-    errEls.forEach(e => e.style.display = 'none');
+    hideWizardErrors();
 
     if (wizardCurrent === 1) {
       if (!wizardData.service) {
-        wizardModal.querySelector('#wizardErr1').style.display = 'block';
+        showStepError(wizardServiceError, 'Please select an option to continue.');
         return;
       }
       showWizardStep(2);
     } else if (wizardCurrent === 2) {
-      const name = wizardModal.querySelector('#wizName').value.trim();
-      const email = wizardModal.querySelector('#wizEmail').value.trim();
+      const nameInput = wizardModal.querySelector('#wizName');
+      const emailInput = wizardModal.querySelector('#wizEmail');
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
       const brand = wizardModal.querySelector('#wizBrand').value.trim();
       if (!name || !email) {
-        wizardModal.querySelector('#wizardErr2').style.display = 'block';
+        if (!name) nameInput.classList.add('wizard-input-error');
+        if (!email) emailInput.classList.add('wizard-input-error');
+        showStepError(wizardFieldError, 'Name and email are required.');
         return;
       }
       wizardData.name = name;
