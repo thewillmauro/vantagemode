@@ -2283,24 +2283,26 @@
     grid-template-columns: 1fr 1fr;
     gap: 12px;
   }
-  .wizard-error {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--red-accent);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    opacity: 0;
-    transform: translateX(8px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .wizard-error.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
   /* Invalid field highlight */
   .wizard-input-error {
     border-color: rgba(230, 57, 70, 0.5) !important;
     box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.1) !important;
+  }
+  .wizard-field-error {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--red-accent);
+    letter-spacing: 0.04em;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin: 0;
+  }
+  .wizard-field-error.visible {
+    max-height: 30px;
+    opacity: 1;
+    margin-top: 12px;
   }
   /* Wizard nav */
   .wizard-nav {
@@ -2308,11 +2310,6 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 40px;
-  }
-  .wizard-nav-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
   }
   .wizard-back {
     background: none;
@@ -4058,6 +4055,7 @@
           <div class="ssc-desc">Not sure yet - let's have a conversation</div>
         </div>
       </div>
+      <div class="wizard-field-error" id="wizardServiceError"></div>
     </div>
 
     <!-- Step 2: About You -->
@@ -4073,6 +4071,7 @@
           <label for="wizEmail">Email *</label>
           <input type="email" id="wizEmail" placeholder="you@company.com">
         </div>
+        <div class="wizard-field-error" id="wizardFieldError"></div>
         <div class="wizard-field">
           <label for="wizBrand">Company / Organization</label>
           <input type="text" id="wizBrand" placeholder="Your company or organization name">
@@ -4129,10 +4128,7 @@
     <!-- Shared nav (outside steps) -->
     <div class="wizard-nav" id="wizardNav">
       <button class="wizard-back hidden" id="wizardBackBtn">← BACK</button>
-      <div class="wizard-nav-right">
-        <div class="wizard-error" id="wizardError"></div>
-        <button class="wizard-next" id="wizardNextBtn">NEXT</button>
-      </div>
+      <button class="wizard-next" id="wizardNextBtn">NEXT</button>
     </div>
 
   </div>
@@ -4406,14 +4402,16 @@
     if (wizardCurrent > 1) showWizardStep(wizardCurrent - 1);
   });
 
-  // Shared error element
-  const wizardErrorEl = wizardModal.querySelector('#wizardError');
-  function showWizardError(msg) {
-    wizardErrorEl.textContent = msg;
-    wizardErrorEl.classList.add('visible');
+  // Error elements per step
+  const wizardServiceError = wizardModal.querySelector('#wizardServiceError');
+  const wizardFieldError = wizardModal.querySelector('#wizardFieldError');
+  function showStepError(el, msg) {
+    el.textContent = msg;
+    el.classList.add('visible');
   }
   function hideWizardErrors() {
-    wizardErrorEl.classList.remove('visible');
+    wizardServiceError.classList.remove('visible');
+    wizardFieldError.classList.remove('visible');
     wizardModal.querySelectorAll('.wizard-input-error').forEach(e => e.classList.remove('wizard-input-error'));
   }
 
@@ -4431,7 +4429,7 @@
 
     if (wizardCurrent === 1) {
       if (!wizardData.service) {
-        showWizardError('Please select an option to continue.');
+        showStepError(wizardServiceError, 'Please select an option to continue.');
         return;
       }
       showWizardStep(2);
@@ -4444,7 +4442,7 @@
       if (!name || !email) {
         if (!name) nameInput.classList.add('wizard-input-error');
         if (!email) emailInput.classList.add('wizard-input-error');
-        showWizardError('Name and email are required.');
+        showStepError(wizardFieldError, 'Name and email are required.');
         return;
       }
       wizardData.name = name;
