@@ -1456,6 +1456,85 @@
   .pricing-cta:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
   .pricing-custom { text-align: center; margin-top: 40px; font-size: 14px; color: var(--muted); }
   .pricing-custom a { color: var(--gold); text-decoration: none; }
+
+  /* Engagement cards */
+  .engagement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .engagement-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+  }
+  .engagement-tier {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .engagement-name {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .engagement-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .engagement-features {
+    list-style: none;
+    font-size: 13px;
+    color: var(--white);
+    line-height: 2.2;
+  }
+  .engagement-cta {
+    display: inline-block;
+    margin-top: auto;
+    background: var(--gold);
+    color: var(--black);
+    padding: 14px 28px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: var(--font-body);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s;
+    text-align: center;
+  }
+  .engagement-cta:hover { background: var(--gold-bright); }
+  .engagement-how {
+    margin-top: 48px;
+    padding: 32px 40px;
+    background: var(--surface);
+    border-left: 3px solid var(--gold);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .engagement-how-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .engagement-how-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
   @media (max-width: 1200px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
 
@@ -2828,8 +2907,8 @@
 
   /* ── TABLET (max 900px) ── */
   @media (max-width: 900px) {
-    /* Pricing cards stack */
-    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    /* Engagement cards stack */
+    .engagement-grid { grid-template-columns: 1fr 1fr !important; }
 
     /* CTA contact info strip */
     #cta > div:last-child { grid-template-columns: 1fr 1fr !important; padding: 32px 24px !important; }
@@ -2897,11 +2976,11 @@
     .products-grid { grid-template-columns: 1fr !important; }
     .product-card { padding: 32px 20px !important; }
 
-    /* Pricing section */
-    #pricing .reveal[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-    #pricing .reveal[style*="padding:32px 40px"] { padding: 24px 20px !important; }
-    #pricing div[style*="padding:48px 36px"] { padding: 32px 20px !important; }
-    .pricing-grid { grid-template-columns: 1fr !important; }
+    /* Engagement cards */
+    .engagement-grid { grid-template-columns: 1fr !important; }
+    .engagement-card { padding: 32px 20px !important; }
+    .engagement-name { font-size: 28px !important; }
+    .engagement-how { padding: 24px 20px !important; }
     .pricing-note { font-size: 14px !important; }
 
     /* Founder */
@@ -2914,6 +2993,13 @@
     .founder-credentials { gap: 6px !important; }
     .credential-tag { font-size: 10px !important; padding: 6px 12px !important; }
     .founder::after { display: none !important; }
+
+    /* Tech Stack */
+    .tech-stack-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+    .tech-stack-item { padding: 20px 12px !important; }
+    .tech-stack-icon { width: 28px !important; height: 28px !important; }
+    .tech-stack-name { font-size: 9px !important; }
+    .tech-stack-desc { font-size: 13px !important; }
 
     /* FAQ */
     .faq-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
@@ -2966,8 +3052,11 @@
 
     /* Founder */
 
-    /* Pricing inline cards */
-    #pricing div[style*="font-size:32px"] { font-size: 24px !important; }
+    /* Tech Stack */
+    .tech-stack-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+    /* Engagement cards */
+    .engagement-name { font-size: 24px !important; }
 
     /* Adboard */
     .adboard-section { padding: 48px 14px !important; }
@@ -2987,8 +3076,6 @@
     /* All sections */
     section { padding: 48px 16px !important; }
   }
-
-  #pricing > div:last-child > div { min-width: 0; }
 
   </style>
 </head>
@@ -3683,48 +3770,48 @@
     <p class="pricing-note reveal">We don't do packages. Every engagement starts with a conversation to understand your goals, scope, and timeline. Then we build a custom proposal.</p>
   </div>
 
-  <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:1100px;margin:0 auto;">
-    <div style="background:var(--surface);border:1px solid rgba(255,255,255,0.06);padding:48px 36px;display:flex;flex-direction:column;">
-      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Video Marketing</div>
-      <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--white);margin-bottom:16px;">CINEMATIC<br>CAMPAIGNS</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;">Brand films, product launches, event coverage, ad creative, live streaming. Full-service production from strategy through delivery.</div>
-      <ul style="list-style:none;font-size:13px;color:var(--muted);line-height:2.2;">
-        <li style="color:var(--white);">✦ Full creative strategy</li>
-        <li style="color:var(--white);">✦ Professional crew + equipment</li>
-        <li style="color:var(--white);">✦ Post-production + color grade</li>
-        <li style="color:var(--white);">✦ Multi-platform delivery</li>
+  <div class="engagement-grid reveal">
+    <div class="engagement-card">
+      <div class="engagement-tier">Video Marketing</div>
+      <div class="engagement-name">CINEMATIC<br>CAMPAIGNS</div>
+      <div class="engagement-desc">Brand films, product launches, event coverage, ad creative, live streaming. Full-service production from strategy through delivery.</div>
+      <ul class="engagement-features">
+        <li>✦ Full creative strategy</li>
+        <li>✦ Professional crew + equipment</li>
+        <li>✦ Post-production + color grade</li>
+        <li>✦ Multi-platform delivery</li>
       </ul>
-      <a href="#" class="open-wizard" style="display:inline-block;margin-top:auto;background:var(--gold);color:var(--black);padding:14px 28px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-family:var(--font-body);text-decoration:none;font-weight:500;transition:background 0.3s;">Start a Conversation</a>
+      <a href="#" class="engagement-cta open-wizard">Start a Conversation</a>
     </div>
-    <div style="background:var(--surface);border:1px solid rgba(255,255,255,0.06);padding:48px 36px;display:flex;flex-direction:column;">
-      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Custom Software</div>
-      <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--white);margin-bottom:16px;">RAPID<br>BUILDS</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;">Web platforms, SaaS products, internal tools, AI-powered apps, and client-facing software. Shipped in weeks, not quarters.</div>
-      <ul style="list-style:none;font-size:13px;color:var(--muted);line-height:2.2;">
-        <li style="color:var(--white);">✦ Full-stack development</li>
-        <li style="color:var(--white);">✦ UI/UX design</li>
-        <li style="color:var(--white);">✦ Rapid prototyping</li>
-        <li style="color:var(--white);">✦ Production deployment</li>
+    <div class="engagement-card">
+      <div class="engagement-tier">Custom Software</div>
+      <div class="engagement-name">RAPID<br>BUILDS</div>
+      <div class="engagement-desc">Web platforms, SaaS products, internal tools, AI-powered apps, and client-facing software. Shipped in weeks, not quarters.</div>
+      <ul class="engagement-features">
+        <li>✦ Full-stack development</li>
+        <li>✦ UI/UX design</li>
+        <li>✦ Rapid prototyping</li>
+        <li>✦ Production deployment</li>
       </ul>
-      <a href="#" class="open-wizard" style="display:inline-block;margin-top:auto;background:var(--gold);color:var(--black);padding:14px 28px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-family:var(--font-body);text-decoration:none;font-weight:500;transition:background 0.3s;">Start a Conversation</a>
+      <a href="#" class="engagement-cta open-wizard">Start a Conversation</a>
     </div>
-    <div style="background:var(--surface);border:1px solid rgba(255,255,255,0.06);padding:48px 36px;display:flex;flex-direction:column;">
-      <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Automation</div>
-      <div style="font-family:var(--font-display);font-size:32px;letter-spacing:0.04em;color:var(--white);margin-bottom:16px;">SMART<br>SYSTEMS</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;">Custom workflows, AI agents, CRM integrations, and connected systems that eliminate manual work and scale your operations.</div>
-      <ul style="list-style:none;font-size:13px;color:var(--muted);line-height:2.2;">
-        <li style="color:var(--white);">✦ Workflow automation</li>
-        <li style="color:var(--white);">✦ AI agents + assistants</li>
-        <li style="color:var(--white);">✦ CRM + API integrations</li>
-        <li style="color:var(--white);">✦ Process optimization</li>
+    <div class="engagement-card">
+      <div class="engagement-tier">Automation</div>
+      <div class="engagement-name">SMART<br>SYSTEMS</div>
+      <div class="engagement-desc">Custom workflows, AI agents, CRM integrations, and connected systems that eliminate manual work and scale your operations.</div>
+      <ul class="engagement-features">
+        <li>✦ Workflow automation</li>
+        <li>✦ AI agents + assistants</li>
+        <li>✦ CRM + API integrations</li>
+        <li>✦ Process optimization</li>
       </ul>
-      <a href="#" class="open-wizard" style="display:inline-block;margin-top:auto;background:var(--gold);color:var(--black);padding:14px 28px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-family:var(--font-body);text-decoration:none;font-weight:500;transition:background 0.3s;">Start a Conversation</a>
+      <a href="#" class="engagement-cta open-wizard">Start a Conversation</a>
     </div>
   </div>
 
-  <div class="reveal" style="margin-top:48px;padding:32px 40px;background:var(--surface);border-left:3px solid var(--gold);max-width:900px;margin-left:auto;margin-right:auto;margin-top:48px;">
-    <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">How it works</div>
-    <div style="font-size:13px;color:var(--muted);line-height:1.7;">Inquiry → Discovery call → Custom proposal → Contract → We build · Simple, fast, no surprises.</div>
+  <div class="engagement-how reveal">
+    <div class="engagement-how-label">How it works</div>
+    <div class="engagement-how-text">Inquiry → Discovery call → Custom proposal → Contract → We build · Simple, fast, no surprises.</div>
   </div>
 
 </section>
