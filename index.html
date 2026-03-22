@@ -2284,53 +2284,22 @@
     gap: 12px;
   }
   .wizard-error {
-    display: none;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    color: var(--white);
-    background: rgba(230, 57, 70, 0.12);
-    border: 1px solid rgba(230, 57, 70, 0.3);
-    border-left: 3px solid var(--red-accent);
-    border-radius: 4px;
-    padding: 12px 16px;
-    margin-top: 16px;
-    margin-bottom: 0;
-    align-items: center;
-    gap: 10px;
-  }
-  .wizard-error::before {
-    content: '!';
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--red-accent);
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--red-accent);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
   }
   .wizard-error.visible {
-    display: flex;
+    opacity: 1;
   }
   /* Invalid field highlight */
   .wizard-input-error {
     border-color: rgba(230, 57, 70, 0.5) !important;
     box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.1) !important;
   }
-  @keyframes wizardShake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-4px); }
-    80% { transform: translateX(4px); }
-  }
-  .wizard-shake {
-    animation: wizardShake 0.4s ease;
-  }
-
   /* Wizard nav */
   .wizard-nav {
     display: flex;
@@ -4082,7 +4051,6 @@
           <div class="ssc-desc">Not sure yet - let's have a conversation</div>
         </div>
       </div>
-      <div class="wizard-error" id="wizardErr1">Please select an option to continue.</div>
     </div>
 
     <!-- Step 2: About You -->
@@ -4103,7 +4071,6 @@
           <input type="text" id="wizBrand" placeholder="Your company or organization name">
         </div>
       </div>
-      <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
     </div>
 
     <!-- Step 3: Project Details -->
@@ -4155,6 +4122,7 @@
     <!-- Shared nav (outside steps) -->
     <div class="wizard-nav" id="wizardNav">
       <button class="wizard-back hidden" id="wizardBackBtn">← BACK</button>
+      <div class="wizard-error" id="wizardError"></div>
       <button class="wizard-next" id="wizardNextBtn">NEXT</button>
     </div>
 
@@ -4411,8 +4379,7 @@
       // Clear any pending auto-advance
       if (wizardAutoAdvanceTimer) clearTimeout(wizardAutoAdvanceTimer);
       // Clear error
-      const err1 = wizardModal.querySelector('#wizardErr1');
-      if (err1) err1.classList.remove('visible', 'wizard-shake');
+      hideWizardErrors();
       // Update selection
       wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
@@ -4430,15 +4397,14 @@
     if (wizardCurrent > 1) showWizardStep(wizardCurrent - 1);
   });
 
-  // Helper to show wizard error with animation
-  function showWizardError(el) {
-    el.classList.add('visible');
-    el.classList.remove('wizard-shake');
-    void el.offsetWidth; // force reflow
-    el.classList.add('wizard-shake');
+  // Shared error element
+  const wizardErrorEl = wizardModal.querySelector('#wizardError');
+  function showWizardError(msg) {
+    wizardErrorEl.textContent = msg;
+    wizardErrorEl.classList.add('visible');
   }
   function hideWizardErrors() {
-    wizardModal.querySelectorAll('.wizard-error').forEach(e => e.classList.remove('visible', 'wizard-shake'));
+    wizardErrorEl.classList.remove('visible');
     wizardModal.querySelectorAll('.wizard-input-error').forEach(e => e.classList.remove('wizard-input-error'));
   }
 
@@ -4446,11 +4412,7 @@
   wizardModal.querySelectorAll('input, textarea, select').forEach(field => {
     field.addEventListener('input', () => {
       field.classList.remove('wizard-input-error');
-      const step = field.closest('.wizard-step');
-      if (step) {
-        const err = step.querySelector('.wizard-error');
-        if (err) err.classList.remove('visible', 'wizard-shake');
-      }
+      hideWizardErrors();
     });
   });
 
@@ -4460,7 +4422,7 @@
 
     if (wizardCurrent === 1) {
       if (!wizardData.service) {
-        showWizardError(wizardModal.querySelector('#wizardErr1'));
+        showWizardError('Please select an option to continue.');
         return;
       }
       showWizardStep(2);
@@ -4473,7 +4435,7 @@
       if (!name || !email) {
         if (!name) nameInput.classList.add('wizard-input-error');
         if (!email) emailInput.classList.add('wizard-input-error');
-        showWizardError(wizardModal.querySelector('#wizardErr2'));
+        showWizardError('Name and email are required.');
         return;
       }
       wizardData.name = name;
