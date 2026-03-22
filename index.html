@@ -2293,8 +2293,8 @@
     border-left: 3px solid var(--red-accent);
     border-radius: 4px;
     padding: 12px 16px;
-    margin-top: 4px;
-    margin-bottom: 16px;
+    margin-top: 16px;
+    margin-bottom: 0;
     align-items: center;
     gap: 10px;
   }
@@ -4055,7 +4055,6 @@
     <div class="wizard-step active" data-step="1">
       <div class="wizard-step-title">WHAT CAN WE<br><span class="italic">help with?</span></div>
       <div class="wizard-step-sub">Select the area that best describes what you need.</div>
-      <div class="wizard-error" id="wizardErr1">Please select an option to continue.</div>
       <div class="service-select-grid">
         <div class="service-select-card" data-service="Video Marketing">
           <div class="ssc-icon">🎬</div>
@@ -4083,13 +4082,13 @@
           <div class="ssc-desc">Not sure yet - let's have a conversation</div>
         </div>
       </div>
+      <div class="wizard-error" id="wizardErr1">Please select an option to continue.</div>
     </div>
 
     <!-- Step 2: About You -->
     <div class="wizard-step" data-step="2">
       <div class="wizard-step-title">WHO ARE<br><span class="italic">you?</span></div>
       <div class="wizard-step-sub">Tell us a bit about yourself so we can tailor the conversation.</div>
-      <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
       <div class="wizard-fields">
         <div class="wizard-field">
           <label for="wizName">Your Name *</label>
@@ -4104,6 +4103,7 @@
           <input type="text" id="wizBrand" placeholder="Your company or organization name">
         </div>
       </div>
+      <div class="wizard-error" id="wizardErr2">Name and email are required.</div>
     </div>
 
     <!-- Step 3: Project Details -->
