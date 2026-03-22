@@ -2424,10 +2424,18 @@
     width: 32px;
     height: 32px;
     filter: brightness(0) invert(0.45);
-    transition: filter 0.3s;
+    transition: filter 0.3s, color 0.3s;
+    color: var(--muted);
   }
   .tech-stack-item:hover .tech-stack-icon {
     filter: brightness(0) invert(0.78) sepia(1) saturate(2) hue-rotate(10deg);
+    color: var(--gold);
+  }
+  svg.tech-stack-icon {
+    filter: none;
+  }
+  .tech-stack-item:hover svg.tech-stack-icon {
+    filter: none;
   }
   .tech-stack-name {
     font-size: 10px;
@@ -3768,7 +3776,7 @@
       <span class="tech-stack-name">Claude</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/klaviyo.svg" alt="Klaviyo" class="tech-stack-icon">
+      <svg class="tech-stack-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 1.5v21h7.5L12 18l4.5 4.5H24v-21H0zm18 15l-3-3-3 3-3-3-3 3v-12h12v12z"/></svg>
       <span class="tech-stack-name">Klaviyo</span>
     </div>
     <div class="tech-stack-item">
