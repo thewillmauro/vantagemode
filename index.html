@@ -2387,6 +2387,68 @@
     color: var(--gold);
   }
 
+  /* ── TECH STACK ── */
+  .tech-stack {
+    background: var(--black);
+    text-align: center;
+  }
+  .tech-stack-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 24px auto 60px;
+  }
+  .tech-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .tech-stack-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 6px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .tech-stack-item:hover {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.04);
+  }
+  .tech-stack-icon {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(0.45);
+    transition: filter 0.3s;
+  }
+  .tech-stack-item:hover .tech-stack-icon {
+    filter: brightness(0) invert(0.78) sepia(1) saturate(2) hue-rotate(10deg);
+  }
+  .tech-stack-name {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+  .tech-stack-item:hover .tech-stack-name {
+    color: var(--white);
+  }
+  @media (max-width: 900px) {
+    .tech-stack-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .tech-stack-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 400px) {
+    .tech-stack-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* ── FAQ ── */
   .faq { background: var(--deep); }
   .faq-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; align-items: start; }
@@ -3691,6 +3753,62 @@
   </div>
 </section>
 
+<!-- TECH STACK -->
+<section class="tech-stack" id="stack">
+  <p class="section-label reveal">Built With</p>
+  <h2 class="section-title reveal">OUR<br><span class="italic">toolkit</span></h2>
+  <p class="tech-stack-desc reveal reveal-delay-2">The platforms, tools, and technologies we use every day to build, ship, and scale.</p>
+  <div class="tech-stack-grid reveal reveal-delay-3">
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg" alt="Shopify" class="tech-stack-icon">
+      <span class="tech-stack-name">Shopify</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude" class="tech-stack-icon">
+      <span class="tech-stack-name">Claude</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/klaviyo.svg" alt="Klaviyo" class="tech-stack-icon">
+      <span class="tech-stack-name">Klaviyo</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="tech-stack-icon">
+      <span class="tech-stack-name">GitHub</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel" class="tech-stack-icon">
+      <span class="tech-stack-name">Vercel</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg" alt="Premiere Pro" class="tech-stack-icon">
+      <span class="tech-stack-name">Premiere Pro</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma" class="tech-stack-icon">
+      <span class="tech-stack-name">Figma</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase" class="tech-stack-icon">
+      <span class="tech-stack-name">Supabase</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe" class="tech-stack-icon">
+      <span class="tech-stack-name">Stripe</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/zapier.svg" alt="Zapier" class="tech-stack-icon">
+      <span class="tech-stack-name">Zapier</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg" alt="After Effects" class="tech-stack-icon">
+      <span class="tech-stack-name">After Effects</span>
+    </div>
+    <div class="tech-stack-item">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/slack.svg" alt="Slack" class="tech-stack-icon">
+      <span class="tech-stack-name">Slack</span>
+    </div>
+  </div>
+</section>
 
 <!-- FAQ -->
 <section class="faq" id="faq">
