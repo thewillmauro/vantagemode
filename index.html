@@ -2307,6 +2307,11 @@
     align-items: center;
     margin-top: 40px;
   }
+  .wizard-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
   .wizard-back {
     background: none;
     border: none;
@@ -4122,8 +4127,10 @@
     <!-- Shared nav (outside steps) -->
     <div class="wizard-nav" id="wizardNav">
       <button class="wizard-back hidden" id="wizardBackBtn">← BACK</button>
-      <div class="wizard-error" id="wizardError"></div>
-      <button class="wizard-next" id="wizardNextBtn">NEXT</button>
+      <div class="wizard-nav-right">
+        <div class="wizard-error" id="wizardError"></div>
+        <button class="wizard-next" id="wizardNextBtn">NEXT</button>
+      </div>
     </div>
 
   </div>
