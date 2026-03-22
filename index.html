@@ -4425,7 +4425,7 @@
       if (wizardAutoAdvanceTimer) clearTimeout(wizardAutoAdvanceTimer);
       // Clear error
       const err1 = wizardModal.querySelector('#wizardErr1');
-      if (err1) err1.style.display = 'none';
+      if (err1) err1.classList.remove('visible', 'wizard-shake');
       // Update selection
       wizardModal.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
