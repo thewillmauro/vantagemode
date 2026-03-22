@@ -2284,16 +2284,18 @@
     gap: 12px;
   }
   .wizard-error {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: var(--red-accent);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+    transform: translateX(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   .wizard-error.visible {
     opacity: 1;
+    transform: translateX(0);
   }
   /* Invalid field highlight */
   .wizard-input-error {
