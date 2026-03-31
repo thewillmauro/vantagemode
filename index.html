@@ -1804,6 +1804,452 @@
     100% { transform: translateX(-50%); }
   }
 
+  /* ── DOCKET SECTION ── */
+  .docket-section {
+    background: #0a0e18;
+    position: relative;
+    overflow: hidden;
+  }
+  .docket-section::before {
+    content: 'DOCKET';
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 280px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(59,130,246,0.04);
+    letter-spacing: 0.02em;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .docket-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .docket-inner > div { min-width: 0; }
+  .docket-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #3b82f6;
+    margin-bottom: 32px;
+  }
+  .docket-badge .dk-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #3b82f6;
+    animation: liveBlink 1.5s ease-in-out infinite;
+  }
+  .docket-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 100px);
+    letter-spacing: 0.04em;
+    color: #fff;
+    line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .docket-title span { color: #3b82f6; }
+  .docket-desc {
+    font-size: 16px;
+    color: rgba(201,216,232,0.55);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+  .dk-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .dk-feature {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 16px;
+    transition: all 0.3s;
+  }
+  .dk-feature:hover {
+    background: rgba(59,130,246,0.05);
+    border-color: rgba(59,130,246,0.15);
+  }
+  .dk-feature-icon { font-size: 18px; margin-bottom: 8px; }
+  .dk-feature-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .dk-feature-desc {
+    font-size: 11px;
+    color: rgba(201,216,232,0.4);
+    line-height: 1.5;
+  }
+  .dk-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    padding: 14px 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: var(--font-body);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+  }
+  .dk-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(59,130,246,0.25);
+  }
+
+  /* Docket Demo */
+  .docket-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .docket-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.3s;
+  }
+  .docket-card:hover {
+    border-color: rgba(59,130,246,0.2);
+  }
+  .docket-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .docket-card-date {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.35);
+  }
+  .docket-card-type {
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .docket-card-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .docket-card-detail {
+    font-size: 13px;
+    color: rgba(201,216,232,0.6);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .docket-card-footer {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 8px;
+  }
+  .docket-stat-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .docket-stat {
+    text-align: center;
+  }
+  .docket-stat-val {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: #3b82f6;
+    letter-spacing: 0.04em;
+  }
+  .docket-stat-lbl {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.35);
+    margin-top: 4px;
+  }
+
+  /* ── FORESIGHT LEDGER SECTION ── */
+  .foresight-section {
+    background: #080a10;
+    position: relative;
+    overflow: hidden;
+  }
+  .foresight-section::before {
+    content: 'FORESIGHT';
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 280px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(168,120,42,0.04);
+    letter-spacing: 0.02em;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .foresight-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .foresight-inner > div { min-width: 0; }
+  .foresight-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(168,120,42,0.08);
+    border: 1px solid rgba(168,120,42,0.2);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #a8782a;
+    margin-bottom: 32px;
+  }
+  .foresight-badge .fl-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #a8782a;
+    animation: liveBlink 1.5s ease-in-out infinite;
+  }
+  .foresight-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 100px);
+    letter-spacing: 0.04em;
+    color: #fff;
+    line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .foresight-title span { color: var(--gold); }
+  .foresight-desc {
+    font-size: 16px;
+    color: rgba(201,216,232,0.55);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+  .fl-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .fl-feature {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 16px;
+    transition: all 0.3s;
+  }
+  .fl-feature:hover {
+    background: rgba(168,120,42,0.05);
+    border-color: rgba(168,120,42,0.15);
+  }
+  .fl-feature-icon { font-size: 18px; margin-bottom: 8px; }
+  .fl-feature-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .fl-feature-desc {
+    font-size: 11px;
+    color: rgba(201,216,232,0.4);
+    line-height: 1.5;
+  }
+  .fl-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), #8a6520);
+    color: #080a10;
+    padding: 14px 32px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: var(--font-body);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+  }
+  .fl-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(168,120,42,0.25);
+  }
+
+  /* Foresight Demo */
+  .foresight-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .fl-dash-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 24px;
+    transition: border-color 0.3s;
+  }
+  .fl-dash-card:hover {
+    border-color: rgba(168,120,42,0.2);
+  }
+  .fl-dash-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.35);
+    margin-bottom: 12px;
+  }
+  .fl-net-worth {
+    font-family: var(--font-display);
+    font-size: 42px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .fl-net-change {
+    font-size: 12px;
+    color: #4ade80;
+    margin-bottom: 16px;
+  }
+  .fl-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 60px;
+    margin-bottom: 8px;
+  }
+  .fl-chart-bar {
+    flex: 1;
+    background: linear-gradient(to top, rgba(168,120,42,0.3), rgba(168,120,42,0.6));
+    border-radius: 2px 2px 0 0;
+    transition: background 0.3s;
+  }
+  .fl-chart-bar:hover {
+    background: linear-gradient(to top, rgba(168,120,42,0.5), var(--gold));
+  }
+  .fl-chart-months {
+    display: flex;
+    gap: 6px;
+  }
+  .fl-chart-month {
+    flex: 1;
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(201,216,232,0.25);
+  }
+  .fl-accounts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .fl-account {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .fl-account-name {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.4);
+    margin-bottom: 6px;
+  }
+  .fl-account-val {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.03em;
+  }
+  .fl-account-change {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  /* Docket responsive */
+  @media (max-width: 1200px) {
+    .docket-inner { grid-template-columns: 1fr; gap: 48px; }
+    .docket-section { padding: 80px 24px; overflow: visible; }
+    .docket-section::before { display: none; }
+    .dk-features { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .docket-section { padding: 64px 16px; overflow: visible; }
+    .docket-section::before { display: none; }
+    .docket-inner { gap: 36px; }
+    .docket-title { font-size: clamp(36px, 10vw, 56px); }
+    .docket-desc { font-size: 14px; margin-bottom: 24px; }
+    .dk-features { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .dk-feature { padding: 14px; }
+    .dk-feature-title { font-size: 11px; }
+    .dk-feature-desc { font-size: 10px; }
+    .docket-card { padding: 16px; }
+    .docket-card-title { font-size: 16px; }
+    .docket-card-detail { font-size: 12px; }
+    .docket-stat-bar { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Foresight responsive */
+  @media (max-width: 1200px) {
+    .foresight-inner { grid-template-columns: 1fr; gap: 48px; }
+    .foresight-section { padding: 80px 24px; overflow: visible; }
+    .foresight-section::before { display: none; }
+    .fl-features { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .foresight-section { padding: 64px 16px; overflow: visible; }
+    .foresight-section::before { display: none; }
+    .foresight-inner { gap: 36px; }
+    .foresight-title { font-size: clamp(36px, 10vw, 56px); }
+    .foresight-desc { font-size: 14px; margin-bottom: 24px; }
+    .fl-features { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .fl-feature { padding: 14px; }
+    .fl-feature-title { font-size: 11px; }
+    .fl-feature-desc { font-size: 10px; }
+    .fl-dash-card { padding: 16px; }
+    .fl-net-worth { font-size: 32px; }
+    .fl-accounts-row { grid-template-columns: 1fr; }
+  }
+
   /* ── AUTOMATION SECTION ── */
   .automation-section {
     background: var(--deep);
@@ -2972,6 +3418,28 @@
     .bulletin-msg { font-size: 12px !important; }
     .bulletin-header { flex-wrap: wrap !important; gap: 6px !important; }
 
+    /* Docket */
+    .docket-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
+    .docket-section { padding: 64px 20px !important; }
+    .docket-section::before { font-size: 80px !important; }
+    .docket-title { font-size: clamp(36px, 10vw, 56px) !important; }
+    .docket-desc { font-size: 14px !important; }
+    .dk-features { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .docket-card { padding: 16px !important; }
+    .docket-card-title { font-size: 16px !important; }
+    .docket-card-detail { font-size: 12px !important; }
+
+    /* Foresight */
+    .foresight-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
+    .foresight-section { padding: 64px 20px !important; }
+    .foresight-section::before { font-size: 80px !important; }
+    .foresight-title { font-size: clamp(36px, 10vw, 56px) !important; }
+    .foresight-desc { font-size: 14px !important; }
+    .fl-features { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .fl-dash-card { padding: 16px !important; }
+    .fl-net-worth { font-size: 28px !important; }
+    .fl-accounts-row { grid-template-columns: 1fr !important; }
+
     /* Products */
     .products-section { padding: 64px 20px !important; }
     .products-grid { grid-template-columns: 1fr !important; }
@@ -3510,6 +3978,28 @@
       </div>
       <a href="#adboard" class="product-cta">Learn More →</a>
     </div>
+    <div class="product-card reveal">
+      <div class="product-badge">Family Court Documentation</div>
+      <div class="product-name">DOCKET</div>
+      <div class="product-desc">The documentation platform built for family court. Every timestamp, every incident, every dollar — organized and court-ready. Built to help parents protect what matters most.</div>
+      <div class="product-tags">
+        <span class="product-tag">Court-Ready Logs</span>
+        <span class="product-tag">Expense Tracking</span>
+        <span class="product-tag">All 50 States</span>
+      </div>
+      <a href="#docket" class="product-cta">Learn More →</a>
+    </div>
+    <div class="product-card reveal reveal-delay-2">
+      <div class="product-badge">Personal Finance Platform</div>
+      <div class="product-name">FORESIGHT LEDGER</div>
+      <div class="product-desc">Your entire financial life in one place. Bank accounts, investments, real estate, debts, and goals — all synced, tracked, and projected with AI-powered insights.</div>
+      <div class="product-tags">
+        <span class="product-tag">Net Worth Tracking</span>
+        <span class="product-tag">Plaid Sync</span>
+        <span class="product-tag">FIRE Calculator</span>
+      </div>
+      <a href="#foresight" class="product-cta">Learn More →</a>
+    </div>
   </div>
 </section>
 
@@ -3690,6 +4180,199 @@
 
 
 
+
+
+<!-- DOCKET -->
+<section class="docket-section" id="docket">
+  <div class="docket-inner">
+    <div class="reveal">
+      <div class="docket-badge">
+        <div class="dk-dot"></div>
+        Powered by Docket
+      </div>
+      <h2 class="docket-title">FAMILY<br>COURT<br><span>ORGANIZED</span></h2>
+      <p class="docket-desc">Docket is the documentation platform built for family court. Every timestamp, every incident, every dollar — organized and court-ready. Trusted by parents navigating custody, support, and co-parenting across all 50 states.</p>
+      <div class="dk-features">
+        <div class="dk-feature">
+          <div class="dk-feature-icon">📋</div>
+          <div class="dk-feature-title">Incident Logging</div>
+          <div class="dk-feature-desc">Timestamped records with evidence, organized by category.</div>
+        </div>
+        <div class="dk-feature">
+          <div class="dk-feature-icon">⏱️</div>
+          <div class="dk-feature-title">Parenting Time</div>
+          <div class="dk-feature-desc">Track custody schedules, late pickups, and missed visits.</div>
+        </div>
+        <div class="dk-feature">
+          <div class="dk-feature-icon">💵</div>
+          <div class="dk-feature-title">Expense Tracking</div>
+          <div class="dk-feature-desc">Medical, childcare, and shared expenses documented to the penny.</div>
+        </div>
+        <div class="dk-feature">
+          <div class="dk-feature-icon">⚖️</div>
+          <div class="dk-feature-title">Court-Ready Export</div>
+          <div class="dk-feature-desc">Generate organized reports your attorney can use immediately.</div>
+        </div>
+      </div>
+      <a href="https://www.docketbinder.com" target="_blank" rel="noopener" class="dk-btn">Visit Docket</a>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="docket-demo">
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#3b82f6;margin-bottom:4px;">Docket — Recent Activity</div>
+
+        <div class="docket-card">
+          <div class="docket-card-header">
+            <div class="docket-card-date">Mar 28, 2026 · 3:42 PM</div>
+            <div class="docket-card-type" style="background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.25);">Late Pickup</div>
+          </div>
+          <div class="docket-card-title">Custody Exchange</div>
+          <div class="docket-card-detail">Arrived 47 minutes late for scheduled 3:00 PM pickup. No prior communication. Children were waiting at agreed location.</div>
+          <div class="docket-card-footer">DOCKET · Incident Log · Timestamped</div>
+        </div>
+
+        <div class="docket-card">
+          <div class="docket-card-header">
+            <div class="docket-card-date">Mar 25, 2026 · 10:15 AM</div>
+            <div class="docket-card-type" style="background:rgba(59,130,246,0.1);color:#3b82f6;border:1px solid rgba(59,130,246,0.25);">Expense</div>
+          </div>
+          <div class="docket-card-title">Medical Co-Pay</div>
+          <div class="docket-card-detail">Pediatric dental cleaning — $185.00. Receipt uploaded. Reimbursement request sent.</div>
+          <div class="docket-card-footer">DOCKET · Expense Log · Receipt Attached</div>
+        </div>
+
+        <div class="docket-card">
+          <div class="docket-card-header">
+            <div class="docket-card-date">Mar 22, 2026 · 6:00 PM</div>
+            <div class="docket-card-type" style="background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.25);">On Time</div>
+          </div>
+          <div class="docket-card-title">Weekend Drop-off</div>
+          <div class="docket-card-detail">Scheduled 6:00 PM drop-off completed on time. Children in good spirits.</div>
+          <div class="docket-card-footer">DOCKET · Parenting Time · Verified</div>
+        </div>
+
+        <div class="docket-stat-bar">
+          <div class="docket-stat">
+            <div class="docket-stat-val">24</div>
+            <div class="docket-stat-lbl">Incidents</div>
+          </div>
+          <div class="docket-stat">
+            <div class="docket-stat-val">$3.2K</div>
+            <div class="docket-stat-lbl">Expenses</div>
+          </div>
+          <div class="docket-stat">
+            <div class="docket-stat-val">89%</div>
+            <div class="docket-stat-lbl">On-Time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FORESIGHT LEDGER -->
+<section class="foresight-section" id="foresight">
+  <div class="foresight-inner">
+    <div class="reveal">
+      <div class="foresight-badge">
+        <div class="fl-dot"></div>
+        Powered by Foresight Ledger
+      </div>
+      <h2 class="foresight-title">YOUR<br>WEALTH<br><span>MAPPED</span></h2>
+      <p class="foresight-desc">Foresight Ledger is the personal finance command center that connects every account, tracks every dollar, and projects your path to financial independence. Bank accounts, investments, real estate, debts, and goals — all in one place.</p>
+      <div class="fl-features">
+        <div class="fl-feature">
+          <div class="fl-feature-icon">🏦</div>
+          <div class="fl-feature-title">Bank Sync via Plaid</div>
+          <div class="fl-feature-desc">Connect checking, savings, and credit cards for automatic tracking.</div>
+        </div>
+        <div class="fl-feature">
+          <div class="fl-feature-icon">📈</div>
+          <div class="fl-feature-title">Portfolio Tracking</div>
+          <div class="fl-feature-desc">Real-time stock prices, cost basis, and sector allocation.</div>
+        </div>
+        <div class="fl-feature">
+          <div class="fl-feature-icon">🏠</div>
+          <div class="fl-feature-title">Real Estate &amp; Assets</div>
+          <div class="fl-feature-desc">Zillow estimates, mortgage balances, equity tracking, and more.</div>
+        </div>
+        <div class="fl-feature">
+          <div class="fl-feature-icon">🔥</div>
+          <div class="fl-feature-title">FIRE Calculator</div>
+          <div class="fl-feature-desc">Project your financial independence date with custom parameters.</div>
+        </div>
+      </div>
+      <a href="#" class="fl-btn">Coming Soon</a>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="foresight-demo">
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Foresight Ledger — Dashboard</div>
+
+        <div class="fl-dash-card">
+          <div class="fl-dash-label">Net Worth</div>
+          <div class="fl-net-worth">$284,750</div>
+          <div class="fl-net-change">+$12,340 this month (+4.5%)</div>
+          <div class="fl-chart-bars">
+            <div class="fl-chart-bar" style="height:35%"></div>
+            <div class="fl-chart-bar" style="height:42%"></div>
+            <div class="fl-chart-bar" style="height:38%"></div>
+            <div class="fl-chart-bar" style="height:50%"></div>
+            <div class="fl-chart-bar" style="height:55%"></div>
+            <div class="fl-chart-bar" style="height:48%"></div>
+            <div class="fl-chart-bar" style="height:62%"></div>
+            <div class="fl-chart-bar" style="height:58%"></div>
+            <div class="fl-chart-bar" style="height:70%"></div>
+            <div class="fl-chart-bar" style="height:68%"></div>
+            <div class="fl-chart-bar" style="height:78%"></div>
+            <div class="fl-chart-bar" style="height:85%"></div>
+          </div>
+          <div class="fl-chart-months">
+            <div class="fl-chart-month">Apr</div>
+            <div class="fl-chart-month">May</div>
+            <div class="fl-chart-month">Jun</div>
+            <div class="fl-chart-month">Jul</div>
+            <div class="fl-chart-month">Aug</div>
+            <div class="fl-chart-month">Sep</div>
+            <div class="fl-chart-month">Oct</div>
+            <div class="fl-chart-month">Nov</div>
+            <div class="fl-chart-month">Dec</div>
+            <div class="fl-chart-month">Jan</div>
+            <div class="fl-chart-month">Feb</div>
+            <div class="fl-chart-month">Mar</div>
+          </div>
+        </div>
+
+        <div class="fl-accounts-row">
+          <div class="fl-account">
+            <div class="fl-account-name">Checking</div>
+            <div class="fl-account-val">$18,420</div>
+            <div class="fl-account-change" style="color:#4ade80;">+$2,100</div>
+          </div>
+          <div class="fl-account">
+            <div class="fl-account-name">Portfolio</div>
+            <div class="fl-account-val">$142,800</div>
+            <div class="fl-account-change" style="color:#4ade80;">+$8,640</div>
+          </div>
+        </div>
+
+        <div class="fl-accounts-row">
+          <div class="fl-account">
+            <div class="fl-account-name">Real Estate</div>
+            <div class="fl-account-val">$185,000</div>
+            <div class="fl-account-change" style="color:#4ade80;">+$3,200</div>
+          </div>
+          <div class="fl-account">
+            <div class="fl-account-name">Credit Cards</div>
+            <div class="fl-account-val">-$4,270</div>
+            <div class="fl-account-change" style="color:#ef4444;">-$820</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <!-- AUTOMATION -->
