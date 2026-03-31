@@ -2205,6 +2205,56 @@
     margin-top: 4px;
   }
 
+  /* ── Product Built-With Strip ── */
+  .product-built-with {
+    margin-bottom: 28px;
+  }
+  .product-built-with-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.3);
+    margin-bottom: 12px;
+  }
+  .product-built-with-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .product-built-with-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .product-built-with-item:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+  }
+  .product-built-with-item img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(0.55);
+    transition: filter 0.3s;
+  }
+  .product-built-with-item:hover img {
+    filter: brightness(0) invert(0.85);
+  }
+  .product-built-with-item span {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(201,216,232,0.5);
+    transition: color 0.3s;
+  }
+  .product-built-with-item:hover span {
+    color: rgba(201,216,232,0.85);
+  }
+
   /* Docket responsive */
   @media (max-width: 1200px) {
     .docket-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -4035,7 +4085,32 @@
           <div class="sf-desc">AI-assisted clipping creates on-demand social assets from your live broadcast.</div>
         </div>
       </div>
-      <a href="https://strmlive.com" target="_blank" rel="noopener" class="btn-primary" style="margin-top:32px;display:inline-block;"><span>Visit StreamLive</span></a>
+      <div class="product-built-with" style="margin-top:32px;">
+        <div class="product-built-with-label">Built With</div>
+        <div class="product-built-with-icons">
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
+            <span>Vercel</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
+            <span>Next.js</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/obsstudio.svg" alt="OBS">
+            <span>OBS</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma">
+            <span>Figma</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
+            <span>Claude</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://strmlive.com" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block;"><span>Visit StreamLive</span></a>
     </div>
 
     <div class="reveal reveal-delay-2">
@@ -4110,6 +4185,31 @@
           <div class="ab-feature-icon">📊</div>
           <div class="ab-feature-title">Full Attribution</div>
           <div class="ab-feature-desc">QR codes, geo-fencing, promo tracking, and search lift.</div>
+        </div>
+      </div>
+      <div class="product-built-with">
+        <div class="product-built-with-label">Built With</div>
+        <div class="product-built-with-icons">
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
+            <span>Vercel</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
+            <span>Next.js</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase">
+            <span>Supabase</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma">
+            <span>Figma</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
+            <span>Claude</span>
+          </div>
         </div>
       </div>
       <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="ab-btn">Visit Adboard</a>
@@ -4214,6 +4314,31 @@
           <div class="dk-feature-desc">Generate organized reports your attorney can use immediately.</div>
         </div>
       </div>
+      <div class="product-built-with">
+        <div class="product-built-with-label">Built With</div>
+        <div class="product-built-with-icons">
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
+            <span>Vercel</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
+            <span>Next.js</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase">
+            <span>Supabase</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe">
+            <span>Stripe</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
+            <span>Claude</span>
+          </div>
+        </div>
+      </div>
       <a href="https://www.docketbinder.com" target="_blank" rel="noopener" class="dk-btn">Visit Docket</a>
     </div>
 
@@ -4301,6 +4426,35 @@
           <div class="fl-feature-icon">🔥</div>
           <div class="fl-feature-title">FIRE Calculator</div>
           <div class="fl-feature-desc">Project your financial independence date with custom parameters.</div>
+        </div>
+      </div>
+      <div class="product-built-with">
+        <div class="product-built-with-label">Built With</div>
+        <div class="product-built-with-icons">
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
+            <span>Vercel</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
+            <span>Next.js</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase">
+            <span>Supabase</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe">
+            <span>Stripe</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/plaid.svg" alt="Plaid">
+            <span>Plaid</span>
+          </div>
+          <div class="product-built-with-item">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
+            <span>Claude</span>
+          </div>
         </div>
       </div>
       <a href="https://www.foresightledger.com" target="_blank" rel="noopener" class="fl-btn">Visit Foresight</a>
