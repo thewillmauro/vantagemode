@@ -3334,7 +3334,7 @@
 
 
 <!-- PORTFOLIO (hidden) -->
-<section class="portfolio" id="portfolio">
+<section class="portfolio" id="portfolio" style="display:none;">
   <div class="portfolio-header reveal">
     <div>
       <p class="section-label">Selected Work</p>
@@ -4354,16 +4354,33 @@
     });
   });
 
-  // Scroll reveal
+  // Scroll reveal (with rootMargin fallback for edge cases)
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('visible');
+        observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Failsafe: if no reveals triggered after 2s, re-observe all
+  setTimeout(() => {
+    if (!document.querySelector('.reveal.visible')) {
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.unobserve(el);
+        observer.observe(el);
+      });
+      // If still nothing after another 1s, force visible
+      setTimeout(() => {
+        if (!document.querySelector('.reveal.visible')) {
+          document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        }
+      }, 1000);
+    }
+  }, 2000);
 
   // Service counter
   const serviceItems = document.querySelectorAll('.service-item');
