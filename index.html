@@ -1128,13 +1128,13 @@
     color: var(--muted);
   }
 
-  /* Scroll reveal */
-  .reveal {
+  /* Scroll reveal — content visible by default, JS adds .reveal-ready to enable animations */
+  .reveal-ready .reveal {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal.visible {
+  .reveal-ready .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -4354,33 +4354,28 @@
     });
   });
 
-  // Scroll reveal (with rootMargin fallback for edge cases)
+  // Scroll reveal — only enable animations if observer works
+  let observerFired = false;
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
+        observerFired = true;
         e.target.classList.add('visible');
         observer.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px 100px 0px' });
 
+  // Enable reveal animations, then observe
+  document.documentElement.classList.add('reveal-ready');
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Failsafe: if no reveals triggered after 2s, re-observe all
+  // Failsafe: if observer never fires after 3s, show everything
   setTimeout(() => {
-    if (!document.querySelector('.reveal.visible')) {
-      document.querySelectorAll('.reveal').forEach(el => {
-        observer.unobserve(el);
-        observer.observe(el);
-      });
-      // If still nothing after another 1s, force visible
-      setTimeout(() => {
-        if (!document.querySelector('.reveal.visible')) {
-          document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-        }
-      }, 1000);
+    if (!observerFired) {
+      document.documentElement.classList.remove('reveal-ready');
     }
-  }, 2000);
+  }, 3000);
 
   // Service counter
   const serviceItems = document.querySelectorAll('.service-item');
