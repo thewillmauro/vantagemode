@@ -2244,6 +2244,15 @@
   .product-built-with-item:hover img {
     filter: brightness(0) invert(0.85);
   }
+  .product-built-with-svg {
+    width: 16px;
+    height: 16px;
+    color: rgba(201,216,232,0.45);
+    transition: color 0.3s;
+  }
+  .product-built-with-item:hover .product-built-with-svg {
+    color: rgba(201,216,232,0.85);
+  }
   .product-built-with-item span {
     font-size: 10px;
     letter-spacing: 0.08em;
@@ -4448,7 +4457,7 @@
             <span>Stripe</span>
           </div>
           <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/plaid.svg" alt="Plaid">
+            <svg class="product-built-with-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h4v4H3V3zm7 0h4v4h-4V3zm7 0h4v4h-4V3zM3 10h4v4H3v-4zm7 0h4v4h-4v-4zm7 0h4v4h-4v-4zM3 17h4v4H3v-4zm7 0h4v4h-4v-4zm7 0h4v4h-4v-4z" fill="currentColor"/></svg>
             <span>Plaid</span>
           </div>
           <div class="product-built-with-item">
