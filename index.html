@@ -5001,7 +5001,7 @@
   // Supabase client
   const SUPABASE_URL = 'https://tnkqxniwjomkojufuxlp.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
@@ -5139,7 +5139,7 @@
       return;
     }
     try {
-      await supabase.from('leads').insert([{
+      await sbClient.from('leads').insert([{
         name,
         email,
         service: type,
@@ -5173,7 +5173,7 @@
       source: 'contact_form'
     };
     try {
-      await supabase.from('leads').insert([lead]);
+      await sbClient.from('leads').insert([lead]);
     } catch (e) { console.error('Lead save error:', e); }
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('contactSuccess').style.display = 'block';
@@ -5356,7 +5356,7 @@
 
       // Save to Supabase
       try {
-        await supabase.from('leads').insert([{
+        await sbClient.from('leads').insert([{
           name: wizardData.name,
           email: wizardData.email,
           brand: wizardData.brand,
@@ -5396,7 +5396,7 @@
     const grid = document.querySelector('.portfolio-grid');
     if (!grid) return;
     try {
-      const { data: projects, error } = await supabase
+      const { data: projects, error } = await sbClient
         .from('projects')
         .select('*')
         .order('sort_order', { ascending: true })
