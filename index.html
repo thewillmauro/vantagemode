@@ -3334,7 +3334,7 @@
 
 
 <!-- PORTFOLIO (hidden) -->
-<section class="portfolio" id="portfolio" style="display:none;">
+<section class="portfolio" id="portfolio">
   <div class="portfolio-header reveal">
     <div>
       <p class="section-label">Selected Work</p>
@@ -4313,7 +4313,12 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Supabase client
+  const SUPABASE_URL = 'https://tnkqxniwjomkojufuxlp.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   // Custom cursor
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
@@ -4429,7 +4434,7 @@
 
 
   // SOW form submission
-  function submitSOW() {
+  async function submitSOW() {
     const name = document.getElementById('sow-name').value.trim();
     const email = document.getElementById('sow-email').value.trim();
     const type = document.getElementById('sow-type').value;
@@ -4438,12 +4443,20 @@
       fields.forEach(f => { if (!f.value.trim()) f.style.borderColor = 'rgba(230,57,70,0.6)'; else f.style.borderColor = ''; });
       return;
     }
+    try {
+      await supabase.from('leads').insert([{
+        name,
+        email,
+        service: type,
+        source: 'sow_form'
+      }]);
+    } catch (e) { console.error('SOW lead save error:', e); }
     document.getElementById('sowForm').style.display = 'none';
     document.getElementById('sowSuccess').style.display = 'block';
   }
 
   // Contact form submission
-  function submitContact() {
+  async function submitContact() {
     const name = document.getElementById('ct-name').value.trim();
     const email = document.getElementById('ct-email').value.trim();
     if (!name || !email) {
@@ -4454,6 +4467,19 @@
       });
       return;
     }
+    const lead = {
+      name,
+      email,
+      brand: document.getElementById('ct-brand').value.trim(),
+      service: document.getElementById('ct-service').value,
+      timeline: document.getElementById('ct-timeline').value,
+      budget: document.getElementById('ct-budget').value,
+      message: document.getElementById('ct-message').value.trim(),
+      source: 'contact_form'
+    };
+    try {
+      await supabase.from('leads').insert([lead]);
+    } catch (e) { console.error('Lead save error:', e); }
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('contactSuccess').style.display = 'block';
   }
@@ -4603,7 +4629,7 @@
   });
 
   // Next / Submit
-  wizardNext.addEventListener('click', () => {
+  wizardNext.addEventListener('click', async () => {
     hideWizardErrors();
 
     if (wizardCurrent === 1) {
@@ -4633,20 +4659,19 @@
       wizardData.budget = wizardModal.querySelector('#wizBudget').value;
       wizardData.message = wizardModal.querySelector('#wizMessage').value.trim();
 
-      // Submit via hidden mailto link (non-blocking)
-      const subject = encodeURIComponent('New Inquiry: ' + wizardData.service + ' - ' + wizardData.name);
-      const body = encodeURIComponent(
-        'Interest: ' + wizardData.service +
-        '\nName: ' + wizardData.name +
-        '\nEmail: ' + wizardData.email +
-        '\nCompany: ' + wizardData.brand +
-        '\nTimeline: ' + wizardData.timeline +
-        '\nBudget: ' + wizardData.budget +
-        '\nDetails: ' + wizardData.message
-      );
-      const mailLink = document.createElement('a');
-      mailLink.href = 'mailto:will@vantagemode.com?subject=' + subject + '&body=' + body;
-      mailLink.click();
+      // Save to Supabase
+      try {
+        await supabase.from('leads').insert([{
+          name: wizardData.name,
+          email: wizardData.email,
+          brand: wizardData.brand,
+          service: wizardData.service,
+          timeline: wizardData.timeline,
+          budget: wizardData.budget,
+          message: wizardData.message,
+          source: 'project_wizard'
+        }]);
+      } catch (e) { console.error('Wizard lead save error:', e); }
       showWizardStep(4);
     }
   });
@@ -4670,6 +4695,47 @@
       document.body.style.width = '';
     });
   });
+
+  // ─── DYNAMIC PORTFOLIO FROM SUPABASE ───
+  (async function loadPortfolio() {
+    const grid = document.querySelector('.portfolio-grid');
+    if (!grid) return;
+    try {
+      const { data: projects, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('sort_order', { ascending: true })
+        .limit(20);
+      if (error || !projects || projects.length === 0) return; // keep static fallback
+      // Clear static items and render from DB
+      grid.innerHTML = '';
+      const gradients = [
+        'linear-gradient(135deg, #1a0a00 0%, #3d1f00 40%, #0d0d0d 100%)',
+        'linear-gradient(135deg, #001a1a 0%, #003333 50%, #0d0d0d 100%)',
+        'linear-gradient(135deg, #1a001a 0%, #330033 50%, #0d0d0d 100%)',
+        'linear-gradient(135deg, #000d1a 0%, #001a33 50%, #0d0d0d 100%)',
+        'linear-gradient(135deg, #0d0800 0%, #2a1800 40%, #0d0d0d 100%)',
+        'linear-gradient(135deg, #001a0d 0%, #003320 50%, #0d0d0d 100%)'
+      ];
+      projects.forEach((p, i) => {
+        const bg = p.thumbnail_url
+          ? `background-image:url('${p.thumbnail_url}');background-size:cover;background-position:center;`
+          : `background:${gradients[i % gradients.length]};`;
+        const wide = p.featured ? ' wide' : '';
+        const tags = (p.tags || []).join(', ');
+        grid.innerHTML += `
+          <div class="portfolio-item${wide}" data-cat="${(p.category || '').toLowerCase()}">
+            <div class="portfolio-bg" style="${bg}"></div>
+            <div class="portfolio-play"></div>
+            <div class="portfolio-overlay">
+              <div class="portfolio-type">${p.category || ''}</div>
+              <div class="portfolio-name">${p.title}</div>
+              <div class="portfolio-meta">${p.description || ''}</div>
+            </div>
+          </div>`;
+      });
+    } catch (e) { console.error('Portfolio load error:', e); }
+  })();
 </script>
 </body>
 </html>
