@@ -3008,13 +3008,13 @@
   .tech-stack-icon {
     width: 32px;
     height: 32px;
-    filter: brightness(0) invert(0.45);
+    filter: brightness(0) invert(0.76) sepia(1) saturate(5) hue-rotate(16deg) brightness(0.95);
     transition: filter 0.3s, color 0.3s;
-    color: var(--muted);
+    color: var(--gold);
   }
   .tech-stack-item:hover .tech-stack-icon {
-    filter: brightness(0) invert(0.78) sepia(1) saturate(2) hue-rotate(10deg);
-    color: var(--gold);
+    filter: brightness(0) invert(0.83) sepia(1) saturate(5) hue-rotate(16deg) brightness(1.05);
+    color: var(--gold-bright);
   }
   svg.tech-stack-icon {
     filter: none;
