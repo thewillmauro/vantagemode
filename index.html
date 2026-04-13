@@ -3008,19 +3008,26 @@
   .tech-stack-icon {
     width: 32px;
     height: 32px;
-    filter: brightness(0) invert(0.78) sepia(0.5) saturate(3) hue-rotate(358deg);
-    transition: filter 0.3s, color 0.3s;
-    color: var(--gold);
+    background-color: var(--gold);
+    transition: background-color 0.3s;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
   .tech-stack-item:hover .tech-stack-icon {
-    filter: brightness(0) invert(0.85) sepia(0.6) saturate(3.5) hue-rotate(358deg);
-    color: var(--gold-bright);
+    background-color: var(--gold-bright);
   }
   svg.tech-stack-icon {
-    filter: none;
+    width: 32px;
+    height: 32px;
+    color: var(--gold);
+    transition: color 0.3s;
   }
   .tech-stack-item:hover svg.tech-stack-icon {
-    filter: none;
+    color: var(--gold-bright);
   }
   .tech-stack-name {
     font-size: 10px;
@@ -4702,51 +4709,51 @@
   <p class="tech-stack-desc reveal reveal-delay-2">The platforms, tools, and technologies we use every day to build, ship, and scale.</p>
   <div class="tech-stack-grid reveal reveal-delay-3">
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg" alt="Shopify" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg);" aria-label="Shopify"></div>
       <span class="tech-stack-name">Shopify</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg);" aria-label="Claude"></div>
       <span class="tech-stack-name">Claude</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobelightroom.svg" alt="Lightroom" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobelightroom.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobelightroom.svg);" aria-label="Lightroom"></div>
       <span class="tech-stack-name">Lightroom</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg);" aria-label="GitHub"></div>
       <span class="tech-stack-name">GitHub</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg);" aria-label="Vercel"></div>
       <span class="tech-stack-name">Vercel</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg" alt="Premiere Pro" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobepremierepro.svg);" aria-label="Premiere Pro"></div>
       <span class="tech-stack-name">Premiere Pro</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg);" aria-label="Figma"></div>
       <span class="tech-stack-name">Figma</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg);" aria-label="Supabase"></div>
       <span class="tech-stack-name">Supabase</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg" alt="Stripe" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg);" aria-label="Stripe"></div>
       <span class="tech-stack-name">Stripe</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/notion.svg" alt="Notion" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/notion.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/notion.svg);" aria-label="Notion"></div>
       <span class="tech-stack-name">Notion</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg" alt="After Effects" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobeaftereffects.svg);" aria-label="After Effects"></div>
       <span class="tech-stack-name">After Effects</span>
     </div>
     <div class="tech-stack-item">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/slack.svg" alt="Slack" class="tech-stack-icon">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/slack.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/slack.svg);" aria-label="Slack"></div>
       <span class="tech-stack-name">Slack</span>
     </div>
   </div>
