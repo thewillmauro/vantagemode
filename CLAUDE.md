@@ -24,7 +24,7 @@ Video, Software & Automation Consultancy — founded by William Mauro.
 3. **Clients** — Logo ticker
 4. **Platforms** — Icon grid of platforms served
 5. **Services** — Tabbed service cards with counter (01-04)
-6. **Portfolio** — Hidden section (`display:none`)
+6. **Portfolio** — Photo portfolio grid with lightbox viewer and category filters
 7. **Process** — Visual process diagram
 8. **Products** — Cards for StreamLive, Adboard
 9. **StreamLive** — Deep-dive section on live broadcasting platform

@@ -1157,7 +1157,7 @@
     font-family: var(--font-display);
     font-size: 220px;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(201,168,76,0.035);
+    -webkit-text-stroke: 2px rgba(201,168,76,0.09);
     letter-spacing: 0.05em;
     bottom: -20px; right: -20px;
     pointer-events: none;
@@ -1322,60 +1322,357 @@
   @media (max-width: 768px) { .clients { padding: 40px 20px; } }
 
   /* ── PORTFOLIO ── */
-  .portfolio { background: var(--black); }
-  .portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; flex-wrap: wrap; gap: 24px; }
-  .portfolio-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+  .portfolio {
+    background: var(--black); position: relative; overflow: hidden;
+    padding: 120px 60px 100px;
+  }
+  /* architectural grid background */
+  .portfolio::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  /* diagonal accent line */
+  .portfolio::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 1px; height: 300px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    transform: rotate(-30deg); transform-origin: top right;
+    opacity: 0.3; pointer-events: none;
+  }
+  /* atmospheric glow */
+  .portfolio-glow {
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 600px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none; filter: blur(60px);
+  }
+
+  /* ── HEADER ── */
+  .portfolio-header {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 80px; flex-wrap: wrap; gap: 32px;
+  }
+  .portfolio-title-wrap { position: relative; }
+  .portfolio-title-index {
+    font-family: var(--font-display); font-size: 120px;
+    color: transparent; -webkit-text-stroke: 1px rgba(201,168,76,0.12);
+    position: absolute; top: -60px; left: -20px; line-height: 1;
+    pointer-events: none; user-select: none;
+  }
+  .portfolio-subtitle {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .portfolio-subtitle::before {
+    content: ''; width: 40px; height: 1px; background: var(--gold);
+  }
+  .portfolio-title {
+    font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px);
+    color: var(--white); letter-spacing: 0.04em; line-height: 0.9;
+  }
+  .portfolio-title .italic {
+    font-family: var(--font-accent); font-style: italic;
+    color: var(--gold); font-weight: 400;
+  }
+
+  /* ── FILTER BAR ── */
+  .portfolio-filter {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    position: relative; z-index: 2;
+  }
   .filter-btn {
-    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
-    padding: 8px 20px; border: 1px solid rgba(255,255,255,0.1);
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 10px 22px; border: none;
     color: var(--muted); background: none; cursor: none;
-    transition: all 0.3s;
+    position: relative; transition: color 0.4s;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
   }
-  .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
-  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .filter-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(201,168,76,0.08);
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .filter-btn:hover, .filter-btn.active { color: var(--gold); }
+  .filter-btn:hover::before, .filter-btn.active::before { opacity: 1; }
+  .filter-btn.active::after {
+    content: ''; position: absolute; bottom: 0; left: 12px; right: 12px;
+    height: 1px; background: var(--gold);
+  }
+
+  /* ── GALLERY GRID ── */
+  .portfolio-grid {
+    display: grid; position: relative; z-index: 2;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(200px, auto);
+    gap: 4px;
+  }
   .portfolio-item {
-    position: relative; overflow: hidden; aspect-ratio: 16/10; cursor: none;
+    position: relative; overflow: hidden; cursor: none;
     background: var(--surface);
+    grid-column: span 4; min-height: 280px;
+    perspective: 800px;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    transition: clip-path 0.5s cubic-bezier(0.16,1,0.3,1);
   }
-  .portfolio-item.wide { grid-column: span 2; aspect-ratio: 16/7; }
-  .portfolio-item.tall { grid-row: span 2; aspect-ratio: 9/16; }
+  .portfolio-item:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+  /* layout variations */
+  .portfolio-item.hero-item { grid-column: span 8; grid-row: span 2; min-height: 500px; }
+  .portfolio-item.tall-item { grid-row: span 2; min-height: 500px; }
+  .portfolio-item.wide-item { grid-column: span 8; min-height: 320px; }
+  .portfolio-item.med-item  { grid-column: span 6; min-height: 340px; }
+
+  /* inner 3D tilt container */
+  .portfolio-inner {
+    position: absolute; inset: 0;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    transform-style: preserve-3d; will-change: transform;
+  }
   .portfolio-bg {
     position: absolute; inset: 0;
-    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    background-size: cover; background-position: center;
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.6s;
+    filter: grayscale(0.3) brightness(0.7);
   }
-  .portfolio-item:hover .portfolio-bg { transform: scale(1.06); }
+  .portfolio-item:hover .portfolio-bg {
+    transform: scale(1.08);
+    filter: grayscale(0) brightness(0.85);
+  }
+  /* scan line sweep on hover */
+  .portfolio-scan {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%, transparent 45%,
+      rgba(201,168,76,0.12) 50%,
+      transparent 55%, transparent 100%
+    );
+    background-size: 100% 200%;
+    background-position: 0 -100%;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .portfolio-item:hover .portfolio-scan {
+    opacity: 1;
+    animation: scanSweep 1.2s ease-out forwards;
+  }
+  @keyframes scanSweep {
+    from { background-position: 0 -100%; }
+    to   { background-position: 0 100%; }
+  }
+  /* HUD corner brackets */
+  .portfolio-bracket {
+    position: absolute; width: 20px; height: 20px;
+    pointer-events: none; opacity: 0;
+    transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
+  }
+  .portfolio-bracket::before, .portfolio-bracket::after {
+    content: ''; position: absolute; background: var(--gold);
+  }
+  .bracket-tl { top: 12px; left: 12px; transform: translate(-4px, -4px); }
+  .bracket-tl::before { width: 16px; height: 1px; top: 0; left: 0; }
+  .bracket-tl::after  { width: 1px; height: 16px; top: 0; left: 0; }
+  .bracket-tr { top: 12px; right: 12px; transform: translate(4px, -4px); }
+  .bracket-tr::before { width: 16px; height: 1px; top: 0; right: 0; }
+  .bracket-tr::after  { width: 1px; height: 16px; top: 0; right: 0; }
+  .bracket-bl { bottom: 12px; left: 12px; transform: translate(-4px, 4px); }
+  .bracket-bl::before { width: 16px; height: 1px; bottom: 0; left: 0; }
+  .bracket-bl::after  { width: 1px; height: 16px; bottom: 0; left: 0; }
+  .bracket-br { bottom: 12px; right: 12px; transform: translate(4px, 4px); }
+  .bracket-br::before { width: 16px; height: 1px; bottom: 0; right: 0; }
+  .bracket-br::after  { width: 1px; height: 16px; bottom: 0; right: 0; }
+  .portfolio-item:hover .portfolio-bracket {
+    opacity: 1; transform: translate(0, 0);
+  }
+  /* index number */
+  .portfolio-index {
+    position: absolute; top: 14px; right: 18px;
+    font-family: var(--font-display); font-size: 13px;
+    letter-spacing: 0.15em; color: rgba(201,168,76,0.5);
+    opacity: 0; transition: opacity 0.4s; pointer-events: none;
+  }
+  .portfolio-item:hover .portfolio-index { opacity: 1; }
+  /* overlay info */
   .portfolio-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
-    opacity: 0; transition: opacity 0.4s;
+    background: linear-gradient(
+      15deg,
+      rgba(8,8,8,0.95) 0%,
+      rgba(8,8,8,0.4) 40%,
+      transparent 70%
+    );
     display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 28px;
+    padding: 32px;
+    opacity: 0; transition: opacity 0.5s;
   }
   .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-  .portfolio-type { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-  .portfolio-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--white); margin-bottom: 6px; }
-  .portfolio-meta { font-size: 13px; color: var(--muted); }
-  .portfolio-play {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    width: 56px; height: 56px; border: 2px solid rgba(255,255,255,0.5); border-radius: 50%;
+  .portfolio-type {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .portfolio-type::before {
+    content: ''; width: 20px; height: 1px; background: var(--gold);
+  }
+  .portfolio-name {
+    font-family: var(--font-display); font-size: clamp(22px, 2.5vw, 34px);
+    letter-spacing: 0.06em; color: var(--white); margin-bottom: 8px;
+  }
+  .portfolio-meta {
+    font-size: 12px; color: var(--muted); line-height: 1.5;
+    max-width: 320px;
+  }
+  /* view prompt */
+  .portfolio-view {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 16px; font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.4s 0.2s, transform 0.4s 0.2s;
+  }
+  .portfolio-view::after {
+    content: ''; width: 16px; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .portfolio-item:hover .portfolio-view {
+    opacity: 1; transform: translateY(0);
+  }
+  .portfolio-item:hover .portfolio-view::after { width: 28px; }
+
+  /* ── SCROLL REVEAL (portfolio items) ── */
+  .portfolio-item.pf-reveal {
+    opacity: 0;
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                clip-path 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .portfolio-item.pf-reveal.pf-visible {
+    opacity: 1;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+  .portfolio-item.pf-reveal.pf-visible:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(4,4,4,0.97);
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.4s, transform 0.4s;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
   }
-  .portfolio-item:hover .portfolio-play { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
-  .portfolio-play::after {
-    content: ''; width: 0; height: 0; border-style: solid;
-    border-width: 8px 0 8px 14px; border-color: transparent transparent transparent rgba(255,255,255,0.9);
-    margin-left: 3px;
+  .lightbox.open { opacity: 1; visibility: visible; }
+  /* architectural frame lines */
+  .lightbox::before {
+    content: ''; position: absolute;
+    inset: 40px; border: 1px solid rgba(201,168,76,0.08);
+    pointer-events: none;
+    clip-path: polygon(24px 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 24px 100%, 0 calc(100% - 24px), 0 24px);
+    opacity: 0; transition: opacity 0.6s 0.2s;
   }
+  .lightbox.open::before { opacity: 1; }
+  .lightbox-img {
+    max-width: 85vw; max-height: 80vh; object-fit: contain;
+    opacity: 0; transform: scale(0.92);
+    transition: opacity 0.5s 0.15s, transform 0.6s 0.15s cubic-bezier(0.16,1,0.3,1);
+  }
+  .lightbox.open .lightbox-img { opacity: 1; transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 28px; right: 36px;
+    width: 44px; height: 44px; background: none; border: none;
+    cursor: none; z-index: 10001;
+  }
+  .lightbox-close::before, .lightbox-close::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    width: 20px; height: 1px; background: var(--muted);
+    transition: background 0.3s, width 0.3s;
+  }
+  .lightbox-close::before { transform: translate(-50%,-50%) rotate(45deg); }
+  .lightbox-close::after { transform: translate(-50%,-50%) rotate(-45deg); }
+  .lightbox-close:hover::before, .lightbox-close:hover::after {
+    background: var(--gold); width: 24px;
+  }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 52px; height: 52px; background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: none; transition: border-color 0.3s, background 0.3s;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+  .lightbox-nav:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+  .lightbox-nav::after {
+    content: ''; width: 10px; height: 10px;
+    border-top: 1px solid var(--muted); border-right: 1px solid var(--muted);
+    transition: border-color 0.3s;
+  }
+  .lightbox-nav:hover::after { border-color: var(--gold); }
+  .lightbox-prev { left: 28px; }
+  .lightbox-prev::after { transform: rotate(-135deg); margin-left: 3px; }
+  .lightbox-next { right: 28px; }
+  .lightbox-next::after { transform: rotate(45deg); margin-right: 3px; }
+  .lightbox-caption {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    text-align: center; max-width: 600px;
+    opacity: 0; transform: translateX(-50%) translateY(10px);
+    transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
+  }
+  .lightbox.open .lightbox-caption {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+  }
+  .lightbox-caption-type {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .lightbox-caption-title {
+    font-family: var(--font-display); font-size: 22px;
+    letter-spacing: 0.06em; color: var(--white);
+  }
+  .lightbox-counter {
+    position: absolute; top: 32px; left: 40px;
+    font-family: var(--font-display); font-size: 13px;
+    letter-spacing: 0.15em; color: rgba(201,168,76,0.5);
+  }
+
+  /* ── PORTFOLIO RESPONSIVE ── */
   @media (max-width: 900px) {
-    .portfolio-grid { grid-template-columns: 1fr 1fr; }
-    .portfolio-item.wide { grid-column: span 2; }
-    .portfolio-item.tall { grid-row: span 1; aspect-ratio: 16/10; }
+    .portfolio { padding: 80px 24px; }
+    .portfolio-grid { grid-template-columns: repeat(6, 1fr); }
+    .portfolio-item { grid-column: span 3; min-height: 240px; }
+    .portfolio-item.hero-item { grid-column: span 6; grid-row: span 1; min-height: 300px; }
+    .portfolio-item.wide-item { grid-column: span 6; min-height: 260px; }
+    .portfolio-item.med-item  { grid-column: span 6; min-height: 280px; }
+    .portfolio-item.tall-item { grid-row: span 1; min-height: 260px; }
+    .portfolio-title-index { font-size: 80px; top: -40px; }
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+    .lightbox-nav { width: 44px; height: 44px; }
+    .lightbox-close { top: 16px; right: 16px; }
+    .lightbox::before { inset: 20px; }
   }
   @media (max-width: 600px) {
-    .portfolio-grid { grid-template-columns: 1fr; }
-    .portfolio-item.wide { grid-column: span 1; }
-    .portfolio-item { aspect-ratio: 16/10; }
+    .portfolio { padding: 60px 16px; }
+    .portfolio-header { margin-bottom: 48px; }
+    .portfolio-grid { grid-template-columns: 1fr; gap: 3px; }
+    .portfolio-item,
+    .portfolio-item.hero-item,
+    .portfolio-item.wide-item,
+    .portfolio-item.med-item,
+    .portfolio-item.tall-item { grid-column: span 1; grid-row: span 1; min-height: 220px; }
+    .portfolio-title-index { display: none; }
+    .filter-btn { padding: 8px 14px; font-size: 9px; }
+    .portfolio-overlay { padding: 20px; }
+    .lightbox::before { display: none; }
   }
 
   /* ── TESTIMONIALS ── */
@@ -1811,7 +2108,7 @@
     overflow: hidden;
   }
   .docket-section::before {
-    content: 'DOCKET';
+    content: 'VEROXA';
     position: absolute;
     font-family: var(--font-display);
     font-size: 280px;
@@ -3638,7 +3935,7 @@
 
 <!-- MOBILE MENU -->
 <div class="nav-mobile-menu" id="mobileMenu">
-  <a href="#portfolio" class="mobile-link">Work</a>
+  <a href="#products" class="mobile-link">Work</a>
   <a href="#services" class="mobile-link">Services</a>
   <a href="#products" class="mobile-link">Products</a>
   <a href="#pricing" class="mobile-link">Pricing</a>
@@ -3867,85 +4164,186 @@
 </section>
 
 
-<!-- PORTFOLIO (hidden) -->
+<!-- PORTFOLIO -->
 <section class="portfolio" id="portfolio" style="display:none;">
+  <div class="portfolio-glow"></div>
+
   <div class="portfolio-header reveal">
-    <div>
-      <p class="section-label">Selected Work</p>
-      <h2 class="section-title">THE<br><span class="italic">reel</span></h2>
+    <div class="portfolio-title-wrap">
+      <div class="portfolio-title-index">04</div>
+      <div class="portfolio-subtitle">Photo Portfolio</div>
+      <h2 class="portfolio-title">THE<br><span class="italic">lens</span></h2>
     </div>
     <div class="portfolio-filter">
       <button class="filter-btn active" onclick="filterPortfolio(this,'all')">All</button>
-      <button class="filter-btn" onclick="filterPortfolio(this,'brand')">Brand Films</button>
       <button class="filter-btn" onclick="filterPortfolio(this,'event')">Events</button>
-      <button class="filter-btn" onclick="filterPortfolio(this,'social')">Social</button>
-      <button class="filter-btn" onclick="filterPortfolio(this,'product')">Product</button>
+      <button class="filter-btn" onclick="filterPortfolio(this,'portrait')">Portraits</button>
+      <button class="filter-btn" onclick="filterPortfolio(this,'commercial')">Commercial</button>
+      <button class="filter-btn" onclick="filterPortfolio(this,'lifestyle')">Lifestyle</button>
     </div>
   </div>
-  <div class="portfolio-grid reveal">
 
-    <div class="portfolio-item wide" data-cat="brand">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #1a0a00 0%, #3d1f00 40%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Brand Film</div>
-        <div class="portfolio-name">ORIGIN STORY</div>
-        <div class="portfolio-meta">Luxury skincare brand, 3-min cinematic narrative</div>
+  <div class="portfolio-grid">
+
+    <div class="portfolio-item hero-item pf-reveal" data-cat="event" data-img="https://picsum.photos/id/1036/1200/800">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/1036/1200/800');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">001</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Event</div>
+          <div class="portfolio-name">GALA NIGHT</div>
+          <div class="portfolio-meta">Annual charity fundraiser, candid + staged coverage</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
-    <div class="portfolio-item" data-cat="event">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #001a1a 0%, #003333 50%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Event Coverage</div>
-        <div class="portfolio-name">GALA NIGHT</div>
-        <div class="portfolio-meta">Annual fundraiser, multi-cam and same-day edit</div>
+    <div class="portfolio-item tall-item pf-reveal" data-cat="portrait" data-img="https://picsum.photos/id/1005/600/900">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/1005/600/900');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">002</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Portrait</div>
+          <div class="portfolio-name">HEADSHOTS</div>
+          <div class="portfolio-meta">Professional executive portraits, studio lighting</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
-    <div class="portfolio-item" data-cat="social">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #1a001a 0%, #330033 50%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Social Content</div>
-        <div class="portfolio-name">REELS PACKAGE</div>
-        <div class="portfolio-meta">Fashion brand, 12 monthly Reels, 2M+ views</div>
+    <div class="portfolio-item pf-reveal" data-cat="commercial" data-img="https://picsum.photos/id/26/800/600">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/26/800/600');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">003</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Commercial</div>
+          <div class="portfolio-name">PRODUCT FLAT LAY</div>
+          <div class="portfolio-meta">E-commerce product photography, lifestyle staging</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
-    <div class="portfolio-item" data-cat="product">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #000d1a 0%, #001a33 50%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Product Video</div>
-        <div class="portfolio-name">LAUNCH DAY</div>
-        <div class="portfolio-meta">DTC skincare, hero product film with 6 ad variants</div>
+    <div class="portfolio-item pf-reveal" data-cat="lifestyle" data-img="https://picsum.photos/id/1015/800/600">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/1015/800/600');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">004</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Lifestyle</div>
+          <div class="portfolio-name">GOLDEN HOUR</div>
+          <div class="portfolio-meta">Outdoor lifestyle session, natural light</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
-    <div class="portfolio-item wide" data-cat="event">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #0d0800 0%, #2a1800 40%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Live Stream + Event</div>
-        <div class="portfolio-name">CONFERENCE KEYNOTE</div>
-        <div class="portfolio-meta">Tech conference. StreamLive broadcast to 4 platforms, 8K live viewers</div>
+    <div class="portfolio-item med-item pf-reveal" data-cat="commercial" data-img="https://picsum.photos/id/180/1000/700">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/180/1000/700');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">005</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Commercial</div>
+          <div class="portfolio-name">BRAND CAMPAIGN</div>
+          <div class="portfolio-meta">Full brand shoot, art direction + post-production</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
-    <div class="portfolio-item" data-cat="brand">
-      <div class="portfolio-bg" style="background: linear-gradient(135deg, #001a0d 0%, #003320 50%, #0d0d0d 100%);"></div>
-      <div class="portfolio-play"></div>
-      <div class="portfolio-overlay">
-        <div class="portfolio-type">Brand Film</div>
-        <div class="portfolio-name">THE CRAFT</div>
-        <div class="portfolio-meta">Artisan food brand, documentary-style, 4 min</div>
+    <div class="portfolio-item med-item pf-reveal" data-cat="event" data-img="https://picsum.photos/id/433/1000/700">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/433/1000/700');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">006</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Event</div>
+          <div class="portfolio-name">CONFERENCE</div>
+          <div class="portfolio-meta">Tech summit, keynote + breakout session coverage</div>
+          <div class="portfolio-view">View project</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item wide-item pf-reveal" data-cat="portrait" data-img="https://picsum.photos/id/1027/1200/600">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/1027/1200/600');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">007</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Portrait</div>
+          <div class="portfolio-name">EDITORIAL</div>
+          <div class="portfolio-meta">Magazine-style editorial portraits, on-location</div>
+          <div class="portfolio-view">View project</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item pf-reveal" data-cat="lifestyle" data-img="https://picsum.photos/id/1029/800/600">
+      <div class="portfolio-inner">
+        <div class="portfolio-bg" style="background-image:url('https://picsum.photos/id/1029/800/600');background-size:cover;background-position:center;"></div>
+        <div class="portfolio-scan"></div>
+        <div class="portfolio-bracket bracket-tl"></div>
+        <div class="portfolio-bracket bracket-tr"></div>
+        <div class="portfolio-bracket bracket-bl"></div>
+        <div class="portfolio-bracket bracket-br"></div>
+        <div class="portfolio-index">008</div>
+        <div class="portfolio-overlay">
+          <div class="portfolio-type">Lifestyle</div>
+          <div class="portfolio-name">URBAN FRAMES</div>
+          <div class="portfolio-meta">Street photography, architecture + city life</div>
+          <div class="portfolio-view">View project</div>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+  <button class="lightbox-close" aria-label="Close lightbox"></button>
+  <button class="lightbox-nav lightbox-prev" aria-label="Previous photo"></button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" aria-label="Next photo"></button>
+  <div class="lightbox-caption">
+    <div class="lightbox-caption-type" id="lightboxType"></div>
+    <div class="lightbox-caption-title" id="lightboxTitle"></div>
+  </div>
+</div>
 
 <!-- PROCESS DIAGRAM -->
 <section class="process" id="process">
@@ -4045,15 +4443,15 @@
       <a href="#adboard" class="product-cta">Learn More →</a>
     </div>
     <div class="product-card reveal">
-      <div class="product-badge">Family Court Documentation</div>
-      <div class="product-name">DOCKET</div>
-      <div class="product-desc">The documentation platform built for family court. Every timestamp, every incident, every dollar, organized and court-ready. Built to help parents protect what matters most.</div>
+      <div class="product-badge">Family Court Case Management</div>
+      <div class="product-name">VEROXA</div>
+      <div class="product-desc">The case management platform built for family court. Every timestamp, every incident, every dollar, organized and court-ready. Built to help parents protect what matters most.</div>
       <div class="product-tags">
         <span class="product-tag">Court-Ready Logs</span>
         <span class="product-tag">Expense Tracking</span>
         <span class="product-tag">All 50 States</span>
       </div>
-      <a href="#docket" class="product-cta">Learn More →</a>
+      <a href="#veroxa" class="product-cta">Learn More →</a>
     </div>
     <div class="product-card reveal reveal-delay-2">
       <div class="product-badge">Personal Finance Platform</div>
@@ -4298,16 +4696,16 @@
 
 
 
-<!-- DOCKET -->
-<section class="docket-section" id="docket">
+<!-- VEROXA -->
+<section class="docket-section" id="veroxa">
   <div class="docket-inner">
     <div class="reveal">
       <div class="docket-badge">
         <div class="dk-dot"></div>
-        Powered by Docket
+        Powered by Veroxa
       </div>
       <h2 class="docket-title">FAMILY<br>COURT<br><span>ORGANIZED</span></h2>
-      <p class="docket-desc">Docket is the documentation platform built for family court. Every timestamp, every incident, every dollar, organized and court-ready. Trusted by parents navigating custody, support, and co-parenting across all 50 states.</p>
+      <p class="docket-desc">Veroxa is the case management platform built for family court. Every timestamp, every incident, every dollar, organized and court-ready. Trusted by parents navigating custody, support, and co-parenting across all 50 states.</p>
       <div class="dk-features">
         <div class="dk-feature">
           <div class="dk-feature-icon">📋</div>
@@ -4355,12 +4753,12 @@
           </div>
         </div>
       </div>
-      <a href="https://www.docketbinder.com" target="_blank" rel="noopener" class="dk-btn">Visit Docket</a>
+      <a href="https://getveroxa.com" target="_blank" rel="noopener" class="dk-btn">Visit Veroxa</a>
     </div>
 
     <div class="reveal reveal-delay-2">
       <div class="docket-demo">
-        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#3b82f6;margin-bottom:4px;">Docket - Recent Activity</div>
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#3b82f6;margin-bottom:4px;">Veroxa - Recent Activity</div>
 
         <div class="docket-card">
           <div class="docket-card-header">
@@ -4369,7 +4767,7 @@
           </div>
           <div class="docket-card-title">Custody Exchange</div>
           <div class="docket-card-detail">Arrived 47 minutes late for scheduled 3:00 PM pickup. No prior communication. Children were waiting at agreed location.</div>
-          <div class="docket-card-footer">DOCKET · Incident Log · Timestamped</div>
+          <div class="docket-card-footer">VEROXA · Incident Log · Timestamped</div>
         </div>
 
         <div class="docket-card">
@@ -4379,7 +4777,7 @@
           </div>
           <div class="docket-card-title">Medical Co-Pay</div>
           <div class="docket-card-detail">Pediatric dental cleaning, $185.00. Receipt uploaded. Reimbursement request sent.</div>
-          <div class="docket-card-footer">DOCKET · Expense Log · Receipt Attached</div>
+          <div class="docket-card-footer">VEROXA · Expense Log · Receipt Attached</div>
         </div>
 
         <div class="docket-card">
@@ -4389,7 +4787,7 @@
           </div>
           <div class="docket-card-title">Weekend Drop-off</div>
           <div class="docket-card-detail">Scheduled 6:00 PM drop-off completed on time. Children in good spirits.</div>
-          <div class="docket-card-footer">DOCKET · Parenting Time · Verified</div>
+          <div class="docket-card-footer">VEROXA · Parenting Time · Verified</div>
         </div>
 
         <div class="docket-stat-bar">
@@ -4687,16 +5085,7 @@
     <div class="founder-content reveal reveal-delay-2">
       <p class="section-label">The Builder</p>
       <blockquote class="founder-quote">"We build products that solve <span>real problems</span>, tools that make people's lives easier and businesses <span>run better</span>."</blockquote>
-      <p class="founder-bio">William Mauro is an entrepreneur, product builder, and technologist with 10+ years working at the intersection of software, brand strategy, and digital execution. His career spans early-stage startups to Fortune 500 enterprise, giving him a rare fluency in what businesses actually need to grow.<br><br>Before founding Vantage Mode, Will co-founded Shopsy, a commerce platform that enabled direct shopping from Instagram content, building partnerships with Sephora, Lululemon, and Forever 21 before acquisition. He then led North American customer success at Amplience, managing enterprise accounts including Crate &amp; Barrel, TUMI, Tom Ford, Panasonic, and Mizuno.<br><br>Since 2019, he's channeled that mix of entrepreneurial instinct and technical fluency into building products that matter: StreamLive for live broadcasting, AdBoard for local advertising, Docket for family court documentation, and Foresight for personal finance. Each one built from scratch to solve a specific problem for a specific person. He's also deeply committed to his Princeton, NJ community, with a focus on families, sustainability, and civic engagement.</p>
-      <div class="founder-credentials">
-        <span class="credential-tag">Product Builder</span>
-        <span class="credential-tag">Software &amp; Automation</span>
-        <span class="credential-tag">Growth Marketing</span>
-        <span class="credential-tag">Video Production</span>
-        <span class="credential-tag">Startup Founder</span>
-        <span class="credential-tag">Enterprise SaaS</span>
-        <span class="credential-tag">Princeton, NJ</span>
-      </div>
+      <p class="founder-bio">William Mauro is an entrepreneur, product builder, and technologist with 10+ years working at the intersection of software, brand strategy, and digital execution. His career spans early-stage startups to Fortune 500 enterprise, giving him a rare fluency in what businesses actually need to grow.<br><br>Before founding Vantage Mode, Will co-founded a commerce platform that enabled direct shopping from social content, building major retail partnerships along the way. He then led North American customer success at an enterprise content management company, managing accounts across fashion, luxury, electronics, and home goods.<br><br>Since 2019, he's channeled that mix of entrepreneurial instinct and technical fluency into building products that matter: StreamLive for live broadcasting, AdBoard for local advertising, Veroxa for family court case management, and Foresight for personal finance. Each one built from scratch to solve a specific problem for a specific person. He's also deeply committed to his Princeton, NJ community, with a focus on families, sustainability, and civic engagement.</p>
 
     </div>
   </div>
@@ -4779,6 +5168,10 @@
     <div class="tech-stack-item">
       <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/apple.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/apple.svg);" aria-label="Apple"></div>
       <span class="tech-stack-name">Apple</span>
+    </div>
+    <div class="tech-stack-item">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/upstash.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/upstash.svg);" aria-label="Upstash"></div>
+      <span class="tech-stack-name">Upstash</span>
     </div>
   </div>
 </section>
@@ -5016,7 +5409,7 @@
     <div class="footer-col-title">Company</div>
     <ul class="footer-links">
       <li><a href="#founder">About Will</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#products">Portfolio</a></li>
       <li><a href="#process">Our Process</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -5378,14 +5771,23 @@
     if (!isOpen) item.classList.add('open');
   }
 
-  // Portfolio filter
+  // Portfolio filter with dramatic transition
   function filterPortfolio(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.portfolio-item').forEach(item => {
+    const items = document.querySelectorAll('.portfolio-item');
+    items.forEach((item, i) => {
       const show = cat === 'all' || item.dataset.cat === cat;
-      item.style.opacity = show ? '1' : '0.2';
-      item.style.pointerEvents = show ? 'auto' : 'none';
+      item.style.transition = `opacity 0.5s ${i * 0.06}s, transform 0.5s ${i * 0.06}s`;
+      if (show) {
+        item.style.opacity = '1';
+        item.style.transform = 'scale(1)';
+        item.style.pointerEvents = 'auto';
+      } else {
+        item.style.opacity = '0.08';
+        item.style.transform = 'scale(0.97)';
+        item.style.pointerEvents = 'none';
+      }
     });
   }
 
@@ -5582,6 +5984,37 @@
     });
   });
 
+  // ─── PORTFOLIO: 3D TILT ───
+  document.querySelectorAll('.portfolio-item').forEach(item => {
+    const inner = item.querySelector('.portfolio-inner');
+    if (!inner) return;
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      inner.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`;
+    });
+    item.addEventListener('mouseleave', () => {
+      inner.style.transform = 'rotateY(0) rotateX(0)';
+    });
+  });
+
+  // ─── PORTFOLIO: STAGGERED SCROLL REVEAL ───
+  const pfObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const item = entry.target;
+        const delay = parseInt(item.dataset.pfDelay || '0');
+        setTimeout(() => item.classList.add('pf-visible'), delay);
+        pfObserver.unobserve(item);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.portfolio-item.pf-reveal').forEach((item, i) => {
+    item.dataset.pfDelay = i * 120;
+    pfObserver.observe(item);
+  });
+
   // ─── DYNAMIC PORTFOLIO FROM SUPABASE ───
   (async function loadPortfolio() {
     const grid = document.querySelector('.portfolio-grid');
@@ -5592,8 +6025,7 @@
         .select('*')
         .order('sort_order', { ascending: true })
         .limit(20);
-      if (error || !projects || projects.length === 0) return; // keep static fallback
-      // Clear static items and render from DB
+      if (error || !projects || projects.length === 0) return;
       grid.innerHTML = '';
       const gradients = [
         'linear-gradient(135deg, #1a0a00 0%, #3d1f00 40%, #0d0d0d 100%)',
@@ -5603,25 +6035,118 @@
         'linear-gradient(135deg, #0d0800 0%, #2a1800 40%, #0d0d0d 100%)',
         'linear-gradient(135deg, #001a0d 0%, #003320 50%, #0d0d0d 100%)'
       ];
+      const layouts = ['hero-item','tall-item','','','med-item','med-item','wide-item',''];
       projects.forEach((p, i) => {
         const bg = p.thumbnail_url
           ? `background-image:url('${p.thumbnail_url}');background-size:cover;background-position:center;`
           : `background:${gradients[i % gradients.length]};`;
-        const wide = p.featured ? ' wide' : '';
-        const tags = (p.tags || []).join(', ');
+        const layoutClass = p.featured ? 'hero-item' : (layouts[i % layouts.length] || '');
+        const idx = String(i + 1).padStart(3, '0');
         grid.innerHTML += `
-          <div class="portfolio-item${wide}" data-cat="${(p.category || '').toLowerCase()}">
-            <div class="portfolio-bg" style="${bg}"></div>
-            <div class="portfolio-play"></div>
-            <div class="portfolio-overlay">
-              <div class="portfolio-type">${p.category || ''}</div>
-              <div class="portfolio-name">${p.title}</div>
-              <div class="portfolio-meta">${p.description || ''}</div>
+          <div class="portfolio-item ${layoutClass} pf-reveal" data-cat="${(p.category || '').toLowerCase()}"
+               ${p.thumbnail_url ? 'data-img="' + p.thumbnail_url + '"' : ''}>
+            <div class="portfolio-inner">
+              <div class="portfolio-bg" style="${bg}"></div>
+              <div class="portfolio-scan"></div>
+              <div class="portfolio-bracket bracket-tl"></div>
+              <div class="portfolio-bracket bracket-tr"></div>
+              <div class="portfolio-bracket bracket-bl"></div>
+              <div class="portfolio-bracket bracket-br"></div>
+              <div class="portfolio-index">${idx}</div>
+              <div class="portfolio-overlay">
+                <div class="portfolio-type">${p.category || ''}</div>
+                <div class="portfolio-name">${p.title}</div>
+                <div class="portfolio-meta">${p.description || ''}</div>
+                <div class="portfolio-view">View project</div>
+              </div>
             </div>
           </div>`;
       });
+      // Re-bind tilt, reveal, lightbox on dynamic items
+      grid.querySelectorAll('.portfolio-item').forEach((item, i) => {
+        const inner = item.querySelector('.portfolio-inner');
+        if (inner) {
+          item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            inner.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 6}deg)`;
+          });
+          item.addEventListener('mouseleave', () => {
+            inner.style.transform = 'rotateY(0) rotateX(0)';
+          });
+        }
+        item.dataset.pfDelay = i * 120;
+        pfObserver.observe(item);
+      });
+      bindLightbox();
     } catch (e) { console.error('Portfolio load error:', e); }
   })();
+
+  // ─── LIGHTBOX ───
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxType = document.getElementById('lightboxType');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  let lightboxItems = [];
+  let lightboxIndex = 0;
+
+  function bindLightbox() {
+    lightboxItems = Array.from(document.querySelectorAll('.portfolio-item[data-img]'));
+    lightboxItems.forEach((item, i) => {
+      item.addEventListener('click', () => openLightbox(i));
+    });
+  }
+
+  function openLightbox(index) {
+    if (lightboxItems.length === 0) return;
+    lightboxIndex = index;
+    updateLightbox();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function updateLightbox() {
+    const item = lightboxItems[lightboxIndex];
+    if (!item) return;
+    lightboxImg.src = item.dataset.img;
+    lightboxImg.alt = item.querySelector('.portfolio-name')?.textContent || '';
+    lightboxType.textContent = item.querySelector('.portfolio-type')?.textContent || '';
+    lightboxTitle.textContent = item.querySelector('.portfolio-name')?.textContent || '';
+    lightboxCounter.textContent =
+      String(lightboxIndex + 1).padStart(2, '0') + ' / ' +
+      String(lightboxItems.length).padStart(2, '0');
+  }
+
+  function lightboxPrev() {
+    lightboxIndex = (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length;
+    updateLightbox();
+  }
+
+  function lightboxNext() {
+    lightboxIndex = (lightboxIndex + 1) % lightboxItems.length;
+    updateLightbox();
+  }
+
+  document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-prev')?.addEventListener('click', lightboxPrev);
+  document.querySelector('.lightbox-next')?.addEventListener('click', lightboxNext);
+  lightbox?.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev();
+    if (e.key === 'ArrowRight') lightboxNext();
+  });
+
+  // Bind lightbox on initial static items
+  bindLightbox();
 </script>
 </body>
 </html>
