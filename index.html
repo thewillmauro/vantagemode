@@ -797,205 +797,6 @@
     transition: width 0.5s ease;
   }
 
-  /* STREAMLIVE */
-  .streamlive {
-    background: var(--black);
-    position: relative;
-    overflow: hidden;
-  }
-  .streamlive::before {
-    content: 'STREAMLIVE';
-    position: absolute;
-    font-family: var(--font-display);
-    font-size: 280px;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(201,168,76,0.04);
-    letter-spacing: 0.02em;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  .streamlive-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .streamlive-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 8px 16px;
-    margin-bottom: 32px;
-  }
-  .live-dot {
-    width: 8px; height: 8px;
-    background: var(--red-accent);
-    border-radius: 50%;
-    animation: liveBlink 1.2s ease-in-out infinite;
-  }
-  @keyframes liveBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
-  }
-
-  .streamlive-title {
-    font-family: var(--font-display);
-    font-size: 64px;
-    line-height: 0.95;
-    letter-spacing: 0.02em;
-    color: var(--white);
-    margin-bottom: 28px;
-  }
-  .streamlive-desc {
-    font-size: 16px;
-    color: var(--muted);
-    line-height: 1.75;
-    margin-bottom: 40px;
-  }
-
-  .stream-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .stream-feature {
-    background: var(--surface);
-    padding: 24px;
-    border-top: 2px solid transparent;
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .stream-feature:hover {
-    border-color: var(--gold);
-    background: var(--surface2);
-  }
-  .sf-icon { font-size: 24px; margin-bottom: 12px; }
-  .sf-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--white);
-    margin-bottom: 6px;
-  }
-  .sf-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-
-  /* Stream preview mockup */
-  .stream-mockup {
-    background: var(--surface);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-  }
-  .mockup-bar {
-    background: var(--surface2);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .mockup-dots { display: flex; gap: 6px; }
-  .mockup-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-  }
-  .mockup-dot:nth-child(1) { background: #ff5f57; }
-  .mockup-dot:nth-child(2) { background: #ffbd2e; }
-  .mockup-dot:nth-child(3) { background: #28c840; }
-  .mockup-url {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-  .mockup-live-pill {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(230,57,70,0.15);
-    border: 1px solid rgba(230,57,70,0.3);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--red-accent);
-  }
-
-  .mockup-screen {
-    aspect-ratio: 16/9;
-    background: #111;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .mockup-screen-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 30% 50%, rgba(0,180,197,0.1) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 50%, rgba(224,64,160,0.08) 0%, transparent 60%);
-  }
-  .mockup-play {
-    width: 60px; height: 60px;
-    border: 2px solid rgba(255,255,255,0.4);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    animation: playPulse 2s ease-in-out infinite;
-  }
-  @keyframes playPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.1); }
-    50% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
-  }
-  .mockup-play::after {
-    content: '';
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 10px 0 10px 18px;
-    border-color: transparent transparent transparent rgba(255,255,255,0.8);
-    margin-left: 4px;
-  }
-
-  .mockup-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
-  .stat-block {
-    padding: 16px;
-    text-align: center;
-    background: var(--surface2);
-  }
-  .stat-val {
-    font-family: var(--font-display);
-    font-size: 22px;
-    color: var(--gold);
-    letter-spacing: 0.05em;
-  }
-  .stat-lbl {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
   /* RESULTS */
   .results { background: var(--deep); }
   .results-grid {
@@ -1882,224 +1683,6 @@
   .sow-submitted-icon { font-size: 40px; margin-bottom: 12px; }
   .sow-submitted-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 8px; }
   .sow-submitted-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
-
-  /* ── ADBOARD SECTION ── */
-  .adboard-section {
-    background: #080c14;
-    position: relative;
-    overflow: hidden;
-  }
-  .adboard-section::before {
-    content: 'ADBOARD';
-    position: absolute;
-    font-family: var(--font-display);
-    font-size: 280px;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255,145,0,0.04);
-    letter-spacing: 0.02em;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-  .adboard-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .adboard-inner > div {
-    min-width: 0;
-  }
-  .adboard-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,145,0,0.08);
-    border: 1px solid rgba(255,145,0,0.2);
-    padding: 8px 16px;
-    border-radius: 40px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #ff9100;
-    margin-bottom: 32px;
-  }
-  .adboard-badge .ab-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #ff9100;
-    animation: liveBlink 1.5s ease-in-out infinite;
-  }
-  .adboard-title {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 7vw, 100px);
-    letter-spacing: 0.04em;
-    color: #fff;
-    line-height: 0.95;
-    margin-bottom: 28px;
-  }
-  .adboard-title span { color: #ff9100; }
-  .adboard-desc {
-    font-size: 16px;
-    color: rgba(201,216,232,0.55);
-    line-height: 1.7;
-    margin-bottom: 36px;
-    max-width: 520px;
-  }
-  .ab-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 36px;
-  }
-  .ab-feature {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 16px;
-    transition: all 0.3s;
-  }
-  .ab-feature:hover {
-    background: rgba(255,145,0,0.05);
-    border-color: rgba(255,145,0,0.15);
-  }
-  .ab-feature-icon { font-size: 18px; margin-bottom: 8px; }
-  .ab-feature-title {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .ab-feature-desc {
-    font-size: 11px;
-    color: rgba(201,216,232,0.4);
-    line-height: 1.5;
-  }
-  .ab-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #ff9100, #ff6b00);
-    color: #080c14;
-    padding: 14px 32px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-family: var(--font-body);
-    text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border-radius: 4px;
-  }
-  .ab-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255,145,0,0.25);
-  }
-
-  /* Bulletin Demo */
-  .bulletin-demo {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-  }
-  .bulletin-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    padding: 20px;
-    transition: border-color 0.3s;
-  }
-  .bulletin-card:hover {
-    border-color: rgba(255,145,0,0.2);
-  }
-  .bulletin-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .bulletin-location {
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.35);
-  }
-  .bulletin-type-badge {
-    font-size: 9px;
-    padding: 3px 8px;
-    border-radius: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .bulletin-biz {
-    font-family: var(--font-display);
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    color: #fff;
-    margin-bottom: 2px;
-  }
-  .bulletin-cat {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.3);
-    margin-bottom: 8px;
-  }
-  .bulletin-msg {
-    font-size: 13px;
-    color: rgba(201,216,232,0.6);
-    line-height: 1.5;
-    margin-bottom: 12px;
-  }
-  .bulletin-cta-btn {
-    display: inline-block;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 4px;
-    background: linear-gradient(135deg, #ff9100, #ff6b00);
-    color: #080c14;
-    margin-bottom: 10px;
-  }
-  .bulletin-footer {
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.2);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    padding-top: 8px;
-  }
-  /* Bulletin ticker */
-  .bulletin-ticker {
-    overflow: hidden;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 6px;
-    padding: 10px 0;
-  }
-  .bulletin-ticker-track {
-    display: flex;
-    gap: 32px;
-    animation: bulletinScroll 20s linear infinite;
-    white-space: nowrap;
-  }
-  .bulletin-ticker-item {
-    font-size: 11px;
-    color: rgba(201,216,232,0.4);
-    flex-shrink: 0;
-  }
-  .bulletin-ticker-item strong {
-    color: #ff9100;
-    font-weight: 500;
-  }
-  @keyframes bulletinScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
 
   /* ── DOCKET SECTION ── */
   .docket-section {
@@ -3438,44 +3021,6 @@
     font-weight: 500;
   }
 
-  /* Adboard responsive */
-  @media (max-width: 1200px) {
-    .adboard-inner { grid-template-columns: 1fr; gap: 48px; }
-    .adboard-section { padding: 80px 24px; overflow: visible; }
-    .adboard-section::before { display: none; }
-    .ab-features { grid-template-columns: repeat(4, 1fr); }
-  }
-  @media (max-width: 768px) {
-    .adboard-section { padding: 64px 16px; overflow: visible; }
-    .adboard-section::before { display: none; }
-    .adboard-inner { gap: 36px; }
-    .adboard-title { font-size: clamp(36px, 10vw, 56px); }
-    .adboard-desc { font-size: 14px; margin-bottom: 24px; }
-    .ab-features { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .ab-feature { padding: 14px; }
-    .ab-feature-title { font-size: 11px; }
-    .ab-feature-desc { font-size: 10px; }
-    .bulletin-card { padding: 16px; }
-    .bulletin-biz { font-size: 16px; }
-    .bulletin-msg { font-size: 12px; }
-    .bulletin-header { flex-wrap: wrap; gap: 6px; }
-    .bulletin-demo { gap: 10px; }
-    .bulletin-ticker { padding: 8px 0; }
-    .bulletin-ticker-item { font-size: 10px; }
-  }
-  @media (max-width: 480px) {
-    .adboard-section { padding: 48px 14px; }
-    .adboard-title { font-size: 32px; }
-    .adboard-desc { font-size: 13px; }
-    .ab-features { grid-template-columns: 1fr; }
-    .bulletin-card { padding: 14px; }
-    .bulletin-biz { font-size: 14px; }
-    .bulletin-msg { font-size: 11px; line-height: 1.4; }
-    .bulletin-cta-btn { font-size: 8px; padding: 5px 12px; }
-    .bulletin-footer { font-size: 7px; }
-    .ab-btn { padding: 12px 24px; font-size: 10px; }
-  }
-
   /* Products responsive */
   @media (max-width: 900px) {
     .products-section { padding: 80px 24px; }
@@ -3568,10 +3113,6 @@
       margin-bottom: 4px;
     }
 
-    /* StreamLive */
-    .streamlive-inner { grid-template-columns: 1fr; gap: 48px; }
-    .stream-features { grid-template-columns: 1fr 1fr; }
-
     /* Results */
     .results-grid { grid-template-columns: repeat(2, 1fr); }
 
@@ -3654,12 +3195,6 @@
       color: var(--muted);
       margin-bottom: 4px;
     }
-
-    /* StreamLive */
-    .stream-features { grid-template-columns: 1fr; gap: 12px; }
-    .streamlive-title { font-size: 48px; }
-    .streamlive-badge { font-size: 9px; }
-    .mockup-stats { grid-template-columns: repeat(2, 1fr); }
 
     /* Results */
     .results-grid { grid-template-columns: 1fr 1fr; }
@@ -3761,25 +3296,6 @@
     .step-phase { margin-top: 0 !important; }
     .process-step > *:not(.step-node) { grid-column: 2 !important; }
     .process-step > .step-node { grid-column: 1 !important; grid-row: 1 / 3 !important; }
-
-    /* StreamLive */
-    .streamlive-inner { grid-template-columns: 1fr !important; gap: 40px !important; }
-    .streamlive-title { font-size: 40px !important; }
-    .stream-features { grid-template-columns: 1fr !important; gap: 10px !important; }
-    .mockup-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-    .stream-mockup { margin: 0 !important; }
-
-    /* Adboard */
-    .adboard-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
-    .adboard-section { padding: 64px 20px !important; }
-    .adboard-section::before { font-size: 80px !important; }
-    .adboard-title { font-size: clamp(36px, 10vw, 56px) !important; }
-    .adboard-desc { font-size: 14px !important; }
-    .ab-features { grid-template-columns: 1fr !important; gap: 8px !important; }
-    .bulletin-card { padding: 16px !important; }
-    .bulletin-biz { font-size: 16px !important; }
-    .bulletin-msg { font-size: 12px !important; }
-    .bulletin-header { flex-wrap: wrap !important; gap: 6px !important; }
 
     /* Docket */
     .docket-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
@@ -3889,15 +3405,6 @@
 
     /* Engagement cards */
     .engagement-name { font-size: 24px !important; }
-
-    /* Adboard */
-    .adboard-section { padding: 48px 14px !important; }
-    .adboard-title { font-size: 32px !important; }
-    .bulletin-card { padding: 14px !important; }
-    .bulletin-biz { font-size: 14px !important; }
-    .bulletin-msg { font-size: 11px !important; }
-    .bulletin-cta-btn { font-size: 8px !important; padding: 5px 12px !important; }
-    .ab-btn { padding: 12px 24px !important; font-size: 10px !important; }
 
     /* Process */
     .process-step { grid-template-columns: 44px 1fr !important; gap: 12px !important; }
@@ -4108,7 +3615,7 @@
       <div class="service-item reveal reveal-delay-1" data-num="02">
         <div class="service-item-num">02</div>
         <div class="service-item-title">CUSTOM SOFTWARE</div>
-        <div class="service-item-desc">We design and build production-ready software - fast. Web platforms, SaaS products, internal tools, client-facing apps, and AI-powered solutions. We've built our own products (StreamLive, Adboard) using the same process we bring to client work: rapid prototyping, clean architecture, and shipping in weeks instead of quarters.</div>
+        <div class="service-item-desc">We design and build production-ready software - fast. Web platforms, SaaS products, internal tools, client-facing apps, and AI-powered solutions. We've built our own products using the same process we bring to client work: rapid prototyping, clean architecture, and shipping in weeks instead of quarters.</div>
         <div class="service-item-tags">
           <span class="service-tag">Web Platforms</span>
           <span class="service-tag">SaaS Products</span>
@@ -4393,28 +3900,6 @@
   </div>
   <div class="products-grid">
     <div class="product-card reveal">
-      <div class="product-badge">Live Broadcasting Platform</div>
-      <div class="product-name">STREAMLIVE</div>
-      <div class="product-desc">Our proprietary multi-destination live broadcasting platform. One production, deployed simultaneously to YouTube, Instagram, TikTok, LinkedIn, and any custom RTMP destination. Professional-grade streaming without the complexity.</div>
-      <div class="product-tags">
-        <span class="product-tag">Multi-Platform</span>
-        <span class="product-tag">Branded Overlays</span>
-        <span class="product-tag">Real-Time Switching</span>
-      </div>
-      <a href="#streamlive" class="product-cta">Learn More →</a>
-    </div>
-    <div class="product-card reveal reveal-delay-2">
-      <div class="product-badge">Local Ad Network</div>
-      <div class="product-name">ADBOARD</div>
-      <div class="product-desc">A digital out-of-home advertising network that turns existing screens in local businesses into targeted ad placements for nearby customers.</div>
-      <div class="product-tags">
-        <span class="product-tag">DOOH Advertising</span>
-        <span class="product-tag">Attribution Tracking</span>
-        <span class="product-tag">$79/week</span>
-      </div>
-      <a href="#adboard" class="product-cta">Learn More →</a>
-    </div>
-    <div class="product-card reveal">
       <div class="product-badge">Family Court Case Management</div>
       <div class="product-name">VEROXA</div>
       <div class="product-desc">The case management platform built for family court. Every timestamp, every incident, every dollar, organized and court-ready. Built to help parents protect what matters most.</div>
@@ -4438,235 +3923,6 @@
     </div>
   </div>
 </section>
-
-<!-- STREAMLIVE -->
-<section class="streamlive" id="streamlive">
-  <div class="streamlive-inner">
-    <div class="reveal">
-      <div class="streamlive-badge">
-        <div class="live-dot"></div>
-        Powered by StreamLive
-      </div>
-      <h2 class="streamlive-title">BROADCAST<br>EVERYWHERE<br>AT ONCE</h2>
-      <p class="streamlive-desc">StreamLive is our proprietary multi-destination live broadcasting platform. One production, deployed simultaneously to YouTube, Instagram, TikTok, LinkedIn, and any custom RTMP destination. We handle the entire technical stack so you can focus on what's happening on stage. Used for product launches, conference keynotes, brand activations, community events, and anything that deserves a live audience larger than the room.</p>
-      <div class="stream-features">
-        <div class="stream-feature">
-          <div class="sf-icon">🔀</div>
-          <div class="sf-title">Multi-Destination</div>
-          <div class="sf-desc">Stream to 10+ platforms simultaneously from a single production.</div>
-        </div>
-        <div class="stream-feature">
-          <div class="sf-icon">🎬</div>
-          <div class="sf-title">Cinematic Quality</div>
-          <div class="sf-desc">4K output with real-time color grading and branded graphics overlays.</div>
-        </div>
-        <div class="stream-feature">
-          <div class="sf-icon">📊</div>
-          <div class="sf-title">Live Analytics</div>
-          <div class="sf-desc">Real-time viewer counts, engagement, and platform performance dashboards.</div>
-        </div>
-        <div class="stream-feature">
-          <div class="sf-icon">✂️</div>
-          <div class="sf-title">Auto-Clip &amp; Replay</div>
-          <div class="sf-desc">AI-assisted clipping creates on-demand social assets from your live broadcast.</div>
-        </div>
-      </div>
-      <div class="product-built-with" style="margin-top:32px;">
-        <div class="product-built-with-label">Built With</div>
-        <div class="product-built-with-icons">
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
-            <span>Vercel</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
-            <span>Next.js</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/obsstudio.svg" alt="OBS">
-            <span>OBS</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma">
-            <span>Figma</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
-            <span>Claude</span>
-          </div>
-        </div>
-      </div>
-      <a href="https://strmlive.com" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block;"><span>Visit StreamLive</span></a>
-    </div>
-
-    <div class="reveal reveal-delay-2">
-      <div class="stream-mockup">
-        <div class="mockup-bar">
-          <div class="mockup-dots">
-            <div class="mockup-dot"></div>
-            <div class="mockup-dot"></div>
-            <div class="mockup-dot"></div>
-          </div>
-          <div class="mockup-url">streamlive.vantagemode.com</div>
-          <div class="mockup-live-pill">
-            <div class="live-dot"></div>
-            Live
-          </div>
-        </div>
-        <div class="mockup-screen">
-          <div class="mockup-screen-bg"></div>
-          <div class="mockup-play"></div>
-        </div>
-        <div class="mockup-stats">
-          <div class="stat-block">
-            <div class="stat-val" id="viewerCount">2.4K</div>
-            <div class="stat-lbl">Live Viewers</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-val">6</div>
-            <div class="stat-lbl">Platforms</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-val">4K</div>
-            <div class="stat-lbl">Resolution</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-val" id="streamTime">01:24:37</div>
-            <div class="stat-lbl">Stream Time</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ADBOARD -->
-<section class="adboard-section" id="adboard">
-  <div class="adboard-inner">
-    <div class="reveal">
-      <div class="adboard-badge">
-        <div class="ab-dot"></div>
-        Powered by Adboard
-      </div>
-      <h2 class="adboard-title">LOCAL<br>SCREENS<br><span>MONETIZED</span></h2>
-      <p class="adboard-desc">Every bar TV, waiting room display, and gym screen is a wasted opportunity. Adboard turns them into a hyper-local advertising network - connecting businesses with nearby customers on screens they already see every day.</p>
-      <div class="ab-features">
-        <div class="ab-feature">
-          <div class="ab-feature-icon">📺</div>
-          <div class="ab-feature-title">Any Existing Screen</div>
-          <div class="ab-feature-desc">Smart TVs, Fire Sticks, tablets. No new hardware needed.</div>
-        </div>
-        <div class="ab-feature">
-          <div class="ab-feature-icon">📍</div>
-          <div class="ab-feature-title">Hyper-Local Targeting</div>
-          <div class="ab-feature-desc">Reach customers within blocks of your business.</div>
-        </div>
-        <div class="ab-feature">
-          <div class="ab-feature-icon">💰</div>
-          <div class="ab-feature-title">65% Revenue Share</div>
-          <div class="ab-feature-desc">Screen owners earn passive income from idle displays.</div>
-        </div>
-        <div class="ab-feature">
-          <div class="ab-feature-icon">📊</div>
-          <div class="ab-feature-title">Full Attribution</div>
-          <div class="ab-feature-desc">QR codes, geo-fencing, promo tracking, and search lift.</div>
-        </div>
-      </div>
-      <div class="product-built-with">
-        <div class="product-built-with-label">Built With</div>
-        <div class="product-built-with-icons">
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/vercel.svg" alt="Vercel">
-            <span>Vercel</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/nextdotjs.svg" alt="Next.js">
-            <span>Next.js</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/supabase.svg" alt="Supabase">
-            <span>Supabase</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg" alt="Figma">
-            <span>Figma</span>
-          </div>
-          <div class="product-built-with-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/anthropic.svg" alt="Claude">
-            <span>Claude</span>
-          </div>
-        </div>
-      </div>
-      <a href="https://adboard-nine.vercel.app/" target="_blank" rel="noopener" class="ab-btn">Visit Adboard</a>
-    </div>
-
-    <div class="reveal reveal-delay-2">
-      <!-- Bulletin In Action -->
-      <div class="bulletin-demo">
-        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#ff9100;margin-bottom:4px;">Bulletin - Live on the Network</div>
-
-        <div class="bulletin-card">
-          <div class="bulletin-header">
-            <div class="bulletin-location">Princeton, NJ</div>
-            <div class="bulletin-type-badge" style="background:rgba(255,145,0,0.1);color:#ff9100;border:1px solid rgba(255,145,0,0.25);">🏷️ Sale/Promo</div>
-          </div>
-          <div class="bulletin-biz">Sunrise Bakery</div>
-          <div class="bulletin-cat">Food & Drink</div>
-          <div class="bulletin-msg">Fresh sourdough loaves - buy 2 get 1 free this weekend only! Come in before noon for the best selection.</div>
-          <div class="bulletin-cta-btn">Get Directions</div>
-          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 2 min ago</div>
-        </div>
-
-        <div class="bulletin-card">
-          <div class="bulletin-header">
-            <div class="bulletin-location">Princeton, NJ</div>
-            <div class="bulletin-type-badge" style="background:rgba(0,180,197,0.1);color:#00b4c5;border:1px solid rgba(0,180,197,0.25);">🎉 Event</div>
-          </div>
-          <div class="bulletin-biz">The Harbor Grill</div>
-          <div class="bulletin-cat">Restaurant & Bar</div>
-          <div class="bulletin-msg">Live jazz every Friday 7-10 PM. No cover charge. Reserve your table now.</div>
-          <div class="bulletin-cta-btn">RSVP</div>
-          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 8 min ago</div>
-        </div>
-
-        <div class="bulletin-card">
-          <div class="bulletin-header">
-            <div class="bulletin-location">Princeton, NJ</div>
-            <div class="bulletin-type-badge" style="background:rgba(224,64,160,0.1);color:#e040a0;border:1px solid rgba(224,64,160,0.25);">💼 Now Hiring</div>
-          </div>
-          <div class="bulletin-biz">Downtown Boutique</div>
-          <div class="bulletin-cat">Retail</div>
-          <div class="bulletin-msg">Hiring part-time sales associates. Flexible hours, employee discount. Walk-ins welcome.</div>
-          <div class="bulletin-cta-btn">Learn More</div>
-          <div class="bulletin-footer">ADBOARD · Bulletin · Posted 15 min ago</div>
-        </div>
-
-        <!-- Live Activity Ticker -->
-        <div class="bulletin-ticker">
-          <div class="bulletin-ticker-track">
-            <div class="bulletin-ticker-item"><strong>Sunrise Bakery</strong> posted a promo</div>
-            <div class="bulletin-ticker-item"><strong>The Harbor Grill</strong> posted an event</div>
-            <div class="bulletin-ticker-item"><strong>Downtown Boutique</strong> is hiring</div>
-            <div class="bulletin-ticker-item"><strong>FitZone Gym</strong> posted a grand opening</div>
-            <div class="bulletin-ticker-item"><strong>Main St. Coffee</strong> posted a promo</div>
-            <div class="bulletin-ticker-item"><strong>Princeton Yoga</strong> posted an event</div>
-            <div class="bulletin-ticker-item"><strong>Sunrise Bakery</strong> posted a promo</div>
-            <div class="bulletin-ticker-item"><strong>The Harbor Grill</strong> posted an event</div>
-            <div class="bulletin-ticker-item"><strong>Downtown Boutique</strong> is hiring</div>
-            <div class="bulletin-ticker-item"><strong>FitZone Gym</strong> posted a grand opening</div>
-            <div class="bulletin-ticker-item"><strong>Main St. Coffee</strong> posted a promo</div>
-            <div class="bulletin-ticker-item"><strong>Princeton Yoga</strong> posted an event</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
 
 <!-- VEROXA -->
 <section class="docket-section" id="veroxa">
@@ -5193,7 +4449,7 @@
           <div class="faq-icon">+</div>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Most software projects ship in weeks, not months. We built StreamLive and Adboard - two full platforms - using the same rapid-build process we bring to client work. Timeline depends on scope, but we move fast without cutting corners.</div>
+          <div class="faq-answer-inner">Most software projects ship in weeks, not months. We use the same rapid-build process for our own products as we do for client work. Timeline depends on scope, but we move fast without cutting corners.</div>
         </div>
       </div>
 
@@ -5214,16 +4470,6 @@
         </div>
         <div class="faq-answer">
           <div class="faq-answer-inner">Every project is custom-priced based on scope. We don't do packages or tiers. After a discovery call, we send a detailed proposal with a fixed price, clear deliverables, and timeline. No surprises.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          What are StreamLive and Adboard?
-          <div class="faq-icon">+</div>
-        </div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">They're products we built ourselves. StreamLive is a multi-destination live broadcasting platform. Adboard is a local digital advertising network. They're proof of what we can build - and the same caliber of work we deliver for clients.</div>
         </div>
       </div>
 
@@ -5586,7 +4832,7 @@
   }
   animateRing();
 
-  document.querySelectorAll('a, button, .platform-card, .service-item, .process-step, .stream-feature, .result-card').forEach(el => {
+  document.querySelectorAll('a, button, .platform-card, .service-item, .process-step, .result-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '20px';
       cursor.style.height = '20px';
@@ -5632,27 +4878,6 @@
       counter.textContent = item.dataset.num || '01';
     });
   });
-
-  // Live stream timer
-  let seconds = 5077;
-  function updateTimer() {
-    seconds++;
-    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
-    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-    const s = (seconds % 60).toString().padStart(2, '0');
-    const el = document.getElementById('streamTime');
-    if (el) el.textContent = `${h}:${m}:${s}`;
-  }
-  setInterval(updateTimer, 1000);
-
-  // Viewer count flicker
-  const viewerCounts = ['2.4K', '2.5K', '2.3K', '2.6K', '2.4K', '2.7K', '2.5K'];
-  let vcIdx = 0;
-  setInterval(() => {
-    vcIdx = (vcIdx + 1) % viewerCounts.length;
-    const el = document.getElementById('viewerCount');
-    if (el) el.textContent = viewerCounts[vcIdx];
-  }, 3000);
 
   // Ticker hover pause
   const tickerTrack = document.querySelector('.ticker-track');
