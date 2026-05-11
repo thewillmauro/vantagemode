@@ -4915,6 +4915,14 @@
     });
   });
 
+  // Shuffle toolkit logos on each page load
+  const toolkitGrid = document.querySelector('.tech-stack-grid');
+  if (toolkitGrid) {
+    Array.from(toolkitGrid.children)
+      .sort(() => Math.random() - 0.5)
+      .forEach(item => toolkitGrid.appendChild(item));
+  }
+
   // Ticker hover pause
   const tickerTrack = document.querySelector('.ticker-track');
   document.querySelector('.ticker').addEventListener('mouseenter', () => {
