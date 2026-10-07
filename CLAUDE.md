@@ -4,7 +4,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 
 ## Architecture
 
-- **Single-file site**: Everything lives in `index.html` (~4270 lines of HTML, CSS, JS)
+- **Single-file site**: Everything lives in `index.html` (HTML, CSS, JS). Images live in `images/` (never inline base64), plus `og.png`, `robots.txt`, `sitemap.xml` at the root
 - **No build system**: Static site, no bundler, no framework
 - **Hosted**: Deployed as static HTML. Pushing a `claude/**` branch auto-merges to `main` (see `.github/workflows`), so use another branch name for unreviewed work
 
@@ -30,6 +30,10 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 9. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
 ## Interactive Elements
+
+- **Leads**: all forms call `saveLead()`, which inserts into the Supabase `leads` table and shows an email fallback if the insert fails. Never show a success message without checking the insert result
+- **Teardown offer**: `.open-teardown` buttons open the wizard preselected to "Pipeline Teardown". Set `BOOKING_URL` in the script to send them to a booking page instead
+- **Analytics**: Vercel Web Analytics (`/_vercel/insights/script.js`). Custom events via `track(name, data)`: cta_teardown, cta_start_project, wizard_step, calculator_used, lead_submitted, lead_save_failed
 
 - **Project Wizard**: Multi-step modal form triggered by `.open-wizard` class
 - **Scroll animations**: `.reveal` class with IntersectionObserver
