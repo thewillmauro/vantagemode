@@ -3452,17 +3452,34 @@
   .pb-phase-num { font-size: 10px; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 12px; }
   .pb-phase-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 10px; line-height: 1; }
   .pb-phase-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
-  .pb-guards { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pb-guards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .pb-guard-lead { background: rgba(201,168,76,0.08); border-left-color: var(--gold); justify-content: center; }
+  .pb-guard-lead .pb-guard-title { color: var(--gold); font-size: 30px; }
+  .pb-guard-lead .pb-guard-desc { color: var(--white); opacity: 0.8; flex: 0; }
+  @media (max-width: 1100px) { .pb-guards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .pb-guards { grid-template-columns: 1fr; } }
   .pb-guard {
-    font-size: 12px;
-    color: var(--white);
-    opacity: 0.85;
-    padding: 10px 16px 10px 32px;
-    border: 1px solid rgba(255,255,255,0.08);
     background: var(--surface);
-    position: relative;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 2px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
   }
-  .pb-guard::before { content: '✦'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 10px; }
+  .pb-guard:hover { background: var(--surface2); border-left-color: var(--gold); }
+  .pb-guard-num { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.15em; color: var(--gold-dim); }
+  .pb-guard-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.04em; line-height: 1.05; color: var(--white); }
+  .pb-guard-desc { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
+  .pb-guard-by {
+    align-self: flex-start;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 5px 10px;
+  }
 
   /* Flow pulses on the lane connectors */
   .pb-pulse {
@@ -3704,21 +3721,8 @@
   .pb-sdr-big-val { font-family: var(--font-display); font-size: clamp(56px, 7vw, 88px); line-height: 0.95; letter-spacing: 0.02em; }
   .pb-sdr-big-sub { font-size: 13px; color: rgba(0,0,0,0.7); line-height: 1.5; }
   .pb-sdr-big-sub b { font-weight: 500; color: var(--black); }
-  .pb-sdr-math { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.08); }
-  .pb-sdr-line {
-    display: grid;
-    grid-template-columns: 20px 1fr auto;
-    gap: 12px;
-    align-items: baseline;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .pb-sdr-op { font-family: var(--font-display); font-size: 20px; color: var(--gold); }
-  .pb-sdr-f { font-size: 13px; color: var(--muted); line-height: 1.5; }
-  .pb-sdr-f b { color: var(--white); font-weight: 500; }
-  .pb-sdr-v { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 0.03em; white-space: nowrap; }
-  .pb-sdr-total .pb-sdr-f { color: var(--white); }
-  .pb-sdr-total .pb-sdr-v { color: var(--gold); font-size: 26px; }
+  .pb-sdr-formula { font-size: 13px; color: var(--muted); line-height: 1.7; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .pb-sdr-formula b { color: var(--white); font-weight: 500; }
 
   .pb-sdr-bars { display: flex; flex-direction: column; gap: 12px; }
   .pb-sdr-bar-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; }
@@ -3739,8 +3743,6 @@
     .pb-sdr { padding: 24px 16px; margin-top: 64px; }
     .pb-sdr-big { padding: 22px 18px; }
     .pb-sdr-bar-row { grid-template-columns: 1fr; gap: 6px; }
-    .pb-sdr-v { font-size: 18px; }
-    .pb-sdr-total .pb-sdr-v { font-size: 22px; }
   }
 
   /* ── TOOLKIT GROUPS ── */
@@ -4112,7 +4114,7 @@
         <p class="section-label">The Playbook</p>
         <h2 class="section-title">TWO MOTIONS<br><span class="italic">one system</span></h2>
       </div>
-      <p class="pb-lede reveal reveal-delay-2">The strategy I use when a product sells to more than one kind of buyer. Let one side come to you, go find the other, and run both through a single source of truth so every signal compounds.</p>
+      <p class="pb-lede reveal reveal-delay-2">Let one kind of buyer come to you. Go find the other. Run both through one database, so every signal makes the next one smarter.</p>
     </div>
 
     <!-- Diagram -->
@@ -4125,11 +4127,11 @@
           <span class="pb-lane-sub">They come to you</span>
         </div>
         <ol class="pb-steps">
-          <li><b>Content &amp; community</b><span>Search, social, launch films, communities</span></li>
-          <li><b>Site &amp; signup</b><span>Clear offer, no sales call required</span></li>
+          <li><b>Content &amp; community</b><span>Search, social, video</span></li>
+          <li><b>Site &amp; signup</b><span>No sales call needed</span></li>
           <li><b>Free plan</b><span>Value before the paywall</span></li>
-          <li><b>Paid tiers</b><span>Plan gates tied to real capabilities</span></li>
-          <li><b>Lifecycle</b><span>Welcome flow, drips, in-app messages</span></li>
+          <li><b>Paid tiers</b><span>Upgrade for features that matter</span></li>
+          <li><b>Lifecycle</b><span>Onboarding and timely nudges</span></li>
         </ol>
       </div>
 
@@ -4138,10 +4140,9 @@
           <div class="pb-hub-k">Source of Truth</div>
           <div class="pb-hub-title">YOUR<br>DATABASE</div>
           <ul class="pb-hub-list">
-            <li>Every account and contact</li>
-            <li>Append-only event log</li>
+            <li>Every account</li>
+            <li>Every change, logged</li>
             <li>Scores with reasons</li>
-            <li>Spend per step</li>
           </ul>
         </div>
         <div class="pb-hub-out">
@@ -4157,18 +4158,18 @@
           <span class="pb-lane-sub">You go find them</span>
         </div>
         <ol class="pb-steps">
-          <li><b>Account list</b><span>Permitted sources, tight ICP</span></li>
-          <li><b>Enrichment</b><span>Clay waterfalls, validated callbacks</span></li>
-          <li><b>AI research</b><span>Right decision-maker, cited evidence</span></li>
-          <li class="pb-gate"><b>Human review</b><span>Uncertain answers stop here</span></li>
-          <li><b>Score &amp; sync</b><span>Per-rule scores, idempotent CRM sync</span></li>
-          <li class="pb-gate"><b>Reviewed outreach</b><span>Drafted by the system, sent by a person</span></li>
+          <li><b>Account list</b><span>The right companies, from permitted sources</span></li>
+          <li><b>Enrichment</b><span>Fill in the missing data</span></li>
+          <li><b>AI research</b><span>Find the real decision-maker</span></li>
+          <li class="pb-gate"><b>Human review</b><span>A person checks anything uncertain</span></li>
+          <li><b>Score &amp; sync</b><span>Rank accounts, push to your CRM</span></li>
+          <li class="pb-gate"><b>Reviewed outreach</b><span>The system drafts, a person sends</span></li>
         </ol>
       </div>
 
       <div class="pb-bridge">
         <span class="pb-bridge-tag">The Bridge</span>
-        <span class="pb-bridge-text">Product users with buyer intent are routed into the outbound pipeline. Your users bring their buyers, so the self-serve motion feeds the sales motion.</span>
+        <span class="pb-bridge-text">When a product user shows buying intent, they flow straight into outbound. Your users bring in their buyers.</span>
         <span class="pb-bridge-arrow" aria-hidden="true">A <i>→</i> B</span>
       </div>
     </div>
@@ -4198,9 +4199,8 @@
           <div class="pb-eq-word">PIPELINE</div>
           <div class="pb-eq-q">More qualified at-bats</div>
           <ul class="pb-eq-list">
-            <li><i class="pb-src pb-src-b">B</i>Researched accounts at scale, for cents each</li>
-            <li><i class="pb-src pb-src-br">⇄</i>Product users bring their buyers</li>
-            <li><i class="pb-src pb-src-a">A</i>Content and signup with no sales call</li>
+            <li><i class="pb-src pb-src-b">B</i>Researched accounts for cents each</li>
+            <li><i class="pb-src pb-src-br">⇄</i>Users bring in their buyers</li>
           </ul>
         </div>
         <div class="pb-eq-op" aria-hidden="true">×</div>
@@ -4209,9 +4209,8 @@
           <div class="pb-eq-word">CONVERSION</div>
           <div class="pb-eq-q">Win more of them</div>
           <ul class="pb-eq-list">
-            <li><i class="pb-src pb-src-b">B</i>The right decision-maker, not a guess</li>
-            <li><i class="pb-src pb-src-hub">DB</i>Scores route the best accounts first</li>
-            <li><i class="pb-src pb-src-a">A</i>A free plan proves value before the paywall</li>
+            <li><i class="pb-src pb-src-b">B</i>Reach the real decision-maker</li>
+            <li><i class="pb-src pb-src-hub">DB</i>Best accounts get worked first</li>
           </ul>
         </div>
         <div class="pb-eq-op" aria-hidden="true">×</div>
@@ -4220,9 +4219,8 @@
           <div class="pb-eq-word">DEAL SIZE</div>
           <div class="pb-eq-q">Earn more per customer</div>
           <ul class="pb-eq-list">
-            <li><i class="pb-src pb-src-a">A</i>Tiers gated on capabilities people pay for</li>
-            <li><i class="pb-src pb-src-br">⇄</i>One user opens a whole account</li>
-            <li><i class="pb-src pb-src-a">A</i>Upgrade moments built into lifecycle</li>
+            <li><i class="pb-src pb-src-a">A</i>Tiers people want to upgrade to</li>
+            <li><i class="pb-src pb-src-br">⇄</i>One user opens the whole account</li>
           </ul>
         </div>
         <div class="pb-eq-op" aria-hidden="true">×</div>
@@ -4231,9 +4229,8 @@
           <div class="pb-eq-word">RETENTION</div>
           <div class="pb-eq-q">Keep and expand them</div>
           <ul class="pb-eq-list">
-            <li><i class="pb-src pb-src-a">A</i>Drips and in-app messages drive habit</li>
-            <li><i class="pb-src pb-src-hub">DB</i>Usage signals flag risk and expansion</li>
-            <li><i class="pb-src pb-src-hub">DB</i>Errors caught before customers report them</li>
+            <li><i class="pb-src pb-src-a">A</i>Onboarding that builds habit</li>
+            <li><i class="pb-src pb-src-hub">DB</i>Churn risk spotted early</li>
           </ul>
         </div>
         <div class="pb-eq-op pb-eq-op-eq" aria-hidden="true">=</div>
@@ -4243,7 +4240,7 @@
             <span class="pb-eq-math-row"><b>1.1</b> × <b>1.1</b> × <b>1.1</b> × <b>1.1</b></span>
             <span class="pb-eq-math-big">+46%</span>
           </div>
-          <p class="pb-eq-note">The levers multiply. Improve each one by 10% and revenue grows by 46%, not 10%.</p>
+          <p class="pb-eq-note">The levers multiply. 10% better on each one means 46% more revenue.</p>
         </div>
       </div>
     </div>
@@ -4267,11 +4264,11 @@
       <div class="pb-loop-text">
         <div class="pb-block-label">Why It Compounds</div>
         <ol class="pb-loop-list">
-          <li><b>Signal.</b> Every signup, reply, upgrade, and churn lands in the same database.</li>
-          <li><b>Targeting.</b> The ICP and scores update from what actually converted.</li>
-          <li><b>Replies.</b> Better targets and real proof points earn more conversations.</li>
-          <li><b>Customers.</b> More conversations close into more, and bigger, accounts.</li>
-          <li><b>Usage data.</b> Those customers show you who to find next.</li>
+          <li><b>Signal.</b> Every signup, reply, and upgrade lands in one place.</li>
+          <li><b>Targeting.</b> You learn who actually buys.</li>
+          <li><b>Replies.</b> Better targets get more replies.</li>
+          <li><b>Customers.</b> More replies turn into more customers.</li>
+          <li><b>Usage data.</b> Customers show you who to find next.</li>
         </ol>
         <div class="pb-cost">
           <div class="pb-cost-title">And it costs less to run</div>
@@ -4291,7 +4288,7 @@
           <div class="pb-block-label">The SDR Math</div>
           <h3 class="pb-rev-title">LET THE SYSTEM RUN OUTBOUND<br><span>put your SDRs on inbound</span></h3>
         </div>
-        <p class="pb-sdr-lede">Research, list building, and first-touch drafting are the parts of outbound a system does at scale. Hand those over and your SDRs spend their hours on the people who already raised their hand. Plug in your own numbers.</p>
+        <p class="pb-sdr-lede">A system can handle research, list building, and first drafts. Your SDRs get those hours back for inbound, the people who already want to talk.</p>
       </div>
 
       <div class="pb-sdr-grid">
@@ -4301,36 +4298,23 @@
             <input type="range" id="sdrN" min="1" max="50" step="1" value="5">
           </label>
           <label class="pb-in">
-            <span class="pb-in-top"><span>Fully loaded cost per SDR / year</span><output id="sdrCost-out"></output></span>
+            <span class="pb-in-top"><span>Cost per SDR per year</span><output id="sdrCost-out"></output></span>
             <input type="range" id="sdrCost" min="50000" max="200000" step="5000" value="95000">
           </label>
           <label class="pb-in">
-            <span class="pb-in-top"><span>Time spent on manual outbound</span><output id="sdrOut-out"></output></span>
+            <span class="pb-in-top"><span>Time spent on outbound</span><output id="sdrOut-out"></output></span>
             <input type="range" id="sdrOut" min="10" max="90" step="5" value="60">
           </label>
-          <label class="pb-in">
-            <span class="pb-in-top"><span>Share of that work the system automates</span><output id="sdrAuto-out"></output></span>
-            <input type="range" id="sdrAuto" min="10" max="90" step="5" value="70">
-          </label>
-          <label class="pb-in">
-            <span class="pb-in-top"><span>Automation cost / month (tools + AI)</span><output id="sdrSys-out"></output></span>
-            <input type="range" id="sdrSys" min="500" max="15000" step="250" value="2500">
-          </label>
-          <p class="pb-sdr-assume">Defaults are example assumptions, not benchmarks. Hours assume 2,000 working hours per SDR per year.</p>
+          <p class="pb-sdr-assume">Assumes the system takes over 70% of manual outbound work and costs $2,500 a month to run, with 2,000 working hours per SDR per year. Example numbers, not benchmarks.</p>
         </div>
 
         <div class="pb-sdr-out">
           <div class="pb-sdr-big">
-            <span class="pb-sdr-big-lbl">Net SDR capacity moved to inbound, per year</span>
+            <span class="pb-sdr-big-lbl">SDR time freed for inbound, per year</span>
             <span class="pb-sdr-big-val" id="sdrNet">$0</span>
-            <span class="pb-sdr-big-sub"><b id="sdrHours">0</b> hours, or <b id="sdrFte">0</b> full-time SDRs of capacity, without a new hire</span>
+            <span class="pb-sdr-big-sub"><b id="sdrHours">0</b> hours a year, about <b id="sdrFte">0</b> SDRs, with no new hires</span>
           </div>
-
-          <div class="pb-sdr-math">
-            <div class="pb-sdr-line"><span class="pb-sdr-op"></span><span class="pb-sdr-f" id="fGross"></span><span class="pb-sdr-v" id="vGross"></span></div>
-            <div class="pb-sdr-line"><span class="pb-sdr-op">−</span><span class="pb-sdr-f" id="fSys"></span><span class="pb-sdr-v" id="vSys"></span></div>
-            <div class="pb-sdr-line pb-sdr-total"><span class="pb-sdr-op">=</span><span class="pb-sdr-f">Net capacity value</span><span class="pb-sdr-v" id="vNet"></span></div>
-          </div>
+          <p class="pb-sdr-formula" id="sdrFormula"></p>
 
           <div class="pb-sdr-bars">
             <div class="pb-sdr-bar-row">
@@ -4362,17 +4346,17 @@
         <div class="pb-phase">
           <div class="pb-phase-num">PHASE 1</div>
           <div class="pb-phase-title">PROVE ONE MOTION</div>
-          <p class="pb-phase-desc">Launch the self-serve side publicly. Collect real usage, real conversion, and real stories before asking anyone for a meeting.</p>
+          <p class="pb-phase-desc">Launch the self-serve side first. Get real users and real results before you pitch anyone.</p>
         </div>
         <div class="pb-phase">
           <div class="pb-phase-num">PHASE 2</div>
           <div class="pb-phase-title">OPEN THE SECOND</div>
-          <p class="pb-phase-desc">Turn the waitlist on and start outbound on a small, labeled pilot list. The pitch is grounded in usage, not promises.</p>
+          <p class="pb-phase-desc">Start outbound on a small test list. Pitch with proof, not promises.</p>
         </div>
         <div class="pb-phase">
           <div class="pb-phase-num">PHASE 3</div>
           <div class="pb-phase-title">SCALE WHAT WORKS</div>
-          <p class="pb-phase-desc">Grow the eval set, widen the territory, and automate only the steps that have already proven accurate.</p>
+          <p class="pb-phase-desc">Expand what is working. Automate only the steps that have proven accurate.</p>
         </div>
       </div>
     </div>
@@ -4381,13 +4365,52 @@
     <div class="pb-block">
       <div class="pb-block-label reveal">Guardrails</div>
       <div class="pb-guards reveal">
-        <span class="pb-guard">Consumers are never cold-prospected</span>
-        <span class="pb-guard">Sensitive public records are never a lead source</span>
-        <span class="pb-guard">Only data sources whose terms allow it</span>
-        <span class="pb-guard">No auto-send</span>
-        <span class="pb-guard">Accurate claims, no guarantees</span>
-        <span class="pb-guard">CAN-SPAM compliant, unsubscribes honored</span>
-        <span class="pb-guard">Every tradeoff written down</span>
+        <div class="pb-guard pb-guard-lead">
+          <div class="pb-guard-title">SAFE TO SCALE</div>
+          <p class="pb-guard-desc">Guardrails are what make automation safe to run at volume. They live in the system itself, so they hold even when nobody is watching.</p>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">01</div>
+          <div class="pb-guard-title">No cold outreach to consumers</div>
+          <p class="pb-guard-desc">Outbound targets businesses only. Individuals hear from you after they opt in, never before.</p>
+          <span class="pb-guard-by">Enforced by: Targeting rules</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">02</div>
+          <div class="pb-guard-title">No sensitive records as leads</div>
+          <p class="pb-guard-desc">Court filings, medical data, and similar records stay off-limits, even when they are technically public.</p>
+          <span class="pb-guard-by">Enforced by: Source allowlist</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">03</div>
+          <div class="pb-guard-title">Permitted data only</div>
+          <p class="pb-guard-desc">Every data source is checked against its terms of use before it enters the pipeline.</p>
+          <span class="pb-guard-by">Enforced by: Source allowlist</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">04</div>
+          <div class="pb-guard-title">A person approves every send</div>
+          <p class="pb-guard-desc">The system drafts and a person reviews and sends. Nothing goes out on autopilot.</p>
+          <span class="pb-guard-by">Enforced by: Review step</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">05</div>
+          <div class="pb-guard-title">Accurate claims only</div>
+          <p class="pb-guard-desc">No guaranteed outcomes and no invented stats. Every message is checked for accuracy before it goes out.</p>
+          <span class="pb-guard-by">Enforced by: Review step</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">06</div>
+          <div class="pb-guard-title">Compliance built in</div>
+          <p class="pb-guard-desc">Unsubscribe links, a physical address, and a suppression list checked before every send. Separate sending domains protect your main one.</p>
+          <span class="pb-guard-by">Enforced by: Sequencer + suppression list</span>
+        </div>
+        <div class="pb-guard">
+          <div class="pb-guard-num">07</div>
+          <div class="pb-guard-title">Decisions on record</div>
+          <p class="pb-guard-desc">Every tradeoff is written down, so your team knows why the system works the way it does.</p>
+          <span class="pb-guard-by">Enforced by: Decision records</span>
+        </div>
       </div>
     </div>
   </div>
@@ -5061,7 +5084,7 @@
   }
   animateRing();
 
-  document.querySelectorAll('a, button, .service-item, .gtm-flow-step, .pb-phase, .tech-stack-item').forEach(el => {
+  document.querySelectorAll('a, button, .service-item, .gtm-flow-step, .pb-phase, .pb-guard, .tech-stack-item').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '20px';
       cursor.style.height = '20px';
@@ -5237,13 +5260,12 @@
   (function sdrMath() {
     const $ = id => document.getElementById(id);
     if (!$('sdrN')) return;
-    const HOURS = 2000;
+    const HOURS = 2000, AUTO = 0.7, SYS_MONTH = 2500;
     const money = v => (v < 0 ? '−$' : '$') + Math.round(Math.abs(v)).toLocaleString('en-US');
-    const short = v => v >= 1000 ? '$' + (v / 1000).toFixed(v % 1000 ? 1 : 0).replace(/\.0$/, '') + 'K' : '$' + v;
-    const inputs = ['sdrN', 'sdrCost', 'sdrOut', 'sdrAuto', 'sdrSys'];
+    const short = v => '$' + (v / 1000).toFixed(v % 1000 ? 1 : 0) + 'K';
+    const inputs = ['sdrN', 'sdrCost', 'sdrOut'];
     function update() {
-      const n = +$('sdrN').value, cost = +$('sdrCost').value;
-      const out = $('sdrOut').value / 100, auto = $('sdrAuto').value / 100, sys = +$('sdrSys').value;
+      const n = +$('sdrN').value, cost = +$('sdrCost').value, out = $('sdrOut').value / 100;
       inputs.forEach(id => {
         const el = $(id);
         el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%');
@@ -5251,25 +5273,17 @@
       $('sdrN-out').textContent = n;
       $('sdrCost-out').textContent = short(cost);
       $('sdrOut-out').textContent = Math.round(out * 100) + '%';
-      $('sdrAuto-out').textContent = Math.round(auto * 100) + '%';
-      $('sdrSys-out').textContent = money(sys);
-      const gross = n * cost * out * auto;
-      const sysYear = sys * 12;
-      const net = gross - sysYear;
-      const hours = n * HOURS * out * auto;
-      $('fGross').innerHTML = '<b>' + n + '</b> SDR' + (n === 1 ? '' : 's') + ' × <b>' + short(cost) + '</b> × <b>' + Math.round(out * 100) + '%</b> on outbound × <b>' + Math.round(auto * 100) + '%</b> automated';
-      $('vGross').textContent = money(gross);
-      $('fSys').innerHTML = '<b>' + money(sys) + '</b> a month to run the system × 12';
-      $('vSys').textContent = money(sysYear);
-      $('vNet').textContent = money(net);
+      const net = n * cost * out * AUTO - SYS_MONTH * 12;
       $('sdrNet').textContent = money(net);
-      $('sdrHours').textContent = Math.round(hours).toLocaleString('en-US');
-      $('sdrFte').textContent = (n * out * auto).toFixed(1);
+      $('sdrHours').textContent = Math.round(n * HOURS * out * AUTO).toLocaleString('en-US');
+      $('sdrFte').textContent = (n * out * AUTO).toFixed(1);
+      $('sdrFormula').innerHTML = '<b>' + n + '</b> SDR' + (n === 1 ? '' : 's') + ' × <b>' + short(cost) + '</b> × <b>' +
+        Math.round(out * 100) + '%</b> outbound × <b>70%</b> automated − <b>' + short(SYS_MONTH * 12) + '</b> system cost';
       const pct = v => (v * 100).toFixed(2) + '%';
       $('bOut0').style.width = pct(out);
       $('bOther0').style.width = pct(1 - out);
-      $('bOut1').style.width = pct(out * (1 - auto));
-      $('bIn1').style.width = pct(out * auto);
+      $('bOut1').style.width = pct(out * (1 - AUTO));
+      $('bIn1').style.width = pct(out * AUTO);
       $('bOther1').style.width = pct(1 - out);
     }
     inputs.forEach(id => $(id).addEventListener('input', update));
