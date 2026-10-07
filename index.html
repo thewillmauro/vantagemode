@@ -3824,6 +3824,25 @@
   }
   @media (max-width: 400px) {
   }
+
+  /* ── MOBILE TOUCH & LEGIBILITY ── */
+  @media (max-width: 768px) {
+    .hero-eyebrow { font-size: 11px !important; letter-spacing: 0.25em !important; }
+    .tech-stack-name { font-size: 10px !important; letter-spacing: 0.1em !important; text-align: center; }
+    .hero-actions .btn-outline { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; }
+    .footer-links a, .footer-bottom a, #cta a, .faq-sticky a { display: inline-flex; align-items: center; min-height: 44px; }
+    .footer-links { gap: 0 !important; }
+    footer a[href*="instagram"], footer a[href*="linkedin"] { display: inline-flex; align-items: center; min-height: 44px; }
+    .pb-in input[type=range] {
+      height: 32px;
+      background-size: 100% 4px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .pb-in input[type=range]::-webkit-slider-thumb { width: 28px; height: 28px; }
+    .pb-in input[type=range]::-moz-range-thumb { width: 26px; height: 26px; }
+    .pb-sdr-bar-key, .pb-legend, .pb-src-key { font-size: 11px; }
+  }
 </style>
 </head>
 <body>
