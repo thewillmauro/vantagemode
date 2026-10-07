@@ -23,7 +23,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy is first person ("I"
 2. **Hero**: GTM positioning, 3 pillars (Data / AI Agents / RevOps)
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
 4. **Services**: Six GTM services with counter (01-06), including launch content and video
-5. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, phased rollout, guardrails). No client or product names
+5. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, revenue equation, compounding flywheel, interactive SDR savings calculator with transparent formulas, phased rollout, guardrails). No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
 6. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, no prices
 7. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load
 8. **Founder**: William Mauro bio with photo

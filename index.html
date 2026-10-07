@@ -3464,6 +3464,285 @@
   }
   .pb-guard::before { content: '✦'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 10px; }
 
+  /* Flow pulses on the lane connectors */
+  .pb-pulse {
+    position: absolute;
+    top: 50%;
+    width: 56px;
+    height: 0;
+    pointer-events: none;
+  }
+  .pb-lane-a .pb-pulse { right: -57px; }
+  .pb-lane-b .pb-pulse { left: -57px; }
+  .pb-pulse::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    box-shadow: 0 0 10px var(--gold);
+  }
+  .pb-lane-a .pb-pulse::before { animation: pbFlowRight 2.4s linear infinite; }
+  .pb-lane-b .pb-pulse::before { animation: pbFlowLeft 2.4s linear infinite 1.2s; }
+  @keyframes pbFlowRight { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 50px; opacity: 0; } }
+  @keyframes pbFlowLeft { 0% { left: 50px; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 0; opacity: 0; } }
+  @keyframes pbFlowDown { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: calc(100% - 6px); opacity: 0; } }
+
+  /* Hub to revenue drop */
+  .pb-drop { display: flex; flex-direction: column; align-items: center; gap: 14px; margin: 40px 0 28px; }
+  .pb-drop-line {
+    position: relative;
+    width: 1px; height: 72px;
+    background: linear-gradient(var(--gold-dim), var(--gold));
+  }
+  .pb-drop-line i {
+    position: absolute;
+    left: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    box-shadow: 0 0 10px var(--gold);
+    animation: pbFlowDown 1.8s linear infinite;
+  }
+  .pb-drop-line::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: -5px;
+    border: 5px solid transparent;
+    border-top: 6px solid var(--gold);
+  }
+  .pb-drop-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+  /* Revenue equation */
+  .pb-rev {
+    border: 1px solid rgba(201,168,76,0.2);
+    background: linear-gradient(180deg, rgba(201,168,76,0.05) 0%, rgba(201,168,76,0) 60%);
+    padding: 40px;
+  }
+  .pb-rev-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; margin-bottom: 36px; }
+  .pb-rev-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    color: var(--white);
+  }
+  .pb-rev-title span { font-family: var(--font-italic); font-style: italic; color: var(--gold); font-size: 0.8em; letter-spacing: 0; }
+  .pb-src-key { display: flex; flex-wrap: wrap; gap: 18px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .pb-src-key span { display: flex; align-items: center; gap: 8px; }
+  .pb-src {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px; height: 22px;
+    padding: 0 4px;
+    font-style: normal;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .pb-src-a { background: var(--gold); color: var(--black); }
+  .pb-src-b { border: 1px solid var(--gold); color: var(--gold); }
+  .pb-src-hub { border: 1px solid var(--gold-bright); color: var(--gold-bright); border-radius: 11px; font-size: 11px; }
+  .pb-src-br { border: 1px dashed var(--gold); color: var(--gold); font-family: var(--font-body); font-size: 12px; }
+
+  .pb-eq {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1.15fr;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .pb-eq-tile {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pb-eq-tile:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+  .pb-eq-icon { width: 30px; height: 30px; color: var(--gold); margin-bottom: 14px; }
+  .pb-eq-icon svg { width: 100%; height: 100%; }
+  .pb-eq-word { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: var(--white); line-height: 1; }
+  .pb-eq-q { font-family: var(--font-italic); font-style: italic; font-size: 14px; color: var(--gold); margin: 6px 0 16px; }
+  .pb-eq-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+  .pb-eq-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .pb-eq-op {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--gold-dim);
+  }
+  .pb-eq-op-eq { color: var(--gold); }
+  .pb-eq-total {
+    background: var(--gold);
+    border-color: var(--gold);
+    justify-content: center;
+    box-shadow: 0 0 60px rgba(201,168,76,0.18);
+  }
+  .pb-eq-total:hover { border-color: var(--gold-bright); }
+  .pb-eq-total .pb-eq-word { color: var(--black); font-size: 34px; }
+  .pb-eq-math { display: flex; flex-direction: column; margin: 14px 0 12px; }
+  .pb-eq-math-row { font-size: 12px; color: rgba(0,0,0,0.6); letter-spacing: 0.05em; }
+  .pb-eq-math-row b { font-weight: 500; color: var(--black); }
+  .pb-eq-math-big { font-family: var(--font-display); font-size: 72px; line-height: 0.95; color: var(--black); letter-spacing: 0.02em; }
+  .pb-eq-note { font-size: 12px; line-height: 1.55; color: rgba(0,0,0,0.7); }
+
+  /* Flywheel */
+  .pb-loop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-top: 88px;
+  }
+  .pb-wheel { width: 100%; height: auto; display: block; overflow: visible; }
+  .pb-wheel-track { fill: none; stroke: rgba(201,168,76,0.18); stroke-width: 1; }
+  .pb-wheel-spin {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 110 770;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pbSpin 6s linear infinite;
+  }
+  @keyframes pbSpin { from { transform: rotate(-90deg); } to { transform: rotate(270deg); } }
+  .pb-wheel-inner { fill: rgba(201,168,76,0.06); stroke: rgba(201,168,76,0.35); stroke-width: 1; }
+  .pb-wheel-center { font-family: var(--font-display); font-size: 34px; letter-spacing: 1.5px; fill: var(--white); }
+  .pb-wheel-center-sub { font-family: var(--font-italic); font-style: italic; font-size: 14px; fill: var(--gold); }
+  .pb-wheel-node circle { fill: var(--black); stroke: var(--gold); stroke-width: 2; }
+  .pb-wheel-node text { font-family: var(--font-display); font-size: 17px; letter-spacing: 1.2px; fill: var(--white); }
+  .pb-loop-list { list-style: none; counter-reset: loop; display: flex; flex-direction: column; gap: 14px; }
+  .pb-loop-list li { counter-increment: loop; position: relative; padding-left: 40px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .pb-loop-list li::before {
+    content: counter(loop);
+    position: absolute;
+    left: 0; top: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pb-loop-list b { color: var(--white); font-weight: 500; }
+  .pb-cost { margin-top: 36px; }
+  .pb-cost-title { font-family: var(--font-italic); font-style: italic; font-size: 20px; color: var(--gold); margin-bottom: 16px; }
+  .pb-cost-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .pb-cost-item { background: var(--surface); padding: 18px 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+  .pb-cost-from { font-family: var(--font-display); font-size: 18px; color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .pb-cost-arrow { color: var(--gold-dim); font-size: 13px; }
+  .pb-cost-to { font-family: var(--font-display); font-size: 24px; color: var(--gold); letter-spacing: 0.03em; }
+  .pb-cost-lbl { flex-basis: 100%; font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pb-pulse::before, .pb-drop-line i, .pb-wheel-spin { animation: none; }
+    .pb-pulse::before, .pb-drop-line i { display: none; }
+  }
+
+  /* SDR math */
+  .pb-sdr {
+    margin-top: 88px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: var(--deep);
+    padding: 40px;
+  }
+  .pb-sdr-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 36px; }
+  .pb-sdr-head .pb-block-label { border-bottom: 0; padding-bottom: 0; margin-bottom: 14px; }
+  .pb-sdr-lede { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .pb-sdr-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; }
+  .pb-sdr-inputs { display: flex; flex-direction: column; gap: 22px; }
+  .pb-in { display: flex; flex-direction: column; gap: 10px; cursor: none; }
+  .pb-in-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13px; color: var(--white); }
+  .pb-in-top output { font-family: var(--font-display); font-size: 22px; color: var(--gold); letter-spacing: 0.03em; white-space: nowrap; }
+  .pb-in input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--fill, 50%), rgba(255,255,255,0.1) var(--fill, 50%));
+    border-radius: 2px;
+    outline: none;
+    cursor: none;
+  }
+  .pb-in input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--black);
+    border: 2px solid var(--gold-bright);
+    box-shadow: 0 0 12px rgba(201,168,76,0.4);
+  }
+  .pb-in input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--black);
+    border: 2px solid var(--gold-bright);
+  }
+  .pb-in input[type=range]:focus-visible { box-shadow: 0 0 0 3px rgba(201,168,76,0.35); }
+  .pb-sdr-assume { font-size: 11px; color: var(--muted); font-style: italic; line-height: 1.5; }
+
+  .pb-sdr-out { display: flex; flex-direction: column; gap: 24px; }
+  .pb-sdr-big {
+    background: var(--gold);
+    color: var(--black);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 0 60px rgba(201,168,76,0.15);
+  }
+  .pb-sdr-big-lbl { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.6); }
+  .pb-sdr-big-val { font-family: var(--font-display); font-size: clamp(56px, 7vw, 88px); line-height: 0.95; letter-spacing: 0.02em; }
+  .pb-sdr-big-sub { font-size: 13px; color: rgba(0,0,0,0.7); line-height: 1.5; }
+  .pb-sdr-big-sub b { font-weight: 500; color: var(--black); }
+  .pb-sdr-math { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.08); }
+  .pb-sdr-line {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .pb-sdr-op { font-family: var(--font-display); font-size: 20px; color: var(--gold); }
+  .pb-sdr-f { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .pb-sdr-f b { color: var(--white); font-weight: 500; }
+  .pb-sdr-v { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 0.03em; white-space: nowrap; }
+  .pb-sdr-total .pb-sdr-f { color: var(--white); }
+  .pb-sdr-total .pb-sdr-v { color: var(--gold); font-size: 26px; }
+
+  .pb-sdr-bars { display: flex; flex-direction: column; gap: 12px; }
+  .pb-sdr-bar-row { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; }
+  .pb-sdr-bar-lbl { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .pb-sdr-bar { display: flex; height: 26px; background: var(--surface); overflow: hidden; }
+  .pb-sdr-bar i { display: block; height: 100%; transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .seg-out { background: repeating-linear-gradient(45deg, rgba(107,100,88,0.9) 0 6px, rgba(107,100,88,0.6) 6px 12px); }
+  .seg-in { background: var(--gold); }
+  .seg-other { background: var(--surface2); }
+  .pb-sdr-bar-key { display: flex; flex-wrap: wrap; gap: 18px; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .pb-sdr-bar-key span { display: flex; align-items: center; gap: 8px; }
+  .pb-sdr-bar-key i { display: inline-block; width: 14px; height: 10px; }
+
+  @media (max-width: 900px) {
+    .pb-sdr-head, .pb-sdr-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 768px) {
+    .pb-sdr { padding: 24px 16px; margin-top: 64px; }
+    .pb-sdr-big { padding: 22px 18px; }
+    .pb-sdr-bar-row { grid-template-columns: 1fr; gap: 6px; }
+    .pb-sdr-v { font-size: 18px; }
+    .pb-sdr-total .pb-sdr-v { font-size: 22px; }
+  }
+
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
     max-width: 900px;
@@ -3497,6 +3776,11 @@
   .tech-stack-item:hover .tech-stack-mono { color: var(--gold-bright); }
 
   /* ── GTM RESPONSIVE ── */
+  @media (max-width: 1000px) {
+    .pb-eq { grid-template-columns: 1fr; gap: 6px; }
+    .pb-eq-op { font-size: 28px; line-height: 1; }
+    .pb-eq-list { margin-top: 0; }
+  }
   @media (max-width: 1100px) {
     .gtm-flow { grid-template-columns: repeat(3, 1fr); }
     .gtm-flow-step:nth-child(3n)::after { display: none; }
@@ -3512,6 +3796,13 @@
     .pb-bridge { flex-direction: column; align-items: flex-start; gap: 12px; }
     .pb-phases { grid-template-columns: 1fr; }
     .pb-phase:not(:last-child)::after { display: none; }
+    .pb-pulse { top: auto; width: 0; height: 48px; left: 50%; right: auto; }
+    .pb-lane-a .pb-pulse { bottom: -49px; right: auto; }
+    .pb-lane-b .pb-pulse { top: -49px; left: 50%; }
+    .pb-pulse::before { left: -3px !important; animation-name: pbFlowDown !important; }
+    .pb-lane-b .pb-pulse::before { animation-direction: reverse; }
+    .pb-loop { grid-template-columns: 1fr; gap: 40px; margin-top: 64px; }
+    .pb-wheel-wrap { max-width: 460px; margin: 0 auto; width: 100%; }
   }
   @media (max-width: 768px) {
     .gtm-approach, .pb { padding: 80px 20px !important; }
@@ -3521,6 +3812,9 @@
     .pb-block { margin-top: 64px; }
     .pb-phase { padding: 26px 20px; }
     .pb-bridge { padding: 20px; }
+    .pb-rev { padding: 24px 16px; }
+    .pb-rev-title { font-size: 30px; }
+    .pb-cost-row { grid-template-columns: 1fr; }
     .gtm-flow { grid-template-columns: 1fr; }
     .gtm-flow-step { padding: 24px 20px; }
     .gtm-flow-step::after { display: none; }
@@ -3805,6 +4099,7 @@
     <!-- Diagram -->
     <div class="pb-diagram reveal" role="img" aria-label="Diagram: an inbound, product-led motion and a targeted outbound motion both feed a central source of truth, with a bridge routing buyer intent from the product into outbound.">
       <div class="pb-lane pb-lane-a">
+        <span class="pb-pulse" aria-hidden="true"></span>
         <div class="pb-lane-head">
           <span class="pb-lane-tag">Motion A</span>
           <span class="pb-lane-title">INBOUND &amp; PRODUCT-LED</span>
@@ -3836,6 +4131,7 @@
       </div>
 
       <div class="pb-lane pb-lane-b">
+        <span class="pb-pulse" aria-hidden="true"></span>
         <div class="pb-lane-head">
           <span class="pb-lane-tag">Motion B</span>
           <span class="pb-lane-title">TARGETED OUTBOUND</span>
@@ -3858,6 +4154,187 @@
       </div>
     </div>
     <div class="pb-legend reveal"><span><i class="pb-dot"></i>Automated step</span><span><i class="pb-dot pb-dot-gate"></i>Human checkpoint</span></div>
+
+    <!-- Hub to revenue connector -->
+    <div class="pb-drop reveal" aria-hidden="true">
+      <span class="pb-drop-line"><i></i></span>
+      <span class="pb-drop-label">Where the revenue comes from</span>
+    </div>
+
+    <!-- Revenue equation -->
+    <div class="pb-rev reveal">
+      <div class="pb-rev-head">
+        <h3 class="pb-rev-title">EVERY PART OF THE SYSTEM<br><span>moves a revenue lever</span></h3>
+        <div class="pb-src-key">
+          <span><i class="pb-src pb-src-a">A</i>Inbound</span>
+          <span><i class="pb-src pb-src-b">B</i>Outbound</span>
+          <span><i class="pb-src pb-src-hub">DB</i>Source of truth</span>
+          <span><i class="pb-src pb-src-br">⇄</i>Bridge</span>
+        </div>
+      </div>
+
+      <div class="pb-eq">
+        <div class="pb-eq-tile">
+          <div class="pb-eq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg></div>
+          <div class="pb-eq-word">PIPELINE</div>
+          <div class="pb-eq-q">More qualified at-bats</div>
+          <ul class="pb-eq-list">
+            <li><i class="pb-src pb-src-b">B</i>Researched accounts at scale, for cents each</li>
+            <li><i class="pb-src pb-src-br">⇄</i>Product users bring their buyers</li>
+            <li><i class="pb-src pb-src-a">A</i>Content and signup with no sales call</li>
+          </ul>
+        </div>
+        <div class="pb-eq-op" aria-hidden="true">×</div>
+        <div class="pb-eq-tile">
+          <div class="pb-eq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
+          <div class="pb-eq-word">CONVERSION</div>
+          <div class="pb-eq-q">Win more of them</div>
+          <ul class="pb-eq-list">
+            <li><i class="pb-src pb-src-b">B</i>The right decision-maker, not a guess</li>
+            <li><i class="pb-src pb-src-hub">DB</i>Scores route the best accounts first</li>
+            <li><i class="pb-src pb-src-a">A</i>A free plan proves value before the paywall</li>
+          </ul>
+        </div>
+        <div class="pb-eq-op" aria-hidden="true">×</div>
+        <div class="pb-eq-tile">
+          <div class="pb-eq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="14" width="4" height="6"/><rect x="10" y="9" width="4" height="11"/><rect x="16" y="4" width="4" height="16"/></svg></div>
+          <div class="pb-eq-word">DEAL SIZE</div>
+          <div class="pb-eq-q">Earn more per customer</div>
+          <ul class="pb-eq-list">
+            <li><i class="pb-src pb-src-a">A</i>Tiers gated on capabilities people pay for</li>
+            <li><i class="pb-src pb-src-br">⇄</i>One user opens a whole account</li>
+            <li><i class="pb-src pb-src-a">A</i>Upgrade moments built into lifecycle</li>
+          </ul>
+        </div>
+        <div class="pb-eq-op" aria-hidden="true">×</div>
+        <div class="pb-eq-tile">
+          <div class="pb-eq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><polyline points="20,4 20,9 15,9"/></svg></div>
+          <div class="pb-eq-word">RETENTION</div>
+          <div class="pb-eq-q">Keep and expand them</div>
+          <ul class="pb-eq-list">
+            <li><i class="pb-src pb-src-a">A</i>Drips and in-app messages drive habit</li>
+            <li><i class="pb-src pb-src-hub">DB</i>Usage signals flag risk and expansion</li>
+            <li><i class="pb-src pb-src-hub">DB</i>Errors caught before customers report them</li>
+          </ul>
+        </div>
+        <div class="pb-eq-op pb-eq-op-eq" aria-hidden="true">=</div>
+        <div class="pb-eq-tile pb-eq-total">
+          <div class="pb-eq-word">REVENUE</div>
+          <div class="pb-eq-math">
+            <span class="pb-eq-math-row"><b>1.1</b> × <b>1.1</b> × <b>1.1</b> × <b>1.1</b></span>
+            <span class="pb-eq-math-big">+46%</span>
+          </div>
+          <p class="pb-eq-note">The levers multiply. Improve each one by 10% and revenue grows by 46%, not 10%.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flywheel + cost -->
+    <div class="pb-loop reveal">
+      <div class="pb-wheel-wrap">
+        <svg class="pb-wheel" viewBox="-30 0 520 400" role="img" aria-label="Flywheel: signal improves targeting, targeting earns replies, replies become customers, customers create usage data, and usage data becomes new signal.">
+          <circle class="pb-wheel-track" cx="230" cy="200" r="140"/>
+          <circle class="pb-wheel-spin" cx="230" cy="200" r="140"/>
+          <circle class="pb-wheel-inner" cx="230" cy="200" r="92"/>
+          <text class="pb-wheel-center" x="230" y="200" text-anchor="middle">COMPOUNDS</text>
+          <text class="pb-wheel-center-sub" x="230" y="224" text-anchor="middle">each loop starts smarter</text>
+          <g class="pb-wheel-node"><circle cx="230" cy="60" r="9"/><text x="230" y="38" text-anchor="middle">1 · SIGNAL</text></g>
+          <g class="pb-wheel-node"><circle cx="363" cy="157" r="9"/><text x="380" y="152" text-anchor="start">2 · TARGETING</text></g>
+          <g class="pb-wheel-node"><circle cx="312" cy="313" r="9"/><text x="326" y="340" text-anchor="start">3 · REPLIES</text></g>
+          <g class="pb-wheel-node"><circle cx="148" cy="313" r="9"/><text x="134" y="340" text-anchor="end">4 · CUSTOMERS</text></g>
+          <g class="pb-wheel-node"><circle cx="97" cy="157" r="9"/><text x="80" y="152" text-anchor="end">5 · USAGE DATA</text></g>
+        </svg>
+      </div>
+      <div class="pb-loop-text">
+        <div class="pb-block-label">Why It Compounds</div>
+        <ol class="pb-loop-list">
+          <li><b>Signal.</b> Every signup, reply, upgrade, and churn lands in the same database.</li>
+          <li><b>Targeting.</b> The ICP and scores update from what actually converted.</li>
+          <li><b>Replies.</b> Better targets and real proof points earn more conversations.</li>
+          <li><b>Customers.</b> More conversations close into more, and bigger, accounts.</li>
+          <li><b>Usage data.</b> Those customers show you who to find next.</li>
+        </ol>
+        <div class="pb-cost">
+          <div class="pb-cost-title">And it costs less to run</div>
+          <div class="pb-cost-row">
+            <div class="pb-cost-item"><span class="pb-cost-from">Hours</span><span class="pb-cost-arrow">→</span><span class="pb-cost-to">Cents</span><span class="pb-cost-lbl">AI research per account</span></div>
+            <div class="pb-cost-item"><span class="pb-cost-from">Everyone</span><span class="pb-cost-arrow">→</span><span class="pb-cost-to">Qualified</span><span class="pb-cost-lbl">Who your team spends time on</span></div>
+            <div class="pb-cost-item"><span class="pb-cost-from">Dupes</span><span class="pb-cost-arrow">→</span><span class="pb-cost-to">Zero</span><span class="pb-cost-lbl">Duplicate CRM records</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SDR math -->
+    <div class="pb-sdr reveal" id="sdr-math">
+      <div class="pb-sdr-head">
+        <div>
+          <div class="pb-block-label">The SDR Math</div>
+          <h3 class="pb-rev-title">LET THE SYSTEM RUN OUTBOUND<br><span>put your SDRs on inbound</span></h3>
+        </div>
+        <p class="pb-sdr-lede">Research, list building, and first-touch drafting are the parts of outbound a system does at scale. Hand those over and your SDRs spend their hours on the people who already raised their hand. Plug in your own numbers.</p>
+      </div>
+
+      <div class="pb-sdr-grid">
+        <div class="pb-sdr-inputs">
+          <label class="pb-in">
+            <span class="pb-in-top"><span>SDRs on the team</span><output id="sdrN-out"></output></span>
+            <input type="range" id="sdrN" min="1" max="50" step="1" value="5">
+          </label>
+          <label class="pb-in">
+            <span class="pb-in-top"><span>Fully loaded cost per SDR / year</span><output id="sdrCost-out"></output></span>
+            <input type="range" id="sdrCost" min="50000" max="200000" step="5000" value="95000">
+          </label>
+          <label class="pb-in">
+            <span class="pb-in-top"><span>Time spent on manual outbound</span><output id="sdrOut-out"></output></span>
+            <input type="range" id="sdrOut" min="10" max="90" step="5" value="60">
+          </label>
+          <label class="pb-in">
+            <span class="pb-in-top"><span>Share of that work the system automates</span><output id="sdrAuto-out"></output></span>
+            <input type="range" id="sdrAuto" min="10" max="90" step="5" value="70">
+          </label>
+          <label class="pb-in">
+            <span class="pb-in-top"><span>Automation cost / month (tools + AI)</span><output id="sdrSys-out"></output></span>
+            <input type="range" id="sdrSys" min="500" max="15000" step="250" value="2500">
+          </label>
+          <p class="pb-sdr-assume">Defaults are example assumptions, not benchmarks. Hours assume 2,000 working hours per SDR per year.</p>
+        </div>
+
+        <div class="pb-sdr-out">
+          <div class="pb-sdr-big">
+            <span class="pb-sdr-big-lbl">Net SDR capacity moved to inbound, per year</span>
+            <span class="pb-sdr-big-val" id="sdrNet">$0</span>
+            <span class="pb-sdr-big-sub"><b id="sdrHours">0</b> hours, or <b id="sdrFte">0</b> full-time SDRs of capacity, without a new hire</span>
+          </div>
+
+          <div class="pb-sdr-math">
+            <div class="pb-sdr-line"><span class="pb-sdr-op"></span><span class="pb-sdr-f" id="fGross"></span><span class="pb-sdr-v" id="vGross"></span></div>
+            <div class="pb-sdr-line"><span class="pb-sdr-op">−</span><span class="pb-sdr-f" id="fSys"></span><span class="pb-sdr-v" id="vSys"></span></div>
+            <div class="pb-sdr-line pb-sdr-total"><span class="pb-sdr-op">=</span><span class="pb-sdr-f">Net capacity value</span><span class="pb-sdr-v" id="vNet"></span></div>
+          </div>
+
+          <div class="pb-sdr-bars">
+            <div class="pb-sdr-bar-row">
+              <span class="pb-sdr-bar-lbl">Today</span>
+              <div class="pb-sdr-bar">
+                <i class="seg-out" id="bOut0"></i><i class="seg-other" id="bOther0"></i>
+              </div>
+            </div>
+            <div class="pb-sdr-bar-row">
+              <span class="pb-sdr-bar-lbl">With the system</span>
+              <div class="pb-sdr-bar">
+                <i class="seg-out" id="bOut1"></i><i class="seg-in" id="bIn1"></i><i class="seg-other" id="bOther1"></i>
+              </div>
+            </div>
+            <div class="pb-sdr-bar-key">
+              <span><i class="seg-out"></i>Manual outbound</span>
+              <span><i class="seg-in"></i>Moved to inbound</span>
+              <span><i class="seg-other"></i>Everything else</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Phases -->
     <div class="pb-block">
@@ -4735,6 +5212,50 @@
       }
     });
   }
+
+
+  // ── SDR MATH ──
+  (function sdrMath() {
+    const $ = id => document.getElementById(id);
+    if (!$('sdrN')) return;
+    const HOURS = 2000;
+    const money = v => (v < 0 ? '−$' : '$') + Math.round(Math.abs(v)).toLocaleString('en-US');
+    const short = v => v >= 1000 ? '$' + (v / 1000).toFixed(v % 1000 ? 1 : 0).replace(/\.0$/, '') + 'K' : '$' + v;
+    const inputs = ['sdrN', 'sdrCost', 'sdrOut', 'sdrAuto', 'sdrSys'];
+    function update() {
+      const n = +$('sdrN').value, cost = +$('sdrCost').value;
+      const out = $('sdrOut').value / 100, auto = $('sdrAuto').value / 100, sys = +$('sdrSys').value;
+      inputs.forEach(id => {
+        const el = $(id);
+        el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100) + '%');
+      });
+      $('sdrN-out').textContent = n;
+      $('sdrCost-out').textContent = short(cost);
+      $('sdrOut-out').textContent = Math.round(out * 100) + '%';
+      $('sdrAuto-out').textContent = Math.round(auto * 100) + '%';
+      $('sdrSys-out').textContent = money(sys);
+      const gross = n * cost * out * auto;
+      const sysYear = sys * 12;
+      const net = gross - sysYear;
+      const hours = n * HOURS * out * auto;
+      $('fGross').innerHTML = '<b>' + n + '</b> SDR' + (n === 1 ? '' : 's') + ' × <b>' + short(cost) + '</b> × <b>' + Math.round(out * 100) + '%</b> on outbound × <b>' + Math.round(auto * 100) + '%</b> automated';
+      $('vGross').textContent = money(gross);
+      $('fSys').innerHTML = '<b>' + money(sys) + '</b> a month to run the system × 12';
+      $('vSys').textContent = money(sysYear);
+      $('vNet').textContent = money(net);
+      $('sdrNet').textContent = money(net);
+      $('sdrHours').textContent = Math.round(hours).toLocaleString('en-US');
+      $('sdrFte').textContent = (n * out * auto).toFixed(1);
+      const pct = v => (v * 100).toFixed(2) + '%';
+      $('bOut0').style.width = pct(out);
+      $('bOther0').style.width = pct(1 - out);
+      $('bOut1').style.width = pct(out * (1 - auto));
+      $('bIn1').style.width = pct(out * auto);
+      $('bOther1').style.width = pct(1 - out);
+    }
+    inputs.forEach(id => $(id).addEventListener('input', update));
+    update();
+  })();
 
   // ── PROJECT WIZARD ──
   const wizardModal = document.getElementById('projectWizard');
