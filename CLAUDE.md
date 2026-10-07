@@ -1,6 +1,6 @@
 # Vantage Mode
 
-GTM Engineering Consultancy, founded by William Mauro. Copy is first person ("I") and avoids em dashes.
+GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the company voice (the founder quote stays "I") and avoids em dashes.
 
 ## Architecture
 
