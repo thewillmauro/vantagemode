@@ -1,0 +1,32 @@
+name: Supabase keep-alive
+
+# Free Supabase projects pause after a period of inactivity, which silently
+# breaks the site's lead forms. This pings the database once a day and
+# re-runs the lead-alert function to catch up on any missed alerts.
+on:
+  schedule:
+    - cron: '17 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping leads endpoint
+        env:
+          # Public anon key, already shipped in index.html
+          ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" -m 30 \
+            "https://tnkqxniwjomkojufuxlp.supabase.co/rest/v1/leads?select=id&limit=1" \
+            -H "apikey: $ANON_KEY" -H "Authorization: Bearer $ANON_KEY")
+          echo "leads endpoint: $code"
+          if [ "$code" != "200" ]; then
+            echo "::error::Supabase leads endpoint returned $code. The project may be paused; restore it in the Supabase dashboard."
+            exit 1
+          fi
+      - name: Catch up lead alerts
+        run: |
+          curl -s -m 60 -X POST "https://tnkqxniwjomkojufuxlp.supabase.co/functions/v1/lead-alert" \
+            -H "Content-Type: application/json" -d '{}'
+          echo
