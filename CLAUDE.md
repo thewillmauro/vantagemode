@@ -19,11 +19,11 @@ GTM Engineering Consultancy, founded by William Mauro. Copy is first person ("I"
 
 ## Site Sections (in order)
 
-1. **Nav**: Fixed top nav (Approach, Services, Case Study, Toolkit, About), hamburger menu, "Start a Project" CTA
+1. **Nav**: Fixed top nav (Approach, Services, Playbook, Toolkit, About), hamburger menu, "Start a Project" CTA
 2. **Hero**: GTM positioning, 3 pillars (Data / AI Agents / RevOps)
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
 4. **Services**: Six GTM services with counter (01-06), including launch content and video
-5. **Case Study** (`#veroxa`): Veroxa only. Results, two-motion strategy, firm pipeline diagram, what was built, build log (M1-M9). Claims must match the public repo github.com/thewillmauro/veroxa-gtm-public
+5. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, phased rollout, guardrails). No client or product names
 6. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, no prices
 7. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load
 8. **Founder**: William Mauro bio with photo

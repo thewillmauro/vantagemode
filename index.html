@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vantage Mode | GTM Engineering Consultancy</title>
-<meta name="description" content="Vantage Mode builds go-to-market systems: account data, Clay enrichment, AI research agents, lead scoring, HubSpot sync, and outbound. See the Veroxa case study.">
+<meta name="description" content="Vantage Mode builds go-to-market systems: account data, Clay enrichment, AI research agents, lead scoring, HubSpot sync, and outbound.">
 <meta property="og:title" content="Vantage Mode | GTM Engineering Consultancy">
 <meta property="og:description" content="Go-to-market, engineered. Data, AI agents, CRM, and outbound systems built like software.">
 <meta property="og:url" content="https://vantagemode.com">
@@ -1701,202 +1701,6 @@
   .sow-submitted-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 8px; }
   .sow-submitted-msg { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  /* ── DOCKET SECTION ── */
-  .docket-section {
-    background: #0a0e18;
-    position: relative;
-    overflow: hidden;
-  }
-  .docket-section::before {
-    content: 'VEROXA';
-    position: absolute;
-    font-family: var(--font-display);
-    font-size: 280px;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(59,130,246,0.04);
-    letter-spacing: 0.02em;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-  .docket-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .docket-inner > div { min-width: 0; }
-  .docket-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(59,130,246,0.08);
-    border: 1px solid rgba(59,130,246,0.2);
-    padding: 8px 16px;
-    border-radius: 40px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #3b82f6;
-    margin-bottom: 32px;
-  }
-  .docket-badge .dk-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #3b82f6;
-    animation: liveBlink 1.5s ease-in-out infinite;
-  }
-  .docket-title {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 7vw, 100px);
-    letter-spacing: 0.04em;
-    color: #fff;
-    line-height: 0.95;
-    margin-bottom: 28px;
-  }
-  .docket-title span { color: #3b82f6; }
-  .docket-desc {
-    font-size: 16px;
-    color: rgba(201,216,232,0.55);
-    line-height: 1.7;
-    margin-bottom: 36px;
-    max-width: 520px;
-  }
-  .dk-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 36px;
-  }
-  .dk-feature {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 16px;
-    transition: all 0.3s;
-  }
-  .dk-feature:hover {
-    background: rgba(59,130,246,0.05);
-    border-color: rgba(59,130,246,0.15);
-  }
-  .dk-feature-icon { font-size: 18px; margin-bottom: 8px; }
-  .dk-feature-title {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .dk-feature-desc {
-    font-size: 11px;
-    color: rgba(201,216,232,0.4);
-    line-height: 1.5;
-  }
-  .dk-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    color: #fff;
-    padding: 14px 32px;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-family: var(--font-body);
-    text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border-radius: 4px;
-  }
-  .dk-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(59,130,246,0.25);
-  }
-
-  /* Docket Demo */
-  .docket-demo {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-  }
-  .docket-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    padding: 20px;
-    transition: border-color 0.3s;
-  }
-  .docket-card:hover {
-    border-color: rgba(59,130,246,0.2);
-  }
-  .docket-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .docket-card-date {
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.35);
-  }
-  .docket-card-type {
-    font-size: 9px;
-    padding: 3px 8px;
-    border-radius: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .docket-card-title {
-    font-family: var(--font-display);
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    color: #fff;
-    margin-bottom: 6px;
-  }
-  .docket-card-detail {
-    font-size: 13px;
-    color: rgba(201,216,232,0.6);
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-  .docket-card-footer {
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.2);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    padding-top: 8px;
-  }
-  .docket-stat-bar {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 6px;
-    padding: 16px;
-  }
-  .docket-stat {
-    text-align: center;
-  }
-  .docket-stat-val {
-    font-family: var(--font-display);
-    font-size: 24px;
-    color: #3b82f6;
-    letter-spacing: 0.04em;
-  }
-  .docket-stat-lbl {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(201,216,232,0.35);
-    margin-top: 4px;
-  }
-
   /* ── FORESIGHT LEDGER SECTION ── */
   .foresight-section {
     background: #080a10;
@@ -2159,29 +1963,6 @@
   }
   .product-built-with-item:hover span {
     color: rgba(201,216,232,0.85);
-  }
-
-  /* Docket responsive */
-  @media (max-width: 1200px) {
-    .docket-inner { grid-template-columns: 1fr; gap: 48px; }
-    .docket-section { padding: 80px 24px; overflow: visible; }
-    .docket-section::before { display: none; }
-    .dk-features { grid-template-columns: repeat(4, 1fr); }
-  }
-  @media (max-width: 768px) {
-    .docket-section { padding: 64px 16px; overflow: visible; }
-    .docket-section::before { display: none; }
-    .docket-inner { gap: 36px; }
-    .docket-title { font-size: clamp(36px, 10vw, 56px); }
-    .docket-desc { font-size: 14px; margin-bottom: 24px; }
-    .dk-features { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .dk-feature { padding: 14px; }
-    .dk-feature-title { font-size: 11px; }
-    .dk-feature-desc { font-size: 10px; }
-    .docket-card { padding: 16px; }
-    .docket-card-title { font-size: 16px; }
-    .docket-card-detail { font-size: 12px; }
-    .docket-stat-bar { grid-template-columns: repeat(3, 1fr); }
   }
 
   /* Foresight responsive */
@@ -3314,17 +3095,6 @@
     .process-step > *:not(.step-node) { grid-column: 2 !important; }
     .process-step > .step-node { grid-column: 1 !important; grid-row: 1 / 3 !important; }
 
-    /* Docket */
-    .docket-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
-    .docket-section { padding: 64px 20px !important; }
-    .docket-section::before { font-size: 80px !important; }
-    .docket-title { font-size: clamp(36px, 10vw, 56px) !important; }
-    .docket-desc { font-size: 14px !important; }
-    .dk-features { grid-template-columns: 1fr !important; gap: 8px !important; }
-    .docket-card { padding: 16px !important; }
-    .docket-card-title { font-size: 16px !important; }
-    .docket-card-detail { font-size: 12px !important; }
-
     /* Foresight */
     .foresight-inner { grid-template-columns: 1fr !important; gap: 36px !important; }
     .foresight-section { padding: 64px 20px !important; }
@@ -3505,62 +3275,159 @@
   }
   .service-item:hover .service-item-desc { max-height: 160px; }
 
-  /* ── CASE STUDY ── */
-  .cs { background: var(--black); position: relative; overflow: hidden; }
-  .cs::before {
+  /* ── PLAYBOOK ── */
+  .pb { background: var(--black); position: relative; overflow: hidden; }
+  .pb::before {
     content: '';
     position: absolute;
-    top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    top: 30%; left: 50%;
+    width: 800px; height: 800px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);
     pointer-events: none;
   }
-  .cs-inner { max-width: 1200px; margin: 0 auto; position: relative; }
-  .cs-header {
+  .pb-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+  .pb-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: end;
     margin-bottom: 72px;
   }
-  .cs-lede { font-size: 16px; color: var(--white); opacity: 0.8; line-height: 1.75; }
-  .cs-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .cs-link {
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-decoration: none;
-    padding: 10px 18px;
-    border: 1px solid rgba(201,168,76,0.3);
-    transition: background 0.3s, color 0.3s;
-  }
-  .cs-link:hover { background: var(--gold); color: var(--black); }
-  .cs-results {
+  .pb-lede { font-size: 16px; color: var(--white); opacity: 0.8; line-height: 1.75; }
+
+  .pb-diagram {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
+    grid-template-columns: 1fr 280px 1fr;
+    column-gap: 56px;
+    row-gap: 28px;
   }
-  .cs-result { background: var(--surface); padding: 36px 28px; }
-  .cs-result-val {
+  .pb-lane {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 28px 20px;
+  }
+  .pb-lane::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 56px;
+    border-top: 1px dashed var(--gold);
+    opacity: 0.6;
+  }
+  .pb-lane-a::after { right: -57px; }
+  .pb-lane-b::after { left: -57px; }
+  .pb-lane-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+  .pb-lane-tag {
+    align-self: flex-start;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 4px 10px;
+  }
+  .pb-lane-title {
     font-family: var(--font-display);
-    font-size: 64px;
+    font-size: 30px;
+    letter-spacing: 0.04em;
     line-height: 1;
-    color: var(--gold);
-    margin-bottom: 14px;
-    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-top: 8px;
   }
-  .cs-before {
-    font-size: 28px;
+  .pb-lane-sub { font-family: var(--font-italic); font-style: italic; font-size: 15px; color: var(--gold); }
+  .pb-steps { list-style: none; position: relative; }
+  .pb-steps::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 8px; bottom: 18px;
+    width: 1px;
+    background: linear-gradient(var(--gold-dim), rgba(201,168,76,0.15));
+  }
+  .pb-steps li {
+    position: relative;
+    padding: 0 0 18px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .pb-steps li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 5px;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px var(--surface);
+  }
+  .pb-steps li.pb-gate::before {
+    border-radius: 0;
+    transform: rotate(45deg);
+    background: var(--surface);
+    border: 1.5px solid var(--gold-bright);
+  }
+  .pb-steps b { font-weight: 500; font-size: 14px; color: var(--white); }
+  .pb-steps li.pb-gate b { color: var(--gold-bright); }
+  .pb-steps span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  .pb-hub { align-self: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .pb-hub-ring {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: radial-gradient(circle, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0.02) 70%);
+    box-shadow: 0 0 0 10px rgba(201,168,76,0.04), 0 0 60px rgba(201,168,76,0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 28px;
+  }
+  .pb-hub-k { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .pb-hub-title { font-family: var(--font-display); font-size: 40px; line-height: 0.95; letter-spacing: 0.04em; color: var(--white); margin-bottom: 14px; }
+  .pb-hub-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .pb-hub-list li { font-size: 12px; color: var(--muted); }
+  .pb-hub-out { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .pb-hub-out span {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-thickness: 1px;
-    margin-right: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px 10px;
   }
-  .cs-result-lbl { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .cs-footnote { font-size: 12px; color: var(--muted); margin-top: 16px; font-style: italic; }
-  .cs-block { margin-top: 96px; }
-  .cs-block-label {
+
+  .pb-bridge {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 28px;
+    border: 1px dashed rgba(201,168,76,0.45);
+    background: rgba(201,168,76,0.04);
+  }
+  .pb-bridge-tag {
+    flex-shrink: 0;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 4px 10px;
+  }
+  .pb-bridge-text { flex: 1; font-size: 14px; color: var(--white); opacity: 0.85; line-height: 1.6; }
+  .pb-bridge-arrow { flex-shrink: 0; font-family: var(--font-display); font-size: 28px; letter-spacing: 0.08em; color: var(--gold); }
+  .pb-bridge-arrow i { font-style: normal; color: var(--gold-bright); }
+  .pb-legend { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .pb-legend span { display: flex; align-items: center; gap: 8px; }
+  .pb-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); }
+  .pb-dot-gate { border-radius: 0; transform: rotate(45deg); background: transparent; border: 1.5px solid var(--gold-bright); }
+
+  .pb-block { margin-top: 88px; }
+  .pb-block-label {
     font-size: 11px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -3569,100 +3436,33 @@
     margin-bottom: 32px;
     border-bottom: 1px solid rgba(201,168,76,0.15);
   }
-  .cs-strategy { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
-  .cs-motion { background: var(--surface); padding: 36px 32px; transition: background 0.3s; }
-  .cs-motion:hover { background: var(--surface2); }
-  .cs-motion-tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 4px 10px;
-    margin-bottom: 18px;
+  .pb-phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; counter-reset: phase; }
+  .pb-phase { background: var(--surface); padding: 32px 28px; position: relative; border-top: 2px solid var(--gold-dim); transition: background 0.3s, border-color 0.3s; }
+  .pb-phase:nth-child(2) { border-top-color: var(--gold); }
+  .pb-phase:nth-child(3) { border-top-color: var(--gold-bright); }
+  .pb-phase:hover { background: var(--surface2); }
+  .pb-phase:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px; top: 30px;
+    z-index: 2;
+    color: var(--gold);
+    font-size: 14px;
   }
-  .cs-motion-title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 0.04em;
-    line-height: 1.05;
+  .pb-phase-num { font-size: 10px; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 12px; }
+  .pb-phase-title { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 10px; line-height: 1; }
+  .pb-phase-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .pb-guards { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pb-guard {
+    font-size: 12px;
     color: var(--white);
-    margin-bottom: 12px;
-  }
-  .cs-motion-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
-  .cs-pipeline {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 16px;
-  }
-  .cs-node {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 18px 14px;
+    opacity: 0.85;
+    padding: 10px 16px 10px 32px;
     border: 1px solid rgba(255,255,255,0.08);
     background: var(--surface);
     position: relative;
   }
-  .cs-node:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -14px; top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    color: var(--gold-dim);
-  }
-  .cs-node-core { border-color: var(--gold); background: rgba(201,168,76,0.06); }
-  .cs-node-k {
-    font-family: var(--font-display);
-    font-size: 20px;
-    letter-spacing: 0.05em;
-    color: var(--gold);
-  }
-  .cs-node-v { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .cs-built { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
-  .cs-built-title {
-    font-family: var(--font-display);
-    font-size: 26px;
-    letter-spacing: 0.05em;
-    color: var(--white);
-    margin-bottom: 20px;
-  }
-  .cs-built-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-  .cs-built-list li {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-    padding-left: 20px;
-    position: relative;
-  }
-  .cs-built-list li::before { content: '✦'; position: absolute; left: 0; color: var(--gold); font-size: 10px; top: 4px; }
-  .cs-built-list code {
-    font-size: 12px;
-    color: var(--gold-bright);
-    background: rgba(201,168,76,0.08);
-    padding: 1px 6px;
-  }
-  .cs-milestones { display: grid; grid-template-columns: repeat(9, 1fr); gap: 2px; }
-  .cs-ms {
-    background: var(--surface);
-    padding: 20px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border-top: 2px solid rgba(255,255,255,0.08);
-  }
-  .cs-ms.done { border-top-color: var(--gold); }
-  .cs-ms.active { border-top-color: var(--gold-bright); background: rgba(201,168,76,0.06); }
-  .cs-ms-id { font-family: var(--font-display); font-size: 22px; color: var(--white); letter-spacing: 0.05em; }
-  .cs-ms.done .cs-ms-id { color: var(--gold); }
-  .cs-ms-name { font-size: 12px; color: var(--muted); line-height: 1.45; }
-  .cs-ms-legend { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .cs-ms-legend span { display: flex; align-items: center; gap: 8px; }
-  .cs-ms-legend i { display: inline-block; width: 14px; height: 2px; background: rgba(255,255,255,0.15); }
-  .cs-ms-legend i.done { background: var(--gold); }
-  .cs-ms-legend i.active { background: var(--gold-bright); }
+  .pb-guard::before { content: '✦'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 10px; }
 
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
@@ -3701,38 +3501,34 @@
     .gtm-flow { grid-template-columns: repeat(3, 1fr); }
     .gtm-flow-step:nth-child(3n)::after { display: none; }
     .gtm-principles { grid-template-columns: repeat(2, 1fr); }
-    .cs-results { grid-template-columns: repeat(2, 1fr); }
-    .cs-built { grid-template-columns: 1fr 1fr; }
-    .cs-milestones { grid-template-columns: repeat(5, 1fr); }
-    .cs-pipeline { grid-template-columns: repeat(4, 1fr); }
-    .cs-node:nth-child(4n)::after { display: none; }
   }
   @media (max-width: 900px) {
-    .gtm-approach-header, .cs-header { grid-template-columns: 1fr; gap: 28px; }
-    .cs-strategy { grid-template-columns: 1fr; }
-    .cs-built { grid-template-columns: 1fr; gap: 40px; }
+    .gtm-approach-header, .pb-header { grid-template-columns: 1fr; gap: 28px; }
+    .pb-diagram { grid-template-columns: 1fr; row-gap: 48px; }
+    .pb-hub { max-width: 280px; margin: 0 auto; width: 100%; }
+    .pb-lane::after { top: auto; width: 0; height: 48px; border-top: 0; border-left: 1px dashed var(--gold); left: 50%; right: auto; }
+    .pb-lane-a::after { bottom: -49px; }
+    .pb-lane-b::after { top: -49px; }
+    .pb-bridge { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .pb-phases { grid-template-columns: 1fr; }
+    .pb-phase:not(:last-child)::after { display: none; }
   }
   @media (max-width: 768px) {
-    .gtm-approach, .cs { padding: 80px 20px !important; }
-    .gtm-approach-header, .cs-header { margin-bottom: 40px; }
+    .gtm-approach, .pb { padding: 80px 20px !important; }
+    .gtm-approach-header, .pb-header { margin-bottom: 40px; }
+    .pb-lane { padding: 24px 20px 12px; }
+    .pb-lane-title { font-size: 26px; }
+    .pb-block { margin-top: 64px; }
+    .pb-phase { padding: 26px 20px; }
+    .pb-bridge { padding: 20px; }
     .gtm-flow { grid-template-columns: 1fr; }
     .gtm-flow-step { padding: 24px 20px; }
     .gtm-flow-step::after { display: none; }
     .gtm-principles { grid-template-columns: 1fr; gap: 28px; margin-top: 48px; padding-top: 36px; }
-    .cs-result { padding: 24px 18px; }
-    .cs-result-val { font-size: 44px; }
-    .cs-before { font-size: 20px; }
-    .cs-block { margin-top: 64px; }
-    .cs-motion { padding: 28px 20px; }
-    .cs-motion-title { font-size: 24px; }
-    .cs-pipeline { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .cs-node::after { display: none; }
-    .cs-milestones { grid-template-columns: repeat(3, 1fr); }
     .tech-stack-groups { gap: 32px; }
     .tech-stack-mono { height: 28px; font-size: 22px; }
   }
   @media (max-width: 400px) {
-    .cs-results { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -3748,7 +3544,7 @@
   <ul class="nav-links">
     <li><a href="#approach">Approach</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#veroxa">Case Study</a></li>
+    <li><a href="#playbook">Playbook</a></li>
     <li><a href="#stack">Toolkit</a></li>
     <li><a href="#founder">About</a></li>
   </ul>
@@ -3762,7 +3558,7 @@
 <div class="nav-mobile-menu" id="mobileMenu">
   <a href="#approach" class="mobile-link">Approach</a>
   <a href="#services" class="mobile-link">Services</a>
-  <a href="#veroxa" class="mobile-link">Case Study</a>
+  <a href="#playbook" class="mobile-link">Playbook</a>
   <a href="#stack" class="mobile-link">Toolkit</a>
   <a href="#founder" class="mobile-link">About</a>
   <a href="#" class="mobile-cta mobile-link open-wizard">Start a Project</a>
@@ -3782,7 +3578,7 @@
     <p class="hero-sub">I design and build the systems behind your pipeline: account data, enrichment, AI research agents, scoring, CRM sync, outreach, and the reporting that ties it together. Built like software, so it is tested, documented, and yours to keep.</p>
     <div class="hero-actions">
       <a href="#" class="btn-primary open-wizard"><span>Start a Project</span></a>
-      <a href="#veroxa" class="btn-outline">See the Veroxa Build</a>
+      <a href="#playbook" class="btn-outline">See the Playbook</a>
     </div>
 
     <!-- Hero Pillars -->
@@ -3995,143 +3791,108 @@
   </div>
 </section>
 
-<!-- CASE STUDY: VEROXA -->
-<section class="cs" id="veroxa">
-  <div class="cs-inner">
-    <div class="cs-header">
+<!-- PLAYBOOK -->
+<section class="pb" id="playbook">
+  <div class="pb-inner">
+    <div class="pb-header">
       <div class="reveal">
-        <p class="section-label">Case Study</p>
-        <h2 class="section-title">VEROXA<br><span class="italic">go-to-market</span></h2>
+        <p class="section-label">The Playbook</p>
+        <h2 class="section-title">TWO MOTIONS<br><span class="italic">one system</span></h2>
       </div>
-      <div class="cs-header-side reveal reveal-delay-2">
-        <p class="cs-lede">Veroxa is a record-keeping platform for family court. Parents keep organized, court-ready records and share them with their attorney. It sells to two very different buyers: parents in a custody case, and the family law firms that represent them. I built the product and the go-to-market system behind it.</p>
-        <div class="cs-links">
-          <a href="https://getveroxa.com" target="_blank" rel="noopener" class="cs-link">getveroxa.com ↗</a>
-          <a href="https://github.com/thewillmauro/veroxa-gtm-public" target="_blank" rel="noopener" class="cs-link">Pipeline source on GitHub ↗</a>
-        </div>
-      </div>
+      <p class="pb-lede reveal reveal-delay-2">The strategy I use when a product sells to more than one kind of buyer. Let one side come to you, go find the other, and run both through a single source of truth so every signal compounds.</p>
     </div>
 
-    <!-- Results -->
-    <div class="cs-results reveal">
-      <div class="cs-result">
-        <div class="cs-result-val"><span class="cs-before">1/10</span> 10/10</div>
-        <div class="cs-result-lbl">Right decision-maker per firm, Clay people search vs. research agent</div>
+    <!-- Diagram -->
+    <div class="pb-diagram reveal" role="img" aria-label="Diagram: an inbound, product-led motion and a targeted outbound motion both feed a central source of truth, with a bridge routing buyer intent from the product into outbound.">
+      <div class="pb-lane pb-lane-a">
+        <div class="pb-lane-head">
+          <span class="pb-lane-tag">Motion A</span>
+          <span class="pb-lane-title">INBOUND &amp; PRODUCT-LED</span>
+          <span class="pb-lane-sub">They come to you</span>
+        </div>
+        <ol class="pb-steps">
+          <li><b>Content &amp; community</b><span>Search, social, launch films, communities</span></li>
+          <li><b>Site &amp; signup</b><span>Clear offer, no sales call required</span></li>
+          <li><b>Free plan</b><span>Value before the paywall</span></li>
+          <li><b>Paid tiers</b><span>Plan gates tied to real capabilities</span></li>
+          <li><b>Lifecycle</b><span>Welcome flow, drips, in-app messages</span></li>
+        </ol>
       </div>
-      <div class="cs-result">
-        <div class="cs-result-val">~$1</div>
-        <div class="cs-result-lbl">Total AI research cost across every pilot run</div>
-      </div>
-      <div class="cs-result">
-        <div class="cs-result-val">0</div>
-        <div class="cs-result-lbl">Wrong contacts sent on to email lookup</div>
-      </div>
-      <div class="cs-result">
-        <div class="cs-result-val">0</div>
-        <div class="cs-result-lbl">Duplicate CRM writes when the HubSpot sync re-runs</div>
-      </div>
-    </div>
-    <p class="cs-footnote reveal">10-firm pilot, graded against hand labels. Small on purpose: the eval set grows to 25 to 30 labeled firms before the pipeline scales.</p>
 
-    <!-- Strategy -->
-    <div class="cs-block">
-      <div class="cs-block-label reveal">01 / The Strategy</div>
-      <div class="cs-strategy reveal">
-        <div class="cs-motion">
-          <div class="cs-motion-tag">Motion A</div>
-          <div class="cs-motion-title">PARENTS: INBOUND &amp; PRODUCT-LED</div>
-          <p class="cs-motion-desc">Parents are never prospected. They arrive through the site, content, and communities, then convert inside the product on a Free, Pro, and Premium ladder. Court records and dockets are never used as a lead source.</p>
-        </div>
-        <div class="cs-motion">
-          <div class="cs-motion-tag">Motion B</div>
-          <div class="cs-motion-title">FIRMS: TARGETED OUTBOUND</div>
-          <p class="cs-motion-desc">Family law firms in two pilot counties are sourced, enriched, researched, scored, and synced to HubSpot. Every message is drafted by the pipeline and approved by a human before it is sent.</p>
-        </div>
-        <div class="cs-motion">
-          <div class="cs-motion-tag">The Bridge</div>
-          <div class="cs-motion-title">PARENTS BRING THEIR ATTORNEYS</div>
-          <p class="cs-motion-desc">Parents can send exports to their attorney for review inside Veroxa. Attorney-intent signups from the product are mirrored into the GTM pipeline, so the B2C motion feeds the B2B one.</p>
-        </div>
-        <div class="cs-motion">
-          <div class="cs-motion-tag">Sequencing</div>
-          <div class="cs-motion-title">PHASED LAUNCH</div>
-          <p class="cs-motion-desc">Parents go live to the public first. Attorneys join a waitlist until Phase 2, which keeps the firm pitch grounded in real usage instead of promises.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Architecture -->
-    <div class="cs-block">
-      <div class="cs-block-label reveal">02 / The Firm Pipeline</div>
-      <div class="cs-pipeline reveal">
-        <div class="cs-node"><span class="cs-node-k">Seed</span><span class="cs-node-v">Firm list import</span></div>
-        <div class="cs-node cs-node-core"><span class="cs-node-k">Supabase</span><span class="cs-node-v">Source of truth + event log</span></div>
-        <div class="cs-node"><span class="cs-node-k">Clay</span><span class="cs-node-v">Webhook in, validated callback out</span></div>
-        <div class="cs-node"><span class="cs-node-k">Claude agent</span><span class="cs-node-v">Decision-maker, evidence URLs required</span></div>
-        <div class="cs-node"><span class="cs-node-k">Review</span><span class="cs-node-v">Human approval CLI</span></div>
-        <div class="cs-node"><span class="cs-node-k">Scoring</span><span class="cs-node-v">Per-rule breakdown</span></div>
-        <div class="cs-node"><span class="cs-node-k">HubSpot</span><span class="cs-node-v">Idempotent sync</span></div>
-        <div class="cs-node"><span class="cs-node-k">Outreach</span><span class="cs-node-v">Reviewed drafts, never auto-sent</span></div>
-      </div>
-    </div>
-
-    <!-- What I built -->
-    <div class="cs-block">
-      <div class="cs-block-label reveal">03 / What I Built</div>
-      <div class="cs-built reveal">
-        <div class="cs-built-col">
-          <div class="cs-built-title">GTM Pipeline</div>
-          <ul class="cs-built-list">
-            <li>Supabase schema with row-level security and an append-only <code>pipeline_events</code> audit log</li>
-            <li>Clay round-trip through a webhook table and an edge function callback: shared secret, Zod validation, idempotent, one transaction</li>
-            <li>Claude research agent that must cite evidence URLs, mostly on Claude Haiku with a Sonnet fallback</li>
-            <li>Decision-maker eval harness graded against hand-labeled firms</li>
-            <li>Scoring v1 as a pure function with a stored breakdown for every rule</li>
-            <li>HubSpot sync that never overwrites manual edits and writes nothing on re-run</li>
-            <li>Database guard that rejects emails on a domain other than the firm's</li>
-            <li>Tests on every migration, run in-process on PGlite</li>
+      <div class="pb-hub">
+        <div class="pb-hub-ring">
+          <div class="pb-hub-k">Source of Truth</div>
+          <div class="pb-hub-title">YOUR<br>DATABASE</div>
+          <ul class="pb-hub-list">
+            <li>Every account and contact</li>
+            <li>Append-only event log</li>
+            <li>Scores with reasons</li>
+            <li>Spend per step</li>
           </ul>
         </div>
-        <div class="cs-built-col">
-          <div class="cs-built-title">Product-Led Growth</div>
-          <ul class="cs-built-list">
-            <li>Free, Pro, and Premium tiers with capability gates in code</li>
-            <li>Stripe billing in live mode with self-healing customer records</li>
-            <li>Welcome email and new-signup alerts fired from the auth callback</li>
-            <li>Drip campaigns, in-app messages, and feature-flag segments in an admin dashboard</li>
-            <li>Parent-to-attorney review requests that bring firms into the product</li>
-            <li>GA4 analytics and Sentry errors filed straight to Linear</li>
-          </ul>
+        <div class="pb-hub-out">
+          <span>CRM</span><span>Reporting</span><span>Sequencer</span>
         </div>
-        <div class="cs-built-col">
-          <div class="cs-built-title">Guardrails</div>
-          <ul class="cs-built-list">
-            <li>No prospecting of individual parents, ever</li>
-            <li>No court records or case filings as a lead source</li>
-            <li>Only data sources whose terms permit this use</li>
-            <li>No auto-send. Every message is reviewed first</li>
-            <li>Accurate claims only, no outcome guarantees, CAN-SPAM compliant</li>
-            <li>An architecture decision record for every major tradeoff</li>
-          </ul>
+      </div>
+
+      <div class="pb-lane pb-lane-b">
+        <div class="pb-lane-head">
+          <span class="pb-lane-tag">Motion B</span>
+          <span class="pb-lane-title">TARGETED OUTBOUND</span>
+          <span class="pb-lane-sub">You go find them</span>
+        </div>
+        <ol class="pb-steps">
+          <li><b>Account list</b><span>Permitted sources, tight ICP</span></li>
+          <li><b>Enrichment</b><span>Clay waterfalls, validated callbacks</span></li>
+          <li><b>AI research</b><span>Right decision-maker, cited evidence</span></li>
+          <li class="pb-gate"><b>Human review</b><span>Uncertain answers stop here</span></li>
+          <li><b>Score &amp; sync</b><span>Per-rule scores, idempotent CRM sync</span></li>
+          <li class="pb-gate"><b>Reviewed outreach</b><span>Drafted by the system, sent by a person</span></li>
+        </ol>
+      </div>
+
+      <div class="pb-bridge">
+        <span class="pb-bridge-tag">The Bridge</span>
+        <span class="pb-bridge-text">Product users with buyer intent are routed into the outbound pipeline. Your users bring their buyers, so the self-serve motion feeds the sales motion.</span>
+        <span class="pb-bridge-arrow" aria-hidden="true">A <i>→</i> B</span>
+      </div>
+    </div>
+    <div class="pb-legend reveal"><span><i class="pb-dot"></i>Automated step</span><span><i class="pb-dot pb-dot-gate"></i>Human checkpoint</span></div>
+
+    <!-- Phases -->
+    <div class="pb-block">
+      <div class="pb-block-label reveal">Phased Rollout</div>
+      <div class="pb-phases reveal">
+        <div class="pb-phase">
+          <div class="pb-phase-num">PHASE 1</div>
+          <div class="pb-phase-title">PROVE ONE MOTION</div>
+          <p class="pb-phase-desc">Launch the self-serve side publicly. Collect real usage, real conversion, and real stories before asking anyone for a meeting.</p>
+        </div>
+        <div class="pb-phase">
+          <div class="pb-phase-num">PHASE 2</div>
+          <div class="pb-phase-title">OPEN THE SECOND</div>
+          <p class="pb-phase-desc">Turn the waitlist on and start outbound on a small, labeled pilot list. The pitch is grounded in usage, not promises.</p>
+        </div>
+        <div class="pb-phase">
+          <div class="pb-phase-num">PHASE 3</div>
+          <div class="pb-phase-title">SCALE WHAT WORKS</div>
+          <p class="pb-phase-desc">Grow the eval set, widen the territory, and automate only the steps that have already proven accurate.</p>
         </div>
       </div>
     </div>
 
-    <!-- Milestones -->
-    <div class="cs-block">
-      <div class="cs-block-label reveal">04 / Build Log</div>
-      <div class="cs-milestones reveal">
-        <div class="cs-ms done"><span class="cs-ms-id">M1</span><span class="cs-ms-name">Schema &amp; migrations</span></div>
-        <div class="cs-ms done"><span class="cs-ms-id">M2</span><span class="cs-ms-name">Seed importer</span></div>
-        <div class="cs-ms done"><span class="cs-ms-id">M3</span><span class="cs-ms-name">Clay round-trip</span></div>
-        <div class="cs-ms done"><span class="cs-ms-id">M4</span><span class="cs-ms-name">Research agent &amp; evals</span></div>
-        <div class="cs-ms done"><span class="cs-ms-id">M5</span><span class="cs-ms-name">Scoring</span></div>
-        <div class="cs-ms done"><span class="cs-ms-id">M6</span><span class="cs-ms-name">HubSpot sync</span></div>
-        <div class="cs-ms active"><span class="cs-ms-id">M7</span><span class="cs-ms-name">Outreach drafts &amp; review</span></div>
-        <div class="cs-ms"><span class="cs-ms-id">M8</span><span class="cs-ms-name">Inbound routing</span></div>
-        <div class="cs-ms"><span class="cs-ms-id">M9</span><span class="cs-ms-name">Funnel reporting</span></div>
+    <!-- Guardrails -->
+    <div class="pb-block">
+      <div class="pb-block-label reveal">Guardrails</div>
+      <div class="pb-guards reveal">
+        <span class="pb-guard">Consumers are never cold-prospected</span>
+        <span class="pb-guard">Sensitive public records are never a lead source</span>
+        <span class="pb-guard">Only data sources whose terms allow it</span>
+        <span class="pb-guard">No auto-send</span>
+        <span class="pb-guard">Accurate claims, no guarantees</span>
+        <span class="pb-guard">CAN-SPAM compliant, unsubscribes honored</span>
+        <span class="pb-guard">Every tradeoff written down</span>
       </div>
-      <div class="cs-ms-legend reveal"><span><i class="done"></i>Shipped</span><span><i class="active"></i>In progress</span><span><i></i>Next</span></div>
     </div>
   </div>
 </section>
@@ -4364,7 +4125,7 @@
     <div class="founder-content reveal reveal-delay-2">
       <p class="section-label">The Engineer</p>
       <blockquote class="founder-quote">"Go-to-market is a system. I build it like <span>software</span>, so it keeps <span>working</span> after I leave."</blockquote>
-      <p class="founder-bio">William Mauro is an entrepreneur, product builder, and technologist with 10+ years working at the intersection of software, brand strategy, and digital execution. His career spans early-stage startups to Fortune 500 enterprise, giving him a rare fluency in what businesses actually need to grow.<br><br>Before founding Vantage Mode, Will co-founded a commerce platform that enabled direct shopping from social content, building major retail partnerships along the way. He then led North American customer success at an enterprise content management company, managing accounts across fashion, luxury, electronics, and home goods.<br><br>Today, Will works as a GTM engineer. He builds the data, AI, and CRM systems that turn a target market into qualified pipeline, and the launch content that gives that pipeline something worth clicking. He built Veroxa end to end, from the product and its billing to the outbound pipeline that finds the right attorney at every firm, and he brings the same playbook to every client engagement.</p>
+      <p class="founder-bio">William Mauro is an entrepreneur, product builder, and technologist with 10+ years working at the intersection of software, brand strategy, and digital execution. His career spans early-stage startups to Fortune 500 enterprise, giving him a rare fluency in what businesses actually need to grow.<br><br>Before founding Vantage Mode, Will co-founded a commerce platform that enabled direct shopping from social content, building major retail partnerships along the way. He then led North American customer success at an enterprise content management company, managing accounts across fashion, luxury, electronics, and home goods.<br><br>Today, Will works as a GTM engineer. He builds the data, AI, and CRM systems that turn a target market into qualified pipeline, and the launch content that gives that pipeline something worth clicking. He has built products end to end, from pricing and billing to the outbound pipeline that finds the right decision-maker at every account, and he brings the same playbook to every client engagement.</p>
 
     </div>
   </div>
@@ -4417,7 +4178,7 @@
           <div class="faq-icon">+</div>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM. On Veroxa this took decision-maker accuracy from 1 in 10 to 10 in 10 on the pilot set.</div>
+          <div class="faq-answer-inner">Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM.</div>
         </div>
       </div>
 
@@ -4607,7 +4368,7 @@
     <ul class="footer-links">
       <li><a href="#founder">About Will</a></li>
       <li><a href="#approach">Approach</a></li>
-      <li><a href="#veroxa">Case Study</a></li>
+      <li><a href="#playbook">Playbook</a></li>
       <li><a href="#pricing">Engagements</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#cta">Contact</a></li>
@@ -4804,7 +4565,7 @@
   }
   animateRing();
 
-  document.querySelectorAll('a, button, .service-item, .gtm-flow-step, .cs-motion, .tech-stack-item').forEach(el => {
+  document.querySelectorAll('a, button, .service-item, .gtm-flow-step, .pb-phase, .tech-stack-item').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '20px';
       cursor.style.height = '20px';
