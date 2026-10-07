@@ -1,12 +1,12 @@
 # Vantage Mode
 
-Video, Software & Automation Consultancy — founded by William Mauro.
+GTM Engineering Consultancy, founded by William Mauro. Copy is first person ("I") and avoids em dashes.
 
 ## Architecture
 
 - **Single-file site**: Everything lives in `index.html` (~4270 lines of HTML, CSS, JS)
 - **No build system**: Static site, no bundler, no framework
-- **Hosted**: Deployed as static HTML
+- **Hosted**: Deployed as static HTML. Pushing a `claude/**` branch auto-merges to `main` (see `.github/workflows`), so use another branch name for unreviewed work
 
 ## Design System
 
@@ -19,20 +19,15 @@ Video, Software & Automation Consultancy — founded by William Mauro.
 
 ## Site Sections (in order)
 
-1. **Nav** — Fixed top nav with logo, links, hamburger menu, "Start a Project" CTA
-2. **Hero** — Full-viewport with grid background, glow effect, letterbox bars, 3 pillars (Video/Software/Automation)
-3. **Clients** — Logo ticker
-4. **Platforms** — Icon grid of platforms served
-5. **Services** — Tabbed service cards with counter (01-04)
-6. **Portfolio** — Photo portfolio grid with lightbox viewer and category filters
-7. **Process** — Visual process diagram
-8. **Products** — Cards for StreamLive, Adboard
-9. **StreamLive** — Deep-dive section on live broadcasting platform
-10. **Adboard** — Deep-dive section on local screen advertising
-11. **Automation** — Business automation services
-12. **Pricing** — Custom proposal approach (no packages)
-13. **Founder** — William Mauro bio with photo
-14. **Footer** — Contact info, links
+1. **Nav**: Fixed top nav (Approach, Services, Case Study, Toolkit, About), hamburger menu, "Start a Project" CTA
+2. **Hero**: GTM positioning, 3 pillars (Data / AI Agents / RevOps)
+3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
+4. **Services**: Six GTM services with counter (01-06), including launch content and video
+5. **Case Study** (`#veroxa`): Veroxa only. Results, two-motion strategy, firm pipeline diagram, what was built, build log (M1-M9). Claims must match the public repo github.com/thewillmauro/veroxa-gtm-public
+6. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, no prices
+7. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load
+8. **Founder**: William Mauro bio with photo
+9. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
 ## Interactive Elements
 
