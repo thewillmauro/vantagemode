@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://www.vantagemode.com/og.png">
 <meta name="theme-color" content="#080808">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Vantage Mode", "url": "https://www.vantagemode.com/", "logo": "https://www.vantagemode.com/og.png", "image": "https://www.vantagemode.com/og.png", "description": "GTM engineering for product-led companies adding a sales team. We build the systems behind your pipeline: account data, Clay enrichment, AI research agents, scoring, HubSpot sync, and outbound.", "email": "will@vantagemode.com", "areaServed": "Worldwide", "address": {"@type": "PostalAddress", "addressLocality": "Princeton", "addressRegion": "NJ", "addressCountry": "US"}, "founder": {"@type": "Person", "name": "William Mauro", "jobTitle": "GTM Engineer"}, "knowsAbout": ["GTM engineering", "Clay", "HubSpot", "Lead scoring", "AI research agents", "Outbound automation", "Product-led growth"], "sameAs": ["https://www.linkedin.com/company/vantage-mode", "https://www.instagram.com/vantagemode"]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does a GTM engineer actually do?", "acceptedAnswer": {"@type": "Answer", "text": "A GTM engineer builds the systems your sales and marketing teams run on: where account data comes from, how it gets enriched and researched, how leads are scored and routed, how records sync to your CRM, and how outreach and reporting work. Think of it as software engineering pointed at pipeline instead of product."}}, {"@type": "Question", "name": "Do you work in our existing stack?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Our default stack is Clay, HubSpot, Supabase, and Claude, but the approach does not depend on any one tool. We start from what you already pay for and only add something new when it clearly earns its place."}}, {"@type": "Question", "name": "Will you send email on our behalf?", "acceptedAnswer": {"@type": "Answer", "text": "By default, no. We build the drafting, review, and sending infrastructure, and a person on your team approves what goes out. Sending domains are kept separate from your main domain, suppression lists are honored, and every message stays CAN-SPAM compliant."}}, {"@type": "Question", "name": "How do you keep AI research accurate?", "acceptedAnswer": {"@type": "Answer", "text": "Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM."}}, {"@type": "Question", "name": "Do you still produce video?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as part of go-to-market. Launch films, ad creative, founder content, and product demos are produced in house, so the creative and the pipeline it runs through are planned together."}}, {"@type": "Question", "name": "How does pricing work?", "acceptedAnswer": {"@type": "Answer", "text": "Audits and builds are fixed-scope and fixed-price. Fractional work is a monthly retainer. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does a GTM engineer actually do?", "acceptedAnswer": {"@type": "Answer", "text": "A GTM engineer builds the systems your sales and marketing teams run on: where account data comes from, how it gets enriched and researched, how leads are scored and routed, how records sync to your CRM, and how outreach and reporting work. Think of it as software engineering pointed at pipeline instead of product."}}, {"@type": "Question", "name": "Do you work in our existing stack?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Our default stack is Clay, HubSpot, Supabase, and Claude, but the approach does not depend on any one tool. We start from what you already pay for and only add something new when it clearly earns its place."}}, {"@type": "Question", "name": "Will you send email on our behalf?", "acceptedAnswer": {"@type": "Answer", "text": "By default, no. We build the drafting, review, and sending infrastructure, and a person on your team approves what goes out. Sending domains are kept separate from your main domain, suppression lists are honored, and every message stays CAN-SPAM compliant."}}, {"@type": "Question", "name": "How do you keep AI research accurate?", "acceptedAnswer": {"@type": "Answer", "text": "Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM."}}, {"@type": "Question", "name": "Do you still produce video?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as part of go-to-market. Launch films, ad creative, founder content, and product demos are produced in house, so the creative and the pipeline it runs through are planned together."}}, {"@type": "Question", "name": "How does pricing work?", "acceptedAnswer": {"@type": "Answer", "text": "Audits and builds are fixed-scope and fixed-price, whether you start with one piece or the full pipeline. Fractional work and upkeep are monthly retainers. Tools like Clay and your sequencer run on your own accounts and are billed to you directly. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises."}}]}</script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1645,6 +1645,29 @@
     text-align: center;
   }
   .engagement-cta:hover { background: var(--gold-bright); }
+  .engagement-extras {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 1100px;
+    margin: 24px auto 0;
+  }
+  .engagement-extra {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 32px 36px;
+  }
+  .engagement-extra .engagement-name { font-size: 24px; margin-bottom: 12px; }
+  .engagement-extra .engagement-desc { margin-bottom: 20px; }
+  .engagement-extra-link {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .engagement-extra-link:hover { color: var(--gold-bright); }
   .engagement-how {
     margin-top: 48px;
     padding: 32px 40px;
@@ -3130,6 +3153,9 @@
     .engagement-grid { grid-template-columns: 1fr !important; }
     .engagement-card { padding: 32px 20px !important; }
     .engagement-name { font-size: 28px !important; }
+    .engagement-extras { grid-template-columns: 1fr !important; }
+    .engagement-extra { padding: 24px 20px !important; }
+    .engagement-extra .engagement-name { font-size: 22px !important; }
     .engagement-how { padding: 24px 20px !important; }
     .pricing-note { font-size: 14px !important; }
 
@@ -4366,7 +4392,7 @@
             <span class="pb-in-top"><span>Time spent on outbound</span><output id="sdrOut-out"></output></span>
             <input type="range" id="sdrOut" min="10" max="90" step="5" value="60">
           </label>
-          <p class="pb-sdr-assume">Assumes the system takes over 70% of manual outbound work and costs $2,500 a month to run, with 2,000 working hours per SDR per year. Example numbers, not benchmarks.</p>
+          <p class="pb-sdr-assume">Assumes the system takes over 70% of manual outbound work and upkeep costs $2,500 a month, with 2,000 working hours per SDR per year. Tool subscriptions are billed separately and are not in this math. Example numbers, not benchmarks.</p>
         </div>
 
         <div class="pb-sdr-out">
@@ -4530,6 +4556,21 @@
         <li>✦ Direct Slack access</li>
       </ul>
       <a href="#" class="engagement-cta open-wizard">Start a Conversation</a>
+    </div>
+  </div>
+
+  <div class="engagement-extras reveal">
+    <div class="engagement-extra">
+      <div class="engagement-tier">Smaller Start</div>
+      <div class="engagement-name">SINGLE-PIECE BUILD</div>
+      <div class="engagement-desc">One part of the pipeline, built, tested, and handed off in about two weeks. Common first pieces are the AI research agent, the enrichment setup, or a clean CRM sync.</div>
+      <a href="#" class="engagement-extra-link open-wizard">Start a Conversation →</a>
+    </div>
+    <div class="engagement-extra">
+      <div class="engagement-tier">After a Build</div>
+      <div class="engagement-name">SYSTEM UPKEEP</div>
+      <div class="engagement-desc">We keep the system running after handoff: monitoring, fixes, and a monthly funnel report. Month to month, with new builds scoped separately.</div>
+      <a href="#" class="engagement-extra-link open-wizard">Start a Conversation →</a>
     </div>
   </div>
 
@@ -4787,7 +4828,7 @@
           <div class="faq-icon">+</div>
         </div>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Audits and builds are fixed-scope and fixed-price. Fractional work is a monthly retainer. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises.</div>
+          <div class="faq-answer-inner">Audits and builds are fixed-scope and fixed-price, whether you start with one piece or the full pipeline. Fractional work and upkeep are monthly retainers. Tools like Clay and your sequencer run on your own accounts and are billed to you directly. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises.</div>
         </div>
       </div>
 
@@ -4863,7 +4904,9 @@
             <option>Free Pipeline Teardown</option>
             <option>GTM Audit</option>
             <option>Pipeline Build</option>
+            <option>Single-Piece Build</option>
             <option>Fractional GTM Engineer</option>
+            <option>System Upkeep</option>
             <option>AI Agents &amp; Automation</option>
             <option>Launch Content &amp; Video</option>
             <option>Not Sure Yet</option>
@@ -5374,7 +5417,7 @@
       $('sdrHours').textContent = Math.round(n * HOURS * out * AUTO).toLocaleString('en-US');
       $('sdrFte').textContent = (n * out * AUTO).toFixed(1);
       $('sdrFormula').innerHTML = '<b>' + n + '</b> SDR' + (n === 1 ? '' : 's') + ' × <b>' + short(cost) + '</b> × <b>' +
-        Math.round(out * 100) + '%</b> outbound × <b>70%</b> automated − <b>' + short(SYS_MONTH * 12) + '</b> system cost';
+        Math.round(out * 100) + '%</b> outbound × <b>70%</b> automated − <b>' + short(SYS_MONTH * 12) + '</b> upkeep';
       sdrSnapshot = '[SDR calculator] ' + $('sdrFormula').textContent + ' = ' + money(net) + ' a year (' + $('sdrHours').textContent + ' hours, ' + $('sdrFte').textContent + ' SDRs)';
       const pct = v => (v * 100).toFixed(2) + '%';
       $('bOut0').style.width = pct(out);
@@ -5491,7 +5534,7 @@
   document.querySelectorAll('.open-wizard').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
-      track('cta_start_project', { location: btn.closest('nav') ? 'nav' : btn.closest('.nav-mobile-menu') ? 'mobile_menu' : btn.closest('.engagement-card') ? 'engagement' : 'other' });
+      track('cta_start_project', { location: btn.closest('nav') ? 'nav' : btn.closest('.nav-mobile-menu') ? 'mobile_menu' : btn.closest('.engagement-card, .engagement-extra') ? 'engagement' : 'other' });
       // Close mobile menu if open
       const mm = document.getElementById('mobileMenu');
       if (mm.classList.contains('open')) {
