@@ -11,7 +11,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 ## Design System
 
 - **Theme**: Dark background with gold accent
-- **Colors**: `--black: #080808`, `--gold: #c9a84c`, `--gold-bright: #f0c96b`, `--white: #f5f0e8`, `--muted: #6b6458`
+- **Colors**: `--black: #080808`, `--gold: #c9a84c`, `--gold-bright: #f0c96b`, `--white: #f5f0e8`, `--muted: #a39b8c` (text), `--line: #6b6458` (rules), `--gold-soft: #b59443` (small gold text)
 - **Accent colors**: `--red-accent: #e63946`, `--teal-accent: #00b4c5`, `--pink-accent: #e040a0`, `--blue-accent: #0070f3`
 - **Fonts**: Bebas Neue (display), DM Sans (body), Playfair Display italic (accent)
 - **Custom cursor**: Gold dot + ring, hidden on mobile via `@media (pointer: coarse)`

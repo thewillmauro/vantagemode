@@ -35,8 +35,10 @@
     --gold: #c9a84c;
     --gold-bright: #f0c96b;
     --gold-dim: #7a6228;
+    --gold-soft: #b59443;
     --white: #f5f0e8;
-    --muted: #6b6458;
+    --muted: #a39b8c;
+    --line: #6b6458;
     --red-accent: #e63946;
     --teal-accent: #00b4c5;
     --pink-accent: #e040a0;
@@ -289,7 +291,7 @@
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
     white-space: nowrap;
   }
   .hero-pillar-divider {
@@ -602,7 +604,7 @@
     font-family: var(--font-display);
     font-size: 13px;
     letter-spacing: 0.15em;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
     margin-bottom: 16px;
   }
   .service-item-title {
@@ -886,7 +888,7 @@
     font-size: 11px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.75);
     margin-bottom: 20px;
   }
   .cta-title {
@@ -899,7 +901,7 @@
   .cta-right { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; }
   .cta-desc {
     font-size: 15px;
-    color: rgba(0,0,0,0.65);
+    color: rgba(0,0,0,0.8);
     line-height: 1.7;
     max-width: 340px;
     text-align: right;
@@ -1121,7 +1123,7 @@
     text-transform: uppercase;
     padding: 7px 16px;
     border: 1px solid rgba(201,168,76,0.25);
-    color: var(--gold-dim);
+    color: var(--gold-soft);
     transition: all 0.3s;
     cursor: none;
   }
@@ -1424,7 +1426,7 @@
   }
   .lightbox-close::before, .lightbox-close::after {
     content: ''; position: absolute; top: 50%; left: 50%;
-    width: 20px; height: 1px; background: var(--muted);
+    width: 20px; height: 1px; background: var(--line);
     transition: background 0.3s, width 0.3s;
   }
   .lightbox-close::before { transform: translate(-50%,-50%) rotate(45deg); }
@@ -1446,7 +1448,7 @@
   }
   .lightbox-nav::after {
     content: ''; width: 10px; height: 10px;
-    border-top: 1px solid var(--muted); border-right: 1px solid var(--muted);
+    border-top: 1px solid var(--line); border-right: 1px solid var(--line);
     transition: border-color 0.3s;
   }
   .lightbox-nav:hover::after { border-color: var(--gold); }
@@ -2175,7 +2177,7 @@
     color: var(--black);
   }
   .products-section .section-title .italic {
-    color: rgba(0,0,0,0.7);
+    color: rgba(0,0,0,0.8);
   }
   .products-grid {
     display: grid;
@@ -2400,7 +2402,7 @@
     display: block;
   }
   .wizard-progress-node.completed .wizard-progress-name {
-    color: var(--gold-dim);
+    color: var(--gold-soft);
   }
   .wizard-step-label {
     display: none;
@@ -3275,13 +3277,13 @@
     right: -9px; top: 34px;
     z-index: 2;
     font-size: 14px;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
   }
   .gtm-flow-num {
     font-family: var(--font-display);
     font-size: 13px;
     letter-spacing: 0.15em;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
     margin-bottom: 14px;
   }
   .gtm-flow-title {
@@ -3509,7 +3511,7 @@
     transition: background 0.3s, border-color 0.3s;
   }
   .pb-guard:hover { background: var(--surface2); border-left-color: var(--gold); }
-  .pb-guard-num { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.15em; color: var(--gold-dim); }
+  .pb-guard-num { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.15em; color: var(--gold-soft); }
   .pb-guard-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.04em; line-height: 1.05; color: var(--white); }
   .pb-guard-desc { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
   .pb-guard-by {
@@ -3634,7 +3636,7 @@
     justify-content: center;
     font-family: var(--font-display);
     font-size: 36px;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
   }
   .pb-eq-op-eq { color: var(--gold); }
   .pb-eq-total {
@@ -3646,10 +3648,10 @@
   .pb-eq-total:hover { border-color: var(--gold-bright); }
   .pb-eq-total .pb-eq-word { color: var(--black); font-size: 34px; }
   .pb-eq-math { display: flex; flex-direction: column; margin: 14px 0 12px; }
-  .pb-eq-math-row { font-size: 12px; color: rgba(0,0,0,0.6); letter-spacing: 0.05em; }
+  .pb-eq-math-row { font-size: 12px; color: rgba(0,0,0,0.75); letter-spacing: 0.05em; }
   .pb-eq-math-row b { font-weight: 500; color: var(--black); }
   .pb-eq-math-big { font-family: var(--font-display); font-size: 72px; line-height: 0.95; color: var(--black); letter-spacing: 0.02em; }
-  .pb-eq-note { font-size: 12px; line-height: 1.55; color: rgba(0,0,0,0.7); }
+  .pb-eq-note { font-size: 12px; line-height: 1.55; color: rgba(0,0,0,0.8); }
 
   /* Flywheel */
   .pb-loop {
@@ -3697,7 +3699,7 @@
   .pb-cost-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
   .pb-cost-item { background: var(--surface); padding: 18px 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
   .pb-cost-from { font-family: var(--font-display); font-size: 18px; color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
-  .pb-cost-arrow { color: var(--gold-dim); font-size: 13px; }
+  .pb-cost-arrow { color: var(--gold-soft); font-size: 13px; }
   .pb-cost-to { font-family: var(--font-display); font-size: 24px; color: var(--gold); letter-spacing: 0.03em; }
   .pb-cost-lbl { flex-basis: 100%; font-size: 11px; color: var(--muted); line-height: 1.45; }
 
@@ -3758,9 +3760,9 @@
     gap: 6px;
     box-shadow: 0 0 60px rgba(201,168,76,0.15);
   }
-  .pb-sdr-big-lbl { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.6); }
+  .pb-sdr-big-lbl { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.75); }
   .pb-sdr-big-val { font-family: var(--font-display); font-size: clamp(56px, 7vw, 88px); line-height: 0.95; letter-spacing: 0.02em; }
-  .pb-sdr-big-sub { font-size: 13px; color: rgba(0,0,0,0.7); line-height: 1.5; }
+  .pb-sdr-big-sub { font-size: 13px; color: rgba(0,0,0,0.8); line-height: 1.5; }
   .pb-sdr-big-sub b { font-weight: 500; color: var(--black); }
   .pb-sdr-formula { font-size: 13px; color: var(--muted); line-height: 1.7; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); }
   .pb-sdr-formula b { color: var(--white); font-weight: 500; }
@@ -3973,10 +3975,10 @@
   <div class="hero-content">
     <p class="hero-eyebrow">GTM Engineering for Early-Stage Software Companies</p>
     <h1 class="hero-title">
-      <span class="line"><span class="line-inner">GO-TO-MARKET</span></span>
-      <span class="line"><span class="line-inner"><span class="gold">engineered</span></span></span>
+      <span class="line"><span class="line-inner">BEFORE YOU HIRE</span></span>
+      <span class="line"><span class="line-inner"><span class="gold">your next SDR</span></span></span>
     </h1>
-    <p class="hero-sub">You're hiring your first sellers. We build the system they run on: account research, the right decision-maker, scoring, CRM sync, and first drafts. Built like software, so it is tested, documented, and yours to keep.</p>
+    <p class="hero-sub">Build the system your sellers run on: account research, the right decision-maker, scoring, CRM sync, and first drafts, done before a rep opens their inbox. Built like software, so it is tested, documented, and yours to keep.</p>
     <div class="hero-actions">
       <a href="#" class="btn-primary open-teardown" data-cta="hero"><span>Get a Free Pipeline Teardown</span></a>
       <a href="#playbook" class="btn-outline">See the Playbook</a>
@@ -4868,14 +4870,14 @@
   <!-- Top banner -->
   <div style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:80px 60px;gap:60px;flex-wrap:wrap;background:var(--gold);">
     <div class="reveal">
-      <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,0,0,0.5);margin-bottom:16px;">Ready to Start?</div>
+      <div style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,0,0,0.75);margin-bottom:16px;">Ready to Start?</div>
       <h2 style="font-family:var(--font-display);font-size:clamp(48px,5vw,80px);line-height:0.95;letter-spacing:0.02em;color:var(--black);">LET'S ENGINEER<br>YOUR<br>PIPELINE</h2>
     </div>
     <div class="reveal" style="max-width:400px;">
-      <p style="font-size:15px;color:rgba(0,0,0,0.65);line-height:1.75;margin-bottom:24px;">Whether it's a messy CRM, an enrichment setup that never quite worked, or a pipeline you need built from zero. We respond to every inquiry within 24 hours with a clear next step.</p>
+      <p style="font-size:15px;color:rgba(0,0,0,0.8);line-height:1.75;margin-bottom:24px;">Whether it's a messy CRM, an enrichment setup that never quite worked, or a pipeline you need built from zero. We respond to every inquiry within 24 hours with a clear next step.</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
         <a href="mailto:will@vantagemode.com" style="background:var(--black);color:var(--gold);padding:14px 32px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background 0.3s;">Email Directly</a>
-        <a href="#" class="open-teardown" data-cta="cta_band" style="border:1px solid rgba(0,0,0,0.25);color:rgba(0,0,0,0.7);padding:14px 32px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;">Free Pipeline Teardown</a>
+        <a href="#" class="open-teardown" data-cta="cta_band" style="border:1px solid rgba(0,0,0,0.25);color:rgba(0,0,0,0.8);padding:14px 32px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;">Free Pipeline Teardown</a>
       </div>
     </div>
   </div>
@@ -5009,7 +5011,7 @@
 </footer>
 <div class="footer-bottom">
   <span>© 2026 Vantage Mode LLC. All rights reserved. Princeton, NJ.</span>
-  <span>Built by Vantage Mode ✦ <a href="https://vantagemode.com" style="color:var(--gold-dim);text-decoration:none;">vantagemode.com</a></span>
+  <span>Built by Vantage Mode ✦ <a href="https://vantagemode.com" style="color:var(--gold-soft);text-decoration:none;">vantagemode.com</a></span>
 </div>
 
 <!-- PROJECT WIZARD MODAL -->
