@@ -4204,6 +4204,32 @@
     .pb-sdr-capture-row button { min-height: 48px; }
     #contactForm { grid-template-columns: 1fr !important; }
   }
+
+  /* ── CREDIBILITY STRIP ── */
+  .cred { background: var(--surface); border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15); padding: 22px 60px; }
+  .cred-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 22px; }
+  .cred-photo { width: 64px; height: 64px; flex-shrink: 0; border-radius: 50%; object-fit: cover; object-position: 50% 30%; border: 1px solid var(--gold); box-shadow: 0 0 0 4px rgba(201,168,76,0.08); }
+  .cred-text { flex: 1; min-width: 0; }
+  .cred-lead { font-size: 15px; color: var(--white); line-height: 1.5; }
+  .cred-lead b { font-weight: 500; color: var(--gold-bright); }
+  .cred-points { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 6px; }
+  .cred-points li { position: relative; padding-left: 14px; font-size: 13px; color: var(--muted); }
+  .cred-points li::before { content: '✦'; position: absolute; left: 0; top: 1px; font-size: 9px; color: var(--gold); }
+  .cred-link { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 44px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; }
+  .cred-link:hover { color: var(--gold-bright); }
+  @media (max-width: 900px) {
+    .cred { padding: 20px 24px; }
+    .cred-inner { flex-wrap: wrap; align-items: flex-start; gap: 14px 16px; }
+    .cred-text { flex-basis: calc(100% - 84px); }
+    .cred-points { flex-direction: column; gap: 4px; }
+    .cred-link { margin-left: 80px; }
+  }
+  @media (max-width: 480px) {
+    .cred-photo { width: 52px; height: 52px; }
+    .cred-text { flex-basis: calc(100% - 70px); }
+    .cred-lead { font-size: 14px; }
+    .cred-link { margin-left: 68px; min-height: 44px; }
+  }
 </style>
 </head>
 <body>
@@ -4313,6 +4339,22 @@
     Scroll
   </div>
 </section>
+
+<!-- CREDIBILITY STRIP -->
+<div class="cred">
+  <div class="cred-inner">
+    <img class="cred-photo" src="images/will-mauro.jpg" alt="Will Mauro" width="64" height="64" loading="lazy" decoding="async">
+    <div class="cred-text">
+      <p class="cred-lead">Built and run by <b>Will Mauro</b>, GTM engineer. You work with him directly, with no handoffs.</p>
+      <ul class="cred-points">
+        <li>Co-founded a social commerce platform with major retail partners</li>
+        <li>Led North American customer success at an enterprise content management company</li>
+        <li>10+ years, from early-stage startups to Fortune 500</li>
+      </ul>
+    </div>
+    <a href="#founder" class="cred-link">About Will →</a>
+  </div>
+</div>
 
 <!-- APPROACH -->
 <section class="gtm-approach" id="approach">

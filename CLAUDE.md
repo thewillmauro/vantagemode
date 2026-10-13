@@ -21,6 +21,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 
 1. **Nav**: Fixed top nav (Approach, Services, Playbook, Toolkit, About), hamburger menu, "Start a Project" CTA
 2. **Hero**: GTM positioning for early-stage software companies growing their sales team, 3 pillars (Data / AI Agents / RevOps)
+2b. **Credibility strip** (`.cred`): photo, one line about Will, three background points, link to `#founder`. Facts must match the founder bio
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
 4. **Live Pipeline demo** (`#pipeline`): "What your reps open every morning." Kanban board of 11 fictional accounts across 5 stages (ghost-loads on scroll, live activity feed). Clicking an account opens a dossier panel that ghost-loads section by section; depth depends on the account's stage. All data is fictional (`.example` domains) and labeled as sample data. Scores are computed from the rules in `scoreRules()`, so the card score and the breakdown always match
 5. **Services**: Six GTM services with counter (01-06), including launch content and video
@@ -29,6 +30,10 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 8. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load
 9. **Founder**: William Mauro bio with photo
 10. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
+
+## Share Links
+
+- `/playbook`, `/sdr-calculator`, `/pipeline-demo` are small static pages (each folder's `index.html`) with their own title and Open Graph tags for LinkedIn previews. They forward to the matching homepage anchor (`#playbook`, `#sdr-math`, `#pipeline`) and keep UTM params. They are `noindex` on purpose; real search-ranking pages would need full content
 
 ## Interactive Elements
 
