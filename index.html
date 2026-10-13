@@ -4759,7 +4759,7 @@
             <span class="pb-in-top"><span>Time spent on outbound</span><output id="sdrOut-out"></output></span>
             <input type="range" id="sdrOut" min="10" max="90" step="5" value="60">
           </label>
-          <p class="pb-sdr-assume">Assumes the system takes over 70% of manual outbound work and upkeep costs $2,500 a month, with 2,000 working hours per SDR per year. Tool subscriptions stay on your own accounts and are not in this math. Example numbers, not benchmarks.</p>
+          <p class="pb-sdr-assume">Assumes the system takes over 70% of manual outbound work and a 2,000-hour work year per SDR. This is the value of the time freed, before the cost of the system, which we scope with you. Example numbers, not benchmarks.</p>
         </div>
 
         <div class="pb-sdr-out">
@@ -5776,7 +5776,7 @@
   (function sdrMath() {
     const $ = id => document.getElementById(id);
     if (!$('sdrN')) return;
-    const HOURS = 2000, AUTO = 0.7, SYS_MONTH = 2500;
+    const HOURS = 2000, AUTO = 0.7;
     const money = v => (v < 0 ? '−$' : '$') + Math.round(Math.abs(v)).toLocaleString('en-US');
     const short = v => '$' + (v / 1000).toFixed(v % 1000 ? 1 : 0) + 'K';
     const inputs = ['sdrN', 'sdrCost', 'sdrOut'];
@@ -5789,12 +5789,12 @@
       $('sdrN-out').textContent = n;
       $('sdrCost-out').textContent = short(cost);
       $('sdrOut-out').textContent = Math.round(out * 100) + '%';
-      const net = n * cost * out * AUTO - SYS_MONTH * 12;
+      const net = n * cost * out * AUTO;
       $('sdrNet').textContent = money(net);
       $('sdrHours').textContent = Math.round(n * HOURS * out * AUTO).toLocaleString('en-US');
       $('sdrFte').textContent = (n * out * AUTO).toFixed(1);
       $('sdrFormula').innerHTML = '<b>' + n + '</b> SDR' + (n === 1 ? '' : 's') + ' × <b>' + short(cost) + '</b> × <b>' +
-        Math.round(out * 100) + '%</b> outbound × <b>70%</b> automated − <b>' + short(SYS_MONTH * 12) + '</b> upkeep';
+        Math.round(out * 100) + '%</b> outbound × <b>70%</b> automated';
       sdrSnapshot = '[SDR calculator] ' + $('sdrFormula').textContent + ' = ' + money(net) + ' a year (' + $('sdrHours').textContent + ' hours, ' + $('sdrFte').textContent + ' SDRs)';
       const pct = v => (v * 100).toFixed(2) + '%';
       $('bOut0').style.width = pct(out);
