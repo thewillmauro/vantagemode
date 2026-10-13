@@ -27,7 +27,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 5. **Services**: Seven GTM services with counter (01-07), including Conversation Intelligence (call notes from sales, CS, and product turned into CRM data) and launch content and video
 6. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, revenue equation, compounding flywheel, interactive SDR savings calculator with transparent formulas, phased rollout, guardrails). No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
 7. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, plus two smaller options below the cards (Single-Piece Build, System Upkeep). No prices on the site. Clients pay for tools on their own accounts, and we never bill tools. The SDR calculator shows the gross value of SDR time freed (no system cost subtracted), so it never implies a price
-8. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load
+8. **Toolkit** (`#stack`): 54 logos in 9 groups (Prospecting & Outreach, CRMs, Call Notes, Product Analytics & Data, Automation & Scheduling, AI Models & Tools, Build & Ship, Operations, Content & Ads), shuffled within each group on load. Intro says these are platforms we build with plus ones we work in for clients. Logos without a simple-icons entry are one-color masks in `images/logos/`, built from each company's own icon
 9. **Founder**: William Mauro bio with photo
 10. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
