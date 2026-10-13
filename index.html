@@ -3980,11 +3980,47 @@
   .lp-guards li.na i { border: 1px dashed rgba(255,255,255,0.2); }
   .lp-guards em { font-size: 11px; color: var(--muted); }
 
-  .lp-draft { margin-top: 16px; border: 1px solid rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
-  .lp-draft-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-bottom: 1px solid rgba(201,168,76,0.18); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
-  .lp-draft-head em { font-style: normal; color: var(--gold-bright); }
-  .lp-draft p { padding: 14px; font-size: 14px; line-height: 1.65; color: var(--white); }
+  .lp-chip-src { color: var(--black) !important; background: var(--gold) !important; border-color: var(--gold) !important; font-weight: 500; }
 
+  .lp-mail { border: 1px solid rgba(201,168,76,0.3); background: var(--surface); }
+  .lp-mail-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(201,168,76,0.06); border-bottom: 1px solid rgba(201,168,76,0.18); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+  .lp-mail-state { font-style: normal; color: var(--gold-bright); letter-spacing: 0.1em; }
+  .lp-mail.approved .lp-mail-state { color: #3ecf8e; }
+  .lp-mail.rejected .lp-mail-state { color: #e88a8a; }
+  .lp-mail-fields { padding: 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .lp-mail-fields div { display: flex; gap: 10px; padding: 7px 0; font-size: 13px; color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.04); overflow-wrap: anywhere; }
+  .lp-mail-fields div:last-child { border-bottom: 0; }
+  .lp-mail-fields span { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--muted); }
+  .lp-mail-fields b { font-weight: 500; }
+  .lp-mail-body { padding: 16px 14px 6px; font-size: 14px; line-height: 1.7; color: var(--white); outline: none; transition: background 0.2s; }
+  .lp-mail-body p { margin-bottom: 12px; }
+  .lp-mail.editing .lp-mail-body { background: rgba(201,168,76,0.05); box-shadow: inset 0 0 0 1px rgba(201,168,76,0.45); }
+  .lp-mail-body mark { background: rgba(201,168,76,0.16); color: var(--gold-bright); padding: 0 3px; border-bottom: 1px dashed var(--gold); }
+  .lp-mail-body sup { font-size: 10px; color: var(--gold); margin-left: 1px; }
+  .lp-mail-foot { padding: 0 14px 14px; font-size: 11px; color: var(--muted); }
+  .lp-mail-foot u { text-underline-offset: 2px; }
+  .lp-mail-refs { margin: 0 14px; padding: 10px 0 10px 18px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .lp-mail-refs li::marker { color: var(--gold); }
+  .lp-mail-checks { list-style: none; margin: 0 14px; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 7px; }
+  .lp-mail-checks li { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--white); }
+  .lp-mail-checks i { width: 18px; height: 18px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-style: normal; font-size: 10px; }
+  .lp-mail-checks .ok i { background: rgba(62,207,142,0.12); color: #3ecf8e; }
+  .lp-mail-checks .wait i { background: rgba(201,168,76,0.14); color: var(--gold-bright); }
+  .lp-mail-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .lp-btn { min-height: 44px; padding: 0 16px; background: none; border: 1px solid rgba(255,255,255,0.18); color: var(--white); font-family: var(--font-body); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; cursor: none; transition: border-color 0.2s, background 0.2s, opacity 0.2s; }
+  .lp-btn:hover:not(:disabled), .lp-btn:focus-visible { border-color: var(--gold); outline: none; }
+  .lp-btn-primary { background: var(--gold); border-color: var(--gold); color: var(--black); font-weight: 500; }
+  .lp-btn-primary:hover:not(:disabled) { background: var(--gold-bright); }
+  .lp-btn-ghost { border-color: transparent; color: var(--muted); }
+  .lp-btn:disabled { opacity: 0.35; }
+  .lp-mail-msg { padding: 0 14px 14px; font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .lp-mail.approved .lp-mail-msg { color: #3ecf8e; }
+  .lp-log li.lp-log-new { color: var(--gold-bright); animation: lpFeedIn 0.4s ease; }
+
+  .lp-panel-cta { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 24px; border-top: 1px solid rgba(201,168,76,0.25); background: var(--surface); }
+  .lp-panel-cta span { font-size: 13px; color: var(--white); }
+  .lp-cta-btn { min-height: 44px; padding: 0 18px; background: var(--gold); color: var(--black); border: 0; font-family: var(--font-body); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; white-space: nowrap; cursor: none; }
+  .lp-cta-btn:hover, .lp-cta-btn:focus-visible { background: var(--gold-bright); outline: none; }
   .lp-log { list-style: none; position: relative; display: flex; flex-direction: column; gap: 12px; padding-left: 18px; }
   .lp-log::before { content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
   .lp-log li { position: relative; font-size: 13px; color: var(--white); }
@@ -4014,6 +4050,9 @@
     .lp-wf-row { grid-template-columns: 1fr auto; }
     .lp-wf-path { grid-column: 1 / -1; grid-row: 2; }
     .lp-rules li { grid-template-columns: 1fr 60px 30px; }
+    .lp-mail-actions .lp-btn { flex: 1 1 auto; }
+    .lp-panel-cta { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 16px; }
+    .lp-panel-cta span { text-align: center; }
   }
   @media (min-width: 1101px) { .lp-hint { display: none; } }
   @media (prefers-reduced-motion: reduce) {
@@ -4385,6 +4424,7 @@
         <div class="lp-status" id="lpDStatus"><span class="lp-spin"></span><span id="lpDStatusText"></span></div>
       </div>
       <div class="lp-panel-body" id="lpDBody"></div>
+      <div class="lp-panel-cta"><span>Want this running on your pipeline?</span><button type="button" class="lp-cta-btn">Get a Free Pipeline Teardown</button></div>
     </div>
   </div>
 </section>
@@ -5777,6 +5817,9 @@
       { id: 'ridgeway', name: 'Ridgeway Data', domain: 'ridgewaydata.example', industry: 'Data infrastructure', hq: 'Atlanta, GA', emp: 140, growth: 18, round: 'Series A', raised: 25, months: 20, founded: 2020, model: 'Product-led', stack: ['HubSpot', 'dbt', 'Snowflake'], hiring: 2, users: 8, stage: 4, dm: ['Kofi Mensah', 'Head of Sales'] }
     ];
 
+    const SIGNAL_SOURCED = ['fernwork', 'quillstack', 'sablepoint', 'lumen'];
+    const fromSignal = a => SIGNAL_SOURCED.includes(a.id);
+    const sourceLine = a => fromSignal(a) ? 'a product signal: ' + a.users + ' free-plan users' : 'the ICP list';
     const ICP_STACK = ['HubSpot', 'Segment'];
     function scoreRules(a) {
       return [
@@ -5813,7 +5856,7 @@
         : '<span class="lp-pending"><i></i>' + STAGES[a.stage].note + '</span>';
       return '<button class="lp-card" data-id="' + a.id + '" aria-label="Open dossier for ' + esc(a.name) + '">' +
         '<span class="lp-card-top"><span class="lp-av">' + initials(a.name) + '</span><span class="lp-card-name">' + esc(a.name) + '<small>' + esc(a.industry) + '</small></span></span>' +
-        '<span class="lp-chips">' + signalChips(a).map(c => '<span>' + esc(c) + '</span>').join('') + '</span>' +
+        '<span class="lp-chips">' + (fromSignal(a) ? '<span class="lp-chip-src">⇄ Product signal</span>' : '') + signalChips(a).slice(0, fromSignal(a) ? 1 : 2).map(c => '<span>' + esc(c) + '</span>').join('') + '</span>' +
         '<span class="lp-card-foot">' + foot + '</span></button>';
     }
     function renderBoard() {
@@ -5853,7 +5896,7 @@
       const events = [];
       ACCOUNTS.forEach(a => {
         const s = score(a);
-        if (a.stage >= 0) events.push('Sourced <b>' + esc(a.name) + '</b> from the ICP list');
+        if (a.stage >= 0) events.push('Sourced <b>' + esc(a.name) + '</b> from ' + sourceLine(a));
         if (a.stage >= 1) events.push('Enriched <b>' + esc(a.name) + '</b> for $' + enrichCost(a));
         if (a.stage >= 2) events.push('Found the decision-maker at <b>' + esc(a.name) + '</b>, evidence cited');
         if (a.stage >= 3) events.push('Scored <b>' + esc(a.name) + '</b> at ' + s + ' (' + tier(s) + ')');
@@ -5897,7 +5940,7 @@
         const enriched = a.stage >= 1;
         return '<div class="lp-grid">' +
           kv('Industry', esc(a.industry), 'List') + kv('HQ', esc(a.hq), 'List') +
-          kv('Domain', esc(a.domain), 'List') + kv('Founded', enriched ? a.founded : '<em>pending</em>', enriched ? 'Clay' : '') +
+          kv('Domain', esc(a.domain), 'List') + kv('Source', fromSignal(a) ? '⇄ Product signal (inbound)' : 'ICP list (outbound)') + kv('Founded', enriched ? a.founded : '<em>pending</em>', enriched ? 'Clay' : '') +
           kv('Employees', enriched ? a.emp + ' <span class="lp-up">+' + a.growth + '% in 12 mo</span>' + spark(a) : '<em>pending</em>', enriched ? 'Apollo' : '') +
           kv('Funding', enriched ? a.round + ', $' + a.raised + 'M, ' + a.months + ' months ago' : '<em>pending</em>', enriched ? 'Clay' : '') +
           kv('Motion', enriched ? a.model : '<em>pending</em>', enriched ? 'Agent' : '') +
@@ -5950,16 +5993,51 @@
         ];
         return '<ul class="lp-guards">' + g.map(x => '<li class="' + (x[1] === true ? 'ok' : x[1] === 'wait' ? 'wait' : 'na') + '"><i>' + (x[1] === true ? '✓' : x[1] === 'wait' ? '◆' : '·') + '</i>' + x[0] + (x[1] === 'wait' ? ' <em>awaiting review</em>' : x[1] === null ? ' <em>not reached</em>' : '') + '</li>').join('') + '</ul>';
       } },
-      { title: 'In Your CRM', min: 4, rows: 5, render: a => {
+      { title: 'In Your CRM', min: 4, rows: 3, render: a => {
         const s = score(a);
-        const opener = 'Hi ' + first(a.dm[0]) + ', ' + (a.users ? a.users + ' people at ' + a.name + ' are already using the free plan' : a.name + ' is growing fast') +
-          (a.hiring ? ', and you are hiring ' + a.hiring + ' AE' + (a.hiring > 1 ? 's' : '') : '') + '. Teams at that point usually want the reps they hire to start on accounts that are already warm. Worth a short call to show you which ones?';
         return '<div class="lp-grid">' + kv('Record', 'HubSpot company + contact, associated', 'Sync') + kv('Duplicates', 'None. Re-runs write nothing new') +
-          kv('Lifecycle', 'Sales-qualified lead') + kv('Owner', 'Routed to AE team, ' + tier(s)) + '</div>' +
-          '<div class="lp-draft"><div class="lp-draft-head"><span>First draft</span><em>◆ Awaiting human review</em></div><p>' + esc(opener) + '</p></div>';
+          kv('Lifecycle', 'Sales-qualified lead') + kv('Owner', 'Routed to AE team, ' + tier(s)) + '</div>';
+      } },
+      { title: 'Email Draft · In Review', min: 4, rows: 8, render: a => {
+        const fn = first(a.dm[0]);
+        const refs = [];
+        const ref = (text, src) => { refs.push(src); return '<mark>' + text + '</mark><sup>' + refs.length + '</sup>'; };
+        const subject = a.users ? a.users + ' people at ' + a.name + ' already use Brightloop' : 'Your new AEs at ' + a.name;
+        const p1 = a.users
+          ? ref(a.users + ' people at ' + esc(a.name), 'Product data: ' + a.users + ' free-plan accounts on @' + a.domain + ' emails, active this month') + ' are already using Brightloop on the free plan.'
+          : esc(a.name) + ' looks like a strong fit for Brightloop.';
+        const p2 = a.hiring
+          ? "You're also hiring " + ref(a.hiring + ' account executive' + (a.hiring > 1 ? 's' : ''), 'Job board: ' + a.hiring + ' open AE role' + (a.hiring > 1 ? 's' : '') + ' posted this month') + ' right now. Teams at that stage usually want new reps starting on accounts that already know the product, not a cold list.'
+          : '';
+        const p3 = 'Would it help if I sent over which of your workspaces look ready for a paid plan? Happy to share it either way.';
+        const checks = [
+          ['Every claim matches the account data', 'ok'],
+          ['Unsubscribe link and mailing address included', 'ok'],
+          ['Recipient is not on the suppression list', 'ok'],
+          ['Sends from the outreach domain, not your main one', 'ok'],
+          ['Approved by a person', 'wait']
+        ];
+        return '<div class="lp-mail" data-account="' + a.id + '">' +
+          '<div class="lp-mail-bar"><span>Review queue</span><em class="lp-mail-state">◆ Awaiting review</em></div>' +
+          '<div class="lp-mail-fields">' +
+            '<div><span>From</span>Avery Cole &lt;avery@hello-brightloop.example&gt;</div>' +
+            '<div><span>To</span>' + esc(a.dm[0]) + ' &lt;' + maskEmail(slugEmail(a)) + '&gt;</div>' +
+            '<div><span>Subject</span><b>' + esc(subject) + '</b></div>' +
+          '</div>' +
+          '<div class="lp-mail-body" spellcheck="false"><p>Hi ' + esc(fn) + ',</p><p>' + p1 + '</p>' + (p2 ? '<p>' + p2 + '</p>' : '') + '<p>' + p3 + '</p><p>Avery</p></div>' +
+          '<div class="lp-mail-foot">Brightloop · 100 Example Street, Austin, TX · <u>Unsubscribe</u></div>' +
+          '<ol class="lp-mail-refs">' + refs.map(r => '<li>' + esc(r) + '</li>').join('') + '</ol>' +
+          '<ul class="lp-mail-checks">' + checks.map(c => '<li class="' + c[1] + '"><i>' + (c[1] === 'ok' ? '✓' : '◆') + '</i>' + c[0] + '</li>').join('') + '</ul>' +
+          '<div class="lp-mail-actions">' +
+            '<button type="button" class="lp-btn lp-btn-primary" data-review="approve">Approve and Schedule</button>' +
+            '<button type="button" class="lp-btn" data-review="edit">Edit</button>' +
+            '<button type="button" class="lp-btn lp-btn-ghost" data-review="reject">Reject</button>' +
+          '</div>' +
+          '<p class="lp-mail-msg" aria-live="polite">Highlighted phrases are pulled from the data above. Nothing sends until a person approves it.</p>' +
+        '</div>';
       } },
       { title: 'Event Log', min: 0, rows: 4, render: a => {
-        const ev = [['Sourced from the ICP list', 0]];
+        const ev = [['Sourced from ' + sourceLine(a), 0]];
         if (a.stage >= 1) ev.push(['Enriched: profile, headcount, funding, and stack for $' + enrichCost(a), 1]);
         if (a.stage >= 2) ev.push(['Decision-maker found with evidence URL', 2], ['Approved in human review', 2]);
         if (a.stage >= 3) ev.push(['Scored ' + score(a) + ' across 7 rules', 3]);
@@ -6008,6 +6086,58 @@
       statusText.textContent = 'Up to date. ' + (a.stage < 4 ? 'Next step: ' + STAGES[a.stage + 1].key + '.' : 'Ready for your reps.');
       statusEl.classList.add('done');
     }
+
+    function logEvent(text) {
+      const log = body.querySelector('.lp-log');
+      if (!log) return;
+      const li = document.createElement('li');
+      li.className = 'lp-log-new';
+      li.innerHTML = '<time>' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</time>' + esc(text);
+      log.prepend(li);
+    }
+    body.addEventListener('click', e => {
+      const btn = e.target.closest('[data-review]');
+      if (!btn) return;
+      const mail = btn.closest('.lp-mail');
+      const a = ACCOUNTS.find(x => x.id === mail.dataset.account);
+      const state = mail.querySelector('.lp-mail-state');
+      const msg = mail.querySelector('.lp-mail-msg');
+      const mailBody = mail.querySelector('.lp-mail-body');
+      const action = btn.dataset.review;
+      track('pipeline_demo_review', { action, account: a.id });
+      if (action === 'edit') {
+        const editing = mailBody.isContentEditable;
+        mailBody.contentEditable = editing ? 'false' : 'true';
+        mail.classList.toggle('editing', !editing);
+        btn.textContent = editing ? 'Edit' : 'Done Editing';
+        if (!editing) { mailBody.focus(); msg.textContent = 'Editing. Changes are saved to the draft and logged.'; }
+        else { msg.textContent = 'Edits saved. The draft still needs approval.'; logEvent('Draft edited by a reviewer'); }
+        return;
+      }
+      mailBody.contentEditable = 'false';
+      mail.classList.remove('editing');
+      mail.querySelectorAll('[data-review]').forEach(b => { b.disabled = true; });
+      if (action === 'approve') {
+        mail.classList.add('approved');
+        state.textContent = '✓ Approved';
+        const last = mail.querySelector('.lp-mail-checks li.wait');
+        if (last) { last.className = 'ok'; last.querySelector('i').textContent = '✓'; }
+        msg.textContent = 'Approved. Scheduled for 9:10 AM in ' + first(a.dm[0]) + "'s time zone from the outreach domain.";
+        logEvent('Draft approved by a reviewer and scheduled');
+        const g = [...body.querySelectorAll('.lp-guards li.wait')].pop();
+        if (g) { g.className = 'ok'; g.querySelector('i').textContent = '✓'; const em = g.querySelector('em'); if (em) em.remove(); }
+      } else {
+        mail.classList.add('rejected');
+        state.textContent = '✕ Rejected';
+        msg.textContent = 'Rejected. Nothing was sent. The account stays in the queue with your note for the next draft.';
+        logEvent('Draft rejected by a reviewer, nothing sent');
+      }
+    });
+    dlg.querySelector('.lp-cta-btn').addEventListener('click', () => {
+      track('pipeline_demo_cta');
+      closeDossier();
+      openTeardown('pipeline_demo');
+    });
 
     function closeDossier() {
       if (dlg.hidden) return;
