@@ -16,7 +16,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 - **Fonts**: Bebas Neue (display), DM Sans (body), Playfair Display italic (accent)
 - **Custom cursor**: Gold dot + ring, hidden on mobile via `@media (pointer: coarse)`
 - **Film grain overlay**: SVG noise texture on `body::before`
-- **Themes**: dark by default, light via `html[data-theme="light"]` overriding the same tokens (plus `--ink-rgb`, `--bg-rgb`, `--on-gold-rgb`, `--ok`, `--bad`, `--info`). Use those tokens, never raw white/black rgba, so both themes keep working. The nav toggle saves the choice in localStorage (`vm-theme`); a one-line script in `<head>` applies it before paint, the only script outside the main block
+- **Themes**: dark by default, light via `html[data-theme="light"]` overriding the same tokens (plus `--ink-rgb`, `--bg-rgb`, `--on-gold`, `--on-gold-rgb`, `--ok`, `--bad`, `--info`). Gold has three jobs: `--gold` for fills and borders, `--gold-ink` for small text, `--gold-display` for large headings in light mode. Use those tokens, never raw white/black rgba, so both themes keep working. The nav toggle saves the choice in localStorage (`vm-theme`); a one-line script in `<head>` applies it before paint, the only script outside the main block
 
 ## Site Sections (in order)
 
