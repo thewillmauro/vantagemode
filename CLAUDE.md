@@ -19,17 +19,18 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 
 ## Site Sections (in order)
 
-1. **Nav**: Fixed top nav (Approach, Services, Playbook, Toolkit, About), hamburger menu, "Start a Project" CTA
+1. **Nav**: Fixed top nav (Approach, Services, Playbook, Metrics, Toolkit, About), hamburger menu, "Start a Project" CTA
 2. **Hero**: GTM positioning for early-stage software companies growing their sales team, 3 pillars (Data / AI Agents / RevOps)
 2b. **Credibility strip** (`.cred`): photo, one line about Will, three background points, link to `#founder`. Facts must match the founder bio
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
 4. **Live Pipeline demo** (`#pipeline`): "What your reps open every morning." Kanban board of 11 fictional accounts across 5 stages (ghost-loads on scroll via IntersectionObserver with a scroll-position fallback, live activity feed). Clicking an account opens a dossier panel that ghost-loads section by section (including Conversation Notes from fictional calls in `CALLS`, shown before the email draft; call content is never quoted in outbound emails); a "Recommended Build" section (from the Enriched stage on) picks the best 3-4 of our services for that company with toolkit tools and one-line reasons, plus "Not now" services and a suggested engagement, all from rules in `recommend()` over the account's stack, motion, hiring, free-plan users, funding, and calls. Tool chip logos are read from the toolkit DOM, so a tool must exist in the toolkit to show its logo; depth depends on the account's stage. All data is fictional (`.example` domains) and labeled as sample data. Scores are computed from the rules in `scoreRules()`, so the card score and the breakdown always match
 5. **Services**: Seven GTM services with counter (01-07), including Conversation Intelligence (call notes from sales, CS, and product turned into CRM data) and launch content and video
 6. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, revenue equation, compounding flywheel, interactive SDR savings calculator with transparent formulas, phased rollout, guardrails). No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
-7. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, plus two smaller options below the cards (Single-Piece Build, System Upkeep). No prices on the site. Clients pay for tools on their own accounts, and we never bill tools. The SDR calculator shows the gross value of SDR time freed (no system cost subtracted), so it never implies a price
-8. **Toolkit** (`#stack`): 54 logos in 9 groups (Prospecting & Outreach, CRMs, Call Notes, Product Analytics & Data, Automation & Scheduling, AI Models & Tools, Build & Ship, Operations, Content & Ads), shuffled within each group on load. Intro says these are platforms we build with plus ones we work in for clients. Logos without a simple-icons entry are one-color masks in `images/logos/`, built from each company's own icon
-9. **Founder**: William Mauro bio with photo
-10. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
+7. **Scoreboard** (`#metrics`): KPI tree (revenue growth → Pipeline, Conversion, Deal Size, Retention, plus Efficiency and System Health), 21 expandable KPIs with definition, formula, and the services that move them; weekly/monthly/quarterly review cadence; experiment loop. Definitions only, no benchmarks or claimed results
+8. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, plus two smaller options below the cards (Single-Piece Build, System Upkeep). No prices on the site. Clients pay for tools on their own accounts, and we never bill tools. The SDR calculator shows the gross value of SDR time freed (no system cost subtracted), so it never implies a price
+9. **Toolkit** (`#stack`): 54 logos in 9 groups (Prospecting & Outreach, CRMs, Call Notes, Product Analytics & Data, Automation & Scheduling, AI Models & Tools, Build & Ship, Operations, Content & Ads), shuffled within each group on load. Intro says these are platforms we build with plus ones we work in for clients. Logos without a simple-icons entry are one-color masks in `images/logos/`, built from each company's own icon
+10. **Founder**: William Mauro bio with photo
+11. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
 ## Share Links
 
