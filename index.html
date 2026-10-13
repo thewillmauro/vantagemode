@@ -4254,6 +4254,19 @@
     .cred-lead { font-size: 14px; }
     .cred-link { margin-left: 68px; min-height: 44px; }
   }
+
+  /* ── MOBILE HERO: compact pillars, nothing hidden under the letterbox ── */
+  @media (max-width: 768px) {
+    .hero { padding-bottom: 48px !important; }
+    .hero::after { display: none !important; }
+    .hero-pillars { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; margin-top: 32px !important; width: 100%; }
+    .hero-pillar { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; padding: 14px 12px; border: 1px solid rgba(201,168,76,0.18); border-radius: 10px; background: rgba(201,168,76,0.03); min-width: 0; }
+    .hero-pillar-divider { display: none !important; }
+    .pillar-icon { width: 36px; height: 36px; border-radius: 8px; }
+    .pillar-icon svg { width: 20px; height: 20px; }
+    .pillar-label { font-size: 16px; white-space: nowrap; }
+    .pillar-cycle { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -5003,10 +5016,6 @@
       <span class="tech-stack-name">Apollo</span>
     </div>
     <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/hubspot.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/hubspot.svg);" aria-label="HubSpot"></div>
-      <span class="tech-stack-name">HubSpot</span>
-    </div>
-    <div class="tech-stack-item">
       <div class="tech-stack-icon" style="-webkit-mask-image:url(images/logos/smartlead-mark.png);mask-image:url(images/logos/smartlead-mark.png);" aria-label="Smartlead"></div>
       <span class="tech-stack-name">Smartlead</span>
     </div>
@@ -5018,9 +5027,30 @@
       <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/stripe.svg);" aria-label="Stripe"></div>
       <span class="tech-stack-name">Stripe</span>
     </div>
+      </div>
+    </div>
+    <div class="tech-stack-group">
+      <div class="tech-stack-group-label">CRMs We Work In</div>
+      <div class="tech-stack-grid">
     <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/shopify.svg);" aria-label="Shopify"></div>
-      <span class="tech-stack-name">Shopify</span>
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/hubspot.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/hubspot.svg);" aria-label="HubSpot"></div>
+      <span class="tech-stack-name">HubSpot</span>
+    </div>
+    <div class="tech-stack-item">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/salesforce.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/salesforce.svg);" aria-label="Salesforce"></div>
+      <span class="tech-stack-name">Salesforce</span>
+    </div>
+    <div class="tech-stack-item">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(images/logos/pipedrive-mark.svg);mask-image:url(images/logos/pipedrive-mark.svg);" aria-label="Pipedrive"></div>
+      <span class="tech-stack-name">Pipedrive</span>
+    </div>
+    <div class="tech-stack-item">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(images/logos/attio-mark.svg);mask-image:url(images/logos/attio-mark.svg);" aria-label="Attio"></div>
+      <span class="tech-stack-name">Attio</span>
+    </div>
+    <div class="tech-stack-item">
+      <div class="tech-stack-icon" style="-webkit-mask-image:url(images/logos/close-mark.svg);mask-image:url(images/logos/close-mark.svg);" aria-label="Close"></div>
+      <span class="tech-stack-name">Close</span>
     </div>
       </div>
     </div>
@@ -5106,10 +5136,6 @@
       <span class="tech-stack-name">Slack</span>
     </div>
     <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="width:24px;height:24px;-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/google.svg);" aria-label="Google Workspace"></div>
-      <span class="tech-stack-name">Google Workspace</span>
-    </div>
-    <div class="tech-stack-item">
       <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/figma.svg);" aria-label="Figma"></div>
       <span class="tech-stack-name">Figma</span>
     </div>
@@ -5129,18 +5155,6 @@
     <div class="tech-stack-item">
       <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobelightroom.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/adobelightroom.svg);" aria-label="Lightroom"></div>
       <span class="tech-stack-name">Lightroom</span>
-    </div>
-    <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="width:80px;height:40px;-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/sony.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/sony.svg);" aria-label="Sony"></div>
-      <span class="tech-stack-name">Sony FX3</span>
-    </div>
-    <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/dji.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/dji.svg);" aria-label="DJI"></div>
-      <span class="tech-stack-name">DJI</span>
-    </div>
-    <div class="tech-stack-item">
-      <div class="tech-stack-icon" style="-webkit-mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/apple.svg);mask-image:url(https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/apple.svg);" aria-label="Apple"></div>
-      <span class="tech-stack-name">Apple</span>
     </div>
       </div>
     </div>
