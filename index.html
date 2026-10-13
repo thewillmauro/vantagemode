@@ -3788,6 +3788,238 @@
     .pb-sdr-bar-row { grid-template-columns: 1fr; gap: 6px; }
   }
 
+
+  /* ── LIVE PIPELINE DEMO ── */
+  .lp { background: var(--black); position: relative; overflow: hidden; }
+  .lp-inner { max-width: 1280px; margin: 0 auto; }
+  .lp-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 40px; }
+  .lp-lede { font-size: 16px; color: var(--white); opacity: 0.85; line-height: 1.75; }
+  .lp-disclaimer { margin-top: 12px; font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* Ghost loading */
+  .sk {
+    display: block;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(201,168,76,0.10) 37%, rgba(255,255,255,0.04) 63%);
+    background-size: 400% 100%;
+    animation: skShimmer 1.4s ease infinite;
+  }
+  .sk-line { height: 10px; width: 100%; }
+  .sk-av { width: 32px; height: 32px; border-radius: 8px; }
+  @keyframes skShimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+  .lp-sk-block { display: flex; flex-direction: column; gap: 10px; }
+
+  /* Feed */
+  .lp-feed {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; margin-bottom: 14px;
+    border: 1px solid rgba(201,168,76,0.18);
+    background: rgba(201,168,76,0.04);
+    font-size: 13px; color: var(--muted);
+    min-height: 46px; overflow: hidden;
+  }
+  .lp-live { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+  .lp-live i { width: 7px; height: 7px; border-radius: 50%; background: #3ecf8e; box-shadow: 0 0 0 0 rgba(62,207,142,0.6); animation: lpPulse 1.8s infinite; }
+  @keyframes lpPulse { 0% { box-shadow: 0 0 0 0 rgba(62,207,142,0.55); } 70% { box-shadow: 0 0 0 8px rgba(62,207,142,0); } 100% { box-shadow: 0 0 0 0 rgba(62,207,142,0); } }
+  .lp-feed-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lp-feed-text b { color: var(--white); font-weight: 500; }
+  .lp-feed-text.in { animation: lpFeedIn 0.45s ease; }
+  .lp-feed-ago { color: var(--gold-soft); font-size: 11px; margin-left: 6px; }
+  @keyframes lpFeedIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* Board */
+  .lp-board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .lp-col { background: var(--deep); border: 1px solid rgba(255,255,255,0.05); padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 280px; }
+  .lp-col-head { display: flex; align-items: center; gap: 8px; padding: 2px 2px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); min-height: 26px; }
+  .lp-col-num { font-family: var(--font-display); font-size: 12px; color: var(--gold-soft); letter-spacing: 0.1em; }
+  .lp-col-name { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.05em; color: var(--white); }
+  .lp-col-count { margin-left: auto; font-size: 11px; color: var(--muted); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1px 8px; }
+  .lp-card {
+    display: flex; flex-direction: column; gap: 10px;
+    width: 100%; text-align: left;
+    background: var(--surface); color: var(--white);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px; cursor: none;
+    font-family: var(--font-body);
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    animation: lpCardIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  button.lp-card:hover, button.lp-card:focus-visible { border-color: rgba(201,168,76,0.55); background: var(--surface2); transform: translateY(-2px); outline: none; }
+  @keyframes lpCardIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .lp-card-sk { animation: none; gap: 8px; }
+  .lp-card-top { display: flex; gap: 10px; align-items: center; }
+  .lp-av {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold); font-family: var(--font-display); font-size: 15px; letter-spacing: 0.04em;
+  }
+  .lp-card-name { display: flex; flex-direction: column; font-size: 14px; font-weight: 500; line-height: 1.25; min-width: 0; }
+  .lp-card-name small { font-size: 11px; font-weight: 400; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lp-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .lp-chips span { font-size: 10px; color: var(--gold); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); padding: 2px 7px; }
+  .lp-card-foot { display: flex; align-items: center; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .lp-score { font-family: var(--font-display); font-size: 20px; color: var(--gold-bright); line-height: 1; }
+  .lp-score small { font-size: 11px; color: var(--muted); margin-left: 1px; }
+  .lp-tier { margin-left: auto; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .lp-pending { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
+  .lp-pending i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--gold-soft); border-top-color: transparent; animation: lpSpin 1s linear infinite; }
+  @keyframes lpSpin { to { transform: rotate(360deg); } }
+  .lp-hint { margin-top: 14px; font-size: 12px; color: var(--muted); }
+
+  /* Dossier */
+  .lp-dossier { position: fixed; inset: 0; z-index: 9400; }
+  .lp-dossier[hidden] { display: none; }
+  .lp-scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.3s; }
+  .lp-panel {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: min(600px, 100%);
+    background: var(--deep);
+    border-left: 1px solid rgba(201,168,76,0.25);
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    outline: none;
+  }
+  .lp-dossier.open .lp-scrim { opacity: 1; }
+  .lp-dossier.open .lp-panel { transform: none; }
+  .lp-panel-head { position: relative; padding: 22px 24px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); background: var(--surface); }
+  .lp-panel-id { display: flex; align-items: center; gap: 14px; padding-right: 90px; }
+  .lp-av-lg { width: 48px; height: 48px; font-size: 22px; border-radius: 12px; }
+  .lp-panel-name { font-family: var(--font-display); font-size: 32px; letter-spacing: 0.04em; line-height: 1; color: var(--white); }
+  .lp-panel-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .lp-close {
+    position: absolute; top: 18px; right: 18px;
+    min-height: 44px; padding: 0 14px;
+    background: none; border: 1px solid rgba(255,255,255,0.15); color: var(--muted);
+    font-family: var(--font-body); font-size: 11px; letter-spacing: 0.15em; cursor: none;
+  }
+  .lp-close:hover, .lp-close:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .lp-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 18px; }
+  .lp-steps span { display: flex; flex-direction: column; gap: 6px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .lp-steps i { display: block; height: 3px; background: rgba(255,255,255,0.08); }
+  .lp-steps .done { color: var(--gold-soft); }
+  .lp-steps .done i { background: var(--gold); }
+  .lp-steps .now { color: var(--white); }
+  .lp-steps .now i { background: linear-gradient(90deg, var(--gold-bright), var(--gold-dim)); background-size: 200% 100%; animation: skShimmer 1.2s linear infinite; }
+  .lp-status { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 12px; color: var(--gold); min-height: 18px; }
+  .lp-spin { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--gold); border-top-color: transparent; animation: lpSpin 0.8s linear infinite; }
+  .lp-status.done { color: #3ecf8e; }
+  .lp-status.done .lp-spin { animation: none; border-color: #3ecf8e; background: #3ecf8e; transform: scale(0.6); }
+  .lp-panel-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 8px 24px 40px; }
+
+  .lp-sec { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .lp-sec.lp-in { animation: lpFeedIn 0.4s ease; }
+  .lp-sec-title { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .lp-sec-pending .lp-sec-title { color: var(--muted); }
+  .lp-pending-box { font-size: 13px; color: var(--muted); padding: 14px 16px; border: 1px dashed rgba(255,255,255,0.14); line-height: 1.55; }
+  .lp-pending-box b { color: var(--white); font-weight: 500; }
+  .lp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+  .lp-kv { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .lp-k { font-size: 11px; color: var(--muted); }
+  .lp-v { font-size: 14px; color: var(--white); line-height: 1.45; overflow-wrap: anywhere; }
+  .lp-v em { color: var(--muted); font-style: italic; }
+  .lp-src { display: inline-block; margin-left: 6px; font-style: normal; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-soft); border: 1px solid rgba(201,168,76,0.25); padding: 1px 5px; vertical-align: 2px; }
+  .lp-up { color: #3ecf8e; font-size: 12px; }
+  .lp-spark { display: block; width: 100%; height: 26px; margin-top: 6px; }
+  .lp-spark polyline { fill: none; stroke: var(--gold); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  .lp-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .lp-tags span { font-size: 11px; border: 1px solid rgba(255,255,255,0.12); padding: 2px 7px; color: var(--white); }
+
+  .lp-wf { display: flex; flex-direction: column; gap: 8px; }
+  .lp-wf-row { display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center; font-size: 12px; }
+  .lp-wf-field { color: var(--white); }
+  .lp-wf-path { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+  .lp-wf-path i { color: var(--line); font-style: normal; }
+  .lp-wf-step { padding: 2px 7px; border: 1px solid; font-size: 11px; }
+  .lp-wf-step.ok { color: #3ecf8e; border-color: rgba(62,207,142,0.35); }
+  .lp-wf-step.miss { color: #e88a8a; border-color: rgba(230,57,70,0.35); text-decoration: line-through; }
+  .lp-wf-step.wait { color: var(--muted); border-color: rgba(255,255,255,0.12); border-style: dashed; }
+  .lp-wf-cost { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lp-wf-total { display: flex; justify-content: space-between; padding-top: 10px; margin-top: 4px; border-top: 1px dashed rgba(255,255,255,0.1); font-size: 13px; color: var(--muted); }
+  .lp-wf-total b { color: var(--gold-bright); font-weight: 500; }
+
+  .lp-signals { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .lp-signals li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--white); padding: 10px 12px; background: var(--surface); border-left: 2px solid var(--line); }
+  .lp-signals li.strong { border-left-color: var(--gold); }
+  .lp-signals li span { flex-shrink: 0; width: 64px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-soft); }
+
+  .lp-dm { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .lp-dm .lp-av { width: 44px; height: 44px; border-radius: 50%; font-size: 17px; }
+  .lp-dm-name { font-size: 16px; font-weight: 500; color: var(--white); }
+  .lp-dm-title { font-size: 12px; color: var(--muted); }
+  .lp-conf { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; font-family: var(--font-display); font-size: 26px; color: var(--gold-bright); line-height: 1; }
+  .lp-conf small { font-family: var(--font-body); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .lp-evidence { margin-top: 14px; font-size: 13px; color: var(--white); padding: 10px 12px; background: var(--surface); }
+  .lp-evidence span { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 3px; }
+  .lp-evidence u { text-decoration-color: var(--gold-dim); text-underline-offset: 3px; }
+  .lp-review { margin-top: 10px; font-size: 12px; color: #3ecf8e; display: flex; gap: 8px; align-items: center; }
+  .lp-review i { font-style: normal; font-size: 10px; }
+
+  .lp-score-wrap { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+  .lp-ring { width: 92px; height: 92px; flex-shrink: 0; }
+  .lp-ring-bg { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 6; }
+  .lp-ring-fg { fill: none; stroke: var(--gold); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 40px 40px; transition: stroke-dashoffset 1.1s cubic-bezier(0.16,1,0.3,1); }
+  .lp-ring text { font-family: var(--font-display); font-size: 26px; fill: var(--white); }
+  .lp-score-tier { font-family: var(--font-display); font-size: 26px; color: var(--gold); letter-spacing: 0.04em; }
+  .lp-score-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .lp-rules { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .lp-rules li { display: grid; grid-template-columns: 1fr 90px 34px; gap: 10px; align-items: center; font-size: 12px; color: var(--white); }
+  .lp-rules li.miss { color: var(--muted); }
+  .lp-rule-bar { height: 5px; background: rgba(255,255,255,0.06); }
+  .lp-rule-bar i { display: block; height: 100%; background: var(--gold); }
+  .lp-rules b { text-align: right; font-weight: 500; color: var(--gold-bright); font-variant-numeric: tabular-nums; }
+  .lp-rules li.miss b { color: var(--muted); }
+
+  .lp-guards { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .lp-guards li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--white); }
+  .lp-guards li i { width: 20px; height: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 11px; border-radius: 50%; }
+  .lp-guards li.ok i { background: rgba(62,207,142,0.12); color: #3ecf8e; }
+  .lp-guards li.wait i { background: rgba(201,168,76,0.12); color: var(--gold-bright); }
+  .lp-guards li.na { color: var(--muted); }
+  .lp-guards li.na i { border: 1px dashed rgba(255,255,255,0.2); }
+  .lp-guards em { font-size: 11px; color: var(--muted); }
+
+  .lp-draft { margin-top: 16px; border: 1px solid rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
+  .lp-draft-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-bottom: 1px solid rgba(201,168,76,0.18); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+  .lp-draft-head em { font-style: normal; color: var(--gold-bright); }
+  .lp-draft p { padding: 14px; font-size: 14px; line-height: 1.65; color: var(--white); }
+
+  .lp-log { list-style: none; position: relative; display: flex; flex-direction: column; gap: 12px; padding-left: 18px; }
+  .lp-log::before { content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+  .lp-log li { position: relative; font-size: 13px; color: var(--white); }
+  .lp-log li::before { content: ''; position: absolute; left: -18px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--deep); border: 1.5px solid var(--gold); }
+  .lp-log time { display: inline-block; min-width: 72px; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lp-log-note { margin-top: 12px; font-size: 11px; color: var(--muted); font-style: italic; }
+
+  @media (max-width: 1100px) {
+    .lp-board { grid-template-columns: repeat(5, minmax(220px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+    .lp-col { scroll-snap-align: start; }
+  }
+  @media (max-width: 900px) {
+    .lp-header { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 768px) {
+    .lp { padding: 80px 20px !important; }
+    .lp-board { grid-template-columns: repeat(5, 78vw); margin: 0 -20px; padding: 0 20px 8px; scroll-padding: 0 20px; }
+    .lp-col { min-height: 0; }
+    .lp-feed { font-size: 12px; }
+    .lp-panel { top: auto; height: 92svh; width: 100%; border-left: 0; border-top: 1px solid rgba(201,168,76,0.3); border-radius: 14px 14px 0 0; transform: translateY(100%); }
+    .lp-panel-head { padding: 18px 16px 14px; border-radius: 14px 14px 0 0; }
+    .lp-panel-name { font-size: 26px; }
+    .lp-close { top: 14px; right: 12px; }
+    .lp-panel-body { padding: 4px 16px 32px; }
+    .lp-steps span { font-size: 10px; letter-spacing: 0; }
+    .lp-grid { grid-template-columns: 1fr; }
+    .lp-wf-row { grid-template-columns: 1fr auto; }
+    .lp-wf-path { grid-column: 1 / -1; grid-row: 2; }
+    .lp-rules li { grid-template-columns: 1fr 60px 30px; }
+  }
+  @media (min-width: 1101px) { .lp-hint { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .sk, .lp-live i, .lp-pending i, .lp-spin, .lp-steps .now i { animation: none; }
+    .lp-card, .lp-sec.lp-in, .lp-feed-text.in { animation: none; }
+  }
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
     max-width: 900px;
@@ -4102,6 +4334,57 @@
     <div class="gtm-principle">
       <div class="gtm-principle-title">Decisions written down</div>
       <div class="gtm-principle-desc">Architecture decision records, tests, and a README your team can actually run.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE PIPELINE -->
+<section class="lp" id="pipeline">
+  <div class="lp-inner">
+    <div class="lp-header">
+      <div class="reveal">
+        <p class="section-label">See It Run</p>
+        <h2 class="section-title">WHAT YOUR REPS<br><span class="italic">open every morning</span></h2>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="lp-lede">A sample pipeline, built the way we build yours. Every account moves through the same five steps. Click any account to see everything the system knows about it, and why it sits where it does.</p>
+        <p class="lp-disclaimer">Sample data. All companies, people, and numbers are fictional.</p>
+      </div>
+    </div>
+
+    <div class="lp-feed reveal" aria-live="polite">
+      <span class="lp-live"><i></i>Live</span>
+      <span class="lp-feed-text" id="lpFeed">Starting pipeline…</span>
+    </div>
+
+    <div class="lp-board reveal" id="lpBoard" aria-busy="true">
+      <!-- Columns are rendered by script; these ghost columns show until it runs -->
+      <div class="lp-col"><div class="lp-col-head"><span class="sk sk-line" style="width:60%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div></div>
+      <div class="lp-col"><div class="lp-col-head"><span class="sk sk-line" style="width:60%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div></div>
+      <div class="lp-col"><div class="lp-col-head"><span class="sk sk-line" style="width:60%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div></div>
+      <div class="lp-col"><div class="lp-col-head"><span class="sk sk-line" style="width:60%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div></div>
+      <div class="lp-col"><div class="lp-col-head"><span class="sk sk-line" style="width:60%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div><div class="lp-card lp-card-sk"><span class="sk sk-av"></span><span class="sk sk-line"></span><span class="sk sk-line" style="width:70%"></span></div></div>
+    </div>
+    <p class="lp-hint reveal">Tap an account to open its dossier. Swipe to see every stage.</p>
+  </div>
+
+  <!-- Account dossier -->
+  <div class="lp-dossier" id="lpDossier" role="dialog" aria-modal="true" aria-labelledby="lpDName" hidden>
+    <div class="lp-scrim" data-close></div>
+    <div class="lp-panel" tabindex="-1">
+      <div class="lp-panel-head">
+        <div class="lp-panel-id">
+          <span class="lp-av lp-av-lg" id="lpDAv"></span>
+          <div>
+            <div class="lp-panel-name" id="lpDName"></div>
+            <div class="lp-panel-meta" id="lpDMeta"></div>
+          </div>
+        </div>
+        <button class="lp-close" data-close aria-label="Close dossier">ESC ✕</button>
+        <div class="lp-steps" id="lpDSteps"></div>
+        <div class="lp-status" id="lpDStatus"><span class="lp-spin"></span><span id="lpDStatusText"></span></div>
+      </div>
+      <div class="lp-panel-body" id="lpDBody"></div>
     </div>
   </div>
 </section>
@@ -5459,6 +5742,292 @@
       $('sdrCaptureNote').innerHTML = ok
         ? 'Got it. Will reviews every breakdown personally and replies within one business day with your numbers and the first fixes we would make.'
         : fallbackHTML(lead);
+    });
+  })();
+
+
+  // ── LIVE PIPELINE DEMO (fictional sample data) ──
+  (function livePipeline() {
+    const board = document.getElementById('lpBoard');
+    if (!board) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+    const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    const STAGES = [
+      { key: 'Sourced', step: 'Pulling firmographics', note: 'Queued for enrichment' },
+      { key: 'Enriched', step: 'Running enrichment waterfall', note: 'Waiting on research' },
+      { key: 'Researched', step: 'Researching the decision-maker', note: 'Ready to score' },
+      { key: 'Scored', step: 'Scoring against your ICP', note: 'Syncing to CRM' },
+      { key: 'In CRM', step: 'Syncing to CRM and drafting', note: 'Draft awaiting review' }
+    ];
+
+    // stage: 0-4. months = months since last funding. users = people on the free plan.
+    const ACCOUNTS = [
+      { id: 'tessellate', name: 'Tessellate', domain: 'tessellate.example', industry: 'Design collaboration', hq: 'Remote, US', emp: 230, growth: 14, round: 'Series B', raised: 41, months: 20, founded: 2018, model: 'Product-led', stack: ['Figma', 'Segment', 'Salesforce'], hiring: 0, users: 2, stage: 0, dm: ['Priya Raman', 'VP Revenue'] },
+      { id: 'fernwork', name: 'Fernwork', domain: 'fernwork.example', industry: 'HR tech, shift scheduling', hq: 'Denver, CO', emp: 88, growth: 41, round: 'Seed+', raised: 9, months: 5, founded: 2022, model: 'Product-led', stack: ['Pipedrive', 'Intercom', 'Stripe'], hiring: 2, users: 6, stage: 0, dm: ['Jordan Ellis', 'Head of Growth'] },
+      { id: 'plume', name: 'Plume Commerce', domain: 'plumecommerce.example', industry: 'E-commerce tooling', hq: 'Los Angeles, CA', emp: 54, growth: 12, round: 'Series A', raised: 12, months: 26, founded: 2020, model: 'Sales-assisted', stack: ['Shopify', 'Klaviyo', 'Pipedrive'], hiring: 0, users: 0, stage: 0, dm: ['Ana Ferreira', 'Founder and CEO'] },
+      { id: 'quillstack', name: 'Quillstack', domain: 'quillstack.example', industry: 'Developer docs platform', hq: 'Remote, US', emp: 62, growth: 18, round: 'Series A', raised: 14, months: 9, founded: 2021, model: 'Product-led', stack: ['HubSpot', 'Segment', 'GitHub'], hiring: 1, users: 11, stage: 1, dm: ['Marcus Chen', 'Head of Sales'] },
+      { id: 'northvane', name: 'Northvane', domain: 'northvane.example', industry: 'Carbon accounting', hq: 'San Francisco, CA', emp: 120, growth: 33, round: 'Series A', raised: 22, months: 14, founded: 2020, model: 'Sales-assisted', stack: ['Salesforce', 'Outreach', 'Snowflake'], hiring: 3, users: 0, stage: 1, dm: ['Leah Brandt', 'VP Sales'] },
+      { id: 'kestrel', name: 'Kestrel Cloud', domain: 'kestrelcloud.example', industry: 'Cloud security posture', hq: 'Boston, MA', emp: 175, growth: 26, round: 'Series B', raised: 50, months: 11, founded: 2019, model: 'Sales-assisted', stack: ['HubSpot', 'Gong', 'Snowflake'], hiring: 4, users: 3, stage: 2, dm: ['Samir Haddad', 'VP Sales'] },
+      { id: 'sablepoint', name: 'Sablepoint', domain: 'sablepoint.example', industry: 'Sales call coaching', hq: 'Seattle, WA', emp: 96, growth: 19, round: 'Series A', raised: 16, months: 7, founded: 2021, model: 'Product-led', stack: ['HubSpot', 'Segment', 'Stripe'], hiring: 2, users: 9, stage: 2, dm: ['Grace Liu', 'Director of Sales'] },
+      { id: 'orbitly', name: 'Orbitly', domain: 'orbitly.example', industry: 'Product analytics', hq: 'New York, NY', emp: 205, growth: 17, round: 'Series B', raised: 45, months: 16, founded: 2018, model: 'Product-led', stack: ['HubSpot', 'Segment', 'Snowflake'], hiring: 2, users: 14, stage: 3, dm: ['Dana Okafor', 'VP Sales'] },
+      { id: 'harborline', name: 'Harborline', domain: 'harborline.example', industry: 'Freight logistics software', hq: 'Chicago, IL', emp: 310, growth: 9, round: 'Series C', raised: 72, months: 30, founded: 2016, model: 'Sales-assisted', stack: ['Salesforce', 'Outreach', 'Zendesk'], hiring: 1, users: 0, stage: 3, dm: ['Tom Becker', 'CRO'] },
+      { id: 'lumen', name: 'Lumen Ledger', domain: 'lumenledger.example', industry: 'Accounting automation', hq: 'Austin, TX', emp: 140, growth: 38, round: 'Series B', raised: 38, months: 22, founded: 2019, model: 'Product-led', stack: ['HubSpot', 'Segment', 'Stripe'], hiring: 3, users: 17, stage: 4, dm: ['Rachel Moreno', 'VP Sales'] },
+      { id: 'ridgeway', name: 'Ridgeway Data', domain: 'ridgewaydata.example', industry: 'Data infrastructure', hq: 'Atlanta, GA', emp: 140, growth: 18, round: 'Series A', raised: 25, months: 20, founded: 2020, model: 'Product-led', stack: ['HubSpot', 'dbt', 'Snowflake'], hiring: 2, users: 8, stage: 4, dm: ['Kofi Mensah', 'Head of Sales'] }
+    ];
+
+    const ICP_STACK = ['HubSpot', 'Segment'];
+    function scoreRules(a) {
+      return [
+        { label: 'B2B software company', pts: 20, hit: true },
+        { label: 'Team of 50 to 500', pts: 15, hit: a.emp >= 50 && a.emp <= 500 },
+        { label: 'Hiring for sales', pts: 15, hit: a.hiring > 0 },
+        { label: 'People already on your free plan', pts: a.users >= 5 ? 20 : 10, hit: a.users > 0 },
+        { label: 'Raised in the last 18 months', pts: 10, hit: a.months <= 18 },
+        { label: 'Stack fits (HubSpot or Segment)', pts: 10, hit: a.stack.some(s => ICP_STACK.includes(s)) },
+        { label: 'Headcount growth above 20%', pts: 10, hit: a.growth > 20 }
+      ];
+    }
+    const score = a => Math.min(100, scoreRules(a).reduce((t, r) => t + (r.hit ? r.pts : 0), 0));
+    const tier = s => s >= 80 ? 'Tier 1' : s >= 60 ? 'Tier 2' : 'Tier 3';
+    const initials = n => n.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const first = n => n.split(' ')[0];
+    const slugEmail = (a) => first(a.dm[0]).toLowerCase() + '@' + a.domain;
+    const enrichCost = a => (a.stage >= 2 ? 0.11 : 0.05).toFixed(2);
+    const maskEmail = e => e[0] + '•••' + e.slice(e.indexOf('@'));
+
+    // ── Board ──
+    function signalChips(a) {
+      const out = [];
+      if (a.hiring) out.push('Hiring ' + a.hiring + ' AE' + (a.hiring > 1 ? 's' : ''));
+      if (a.users) out.push(a.users + ' on free plan');
+      if (a.months <= 12) out.push(a.round + ' · ' + a.months + ' mo ago');
+      if (a.growth >= 30) out.push('+' + a.growth + '% headcount');
+      return out.slice(0, 2);
+    }
+    function cardHTML(a) {
+      const s = score(a);
+      const foot = a.stage >= 3
+        ? '<span class="lp-score">' + s + '<small>/100</small></span><span class="lp-tier">' + tier(s) + '</span>'
+        : '<span class="lp-pending"><i></i>' + STAGES[a.stage].note + '</span>';
+      return '<button class="lp-card" data-id="' + a.id + '" aria-label="Open dossier for ' + esc(a.name) + '">' +
+        '<span class="lp-card-top"><span class="lp-av">' + initials(a.name) + '</span><span class="lp-card-name">' + esc(a.name) + '<small>' + esc(a.industry) + '</small></span></span>' +
+        '<span class="lp-chips">' + signalChips(a).map(c => '<span>' + esc(c) + '</span>').join('') + '</span>' +
+        '<span class="lp-card-foot">' + foot + '</span></button>';
+    }
+    function renderBoard() {
+      board.innerHTML = STAGES.map((st, i) => {
+        const list = ACCOUNTS.filter(a => a.stage === i);
+        return '<div class="lp-col"><div class="lp-col-head"><span class="lp-col-num">0' + (i + 1) + '</span><span class="lp-col-name">' + st.key + '</span><span class="lp-col-count">' + list.length + '</span></div>' +
+          list.map(cardHTML).join('') + '</div>';
+      }).join('');
+      board.setAttribute('aria-busy', 'false');
+      board.querySelectorAll('.lp-card').forEach((c, i) => {
+        c.style.animationDelay = (reduce ? 0 : i * 70) + 'ms';
+        c.addEventListener('click', () => openDossier(c.dataset.id, c));
+        c.addEventListener('mouseenter', () => {
+          cursor.style.width = '20px'; cursor.style.height = '20px';
+          cursorRing.style.opacity = '1'; cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+        });
+        c.addEventListener('mouseleave', () => {
+          cursor.style.width = '12px'; cursor.style.height = '12px';
+          cursorRing.style.opacity = '0.6'; cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+      });
+    }
+
+    // Load the board when it scrolls into view, after a short ghost-loading beat
+    let loaded = false;
+    const io = new IntersectionObserver(entries => {
+      if (loaded || !entries.some(e => e.isIntersecting)) return;
+      loaded = true;
+      io.disconnect();
+      setTimeout(() => { renderBoard(); startFeed(); }, reduce ? 0 : 1100);
+    }, { threshold: 0.15 });
+    io.observe(board);
+
+    // ── Activity feed ──
+    function startFeed() {
+      const feed = document.getElementById('lpFeed');
+      const events = [];
+      ACCOUNTS.forEach(a => {
+        const s = score(a);
+        if (a.stage >= 0) events.push('Sourced <b>' + esc(a.name) + '</b> from the ICP list');
+        if (a.stage >= 1) events.push('Enriched <b>' + esc(a.name) + '</b> for $' + enrichCost(a));
+        if (a.stage >= 2) events.push('Found the decision-maker at <b>' + esc(a.name) + '</b>, evidence cited');
+        if (a.stage >= 3) events.push('Scored <b>' + esc(a.name) + '</b> at ' + s + ' (' + tier(s) + ')');
+        if (a.stage >= 4) events.push('Synced <b>' + esc(a.name) + '</b> to HubSpot, draft queued for review');
+      });
+      let i = 0;
+      const tick = () => {
+        feed.classList.remove('in');
+        void feed.offsetWidth;
+        feed.innerHTML = events[i % events.length] + ' <span class="lp-feed-ago">just now</span>';
+        feed.classList.add('in');
+        i += 7;
+      };
+      tick();
+      if (!reduce) setInterval(tick, 3200);
+    }
+
+    // ── Dossier ──
+    const dlg = document.getElementById('lpDossier');
+    const body = document.getElementById('lpDBody');
+    const statusEl = document.getElementById('lpDStatus');
+    const statusText = document.getElementById('lpDStatusText');
+    let runId = 0, lastFocus = null;
+
+    const sk = (w, h) => '<span class="sk" style="width:' + (w || '100%') + ';height:' + (h || 12) + 'px"></span>';
+    const skBlock = rows => '<div class="lp-sk-block">' + Array.from({ length: rows }, (_, i) => sk((60 + (i * 17) % 40) + '%')).join('') + '</div>';
+    const pendingHTML = (title, stageIdx) => '<div class="lp-sec lp-sec-pending"><div class="lp-sec-title">' + title + '</div><div class="lp-pending-box">Runs at the <b>' + STAGES[stageIdx].key + '</b> step. This account has not reached it yet.</div></div>';
+
+    function spark(a) {
+      const pts = Array.from({ length: 8 }, (_, i) => a.emp / (1 + a.growth / 100) * (1 + (a.growth / 100) * (i / 7)) * (1 + Math.sin(i * 1.7 + a.emp) * 0.015));
+      const min = Math.min(...pts), max = Math.max(...pts);
+      const xy = pts.map((p, i) => (i * 100 / 7).toFixed(1) + ',' + (28 - ((p - min) / (max - min || 1)) * 24).toFixed(1)).join(' ');
+      return '<svg class="lp-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + xy + '"/></svg>';
+    }
+    function kv(k, v, src) {
+      return '<div class="lp-kv"><span class="lp-k">' + k + '</span><span class="lp-v">' + v + (src ? '<i class="lp-src">' + src + '</i>' : '') + '</span></div>';
+    }
+
+    const SECTIONS = [
+      { title: 'Firmographics', min: 0, rows: 6, render: a => {
+        const enriched = a.stage >= 1;
+        return '<div class="lp-grid">' +
+          kv('Industry', esc(a.industry), 'List') + kv('HQ', esc(a.hq), 'List') +
+          kv('Domain', esc(a.domain), 'List') + kv('Founded', enriched ? a.founded : '<em>pending</em>', enriched ? 'Clay' : '') +
+          kv('Employees', enriched ? a.emp + ' <span class="lp-up">+' + a.growth + '% in 12 mo</span>' + spark(a) : '<em>pending</em>', enriched ? 'Apollo' : '') +
+          kv('Funding', enriched ? a.round + ', $' + a.raised + 'M, ' + a.months + ' months ago' : '<em>pending</em>', enriched ? 'Clay' : '') +
+          kv('Motion', enriched ? a.model : '<em>pending</em>', enriched ? 'Agent' : '') +
+          kv('Tech stack', enriched ? '<span class="lp-tags">' + a.stack.map(t => '<span>' + esc(t) + '</span>').join('') + '</span>' : '<em>pending</em>', enriched ? 'Site scan' : '') +
+          '</div>';
+      } },
+      { title: 'Enrichment Waterfall', min: 1, rows: 5, render: a => {
+        const rows = [
+          ['Company profile', [['Clay', true]], '0.02'],
+          ['Headcount + growth', [['Apollo', true]], '0.01'],
+          ['Funding', [['Clay', true]], '0.02'],
+          ['Tech stack', [['Site scan', true]], '0.00'],
+          ['Work email', a.stage >= 2 ? [['Provider A', false], ['Provider B', true], ['Verifier', true]] : [['Waits for research', null]], a.stage >= 2 ? '0.06' : '0.00']
+        ];
+        const total = rows.reduce((t, r) => t + parseFloat(r[2]), 0).toFixed(2);
+        return '<div class="lp-wf">' + rows.map(r => '<div class="lp-wf-row"><span class="lp-wf-field">' + r[0] + '</span><span class="lp-wf-path">' +
+          r[1].map(p => '<span class="lp-wf-step ' + (p[1] === true ? 'ok' : p[1] === false ? 'miss' : 'wait') + '">' + (p[1] === true ? '✓ ' : p[1] === false ? '✕ ' : '… ') + p[0] + '</span>').join('<i>→</i>') +
+          '</span><span class="lp-wf-cost">$' + r[2] + '</span></div>').join('') +
+          '<div class="lp-wf-total"><span>Total enrichment cost</span><b>$' + total + '</b></div></div>';
+      } },
+      { title: 'Buying Signals', min: 1, rows: 4, render: a => {
+        const sig = [];
+        if (a.users) sig.push(['Product', a.users + ' people from ' + a.domain + ' are on your free plan', a.users >= 5 ? 'strong' : '']);
+        if (a.hiring) sig.push(['Hiring', a.hiring + ' open account executive role' + (a.hiring > 1 ? 's' : '') + ' posted this month', 'strong']);
+        if (a.months <= 18) sig.push(['Funding', 'Raised ' + a.round + ' ' + a.months + ' months ago', a.months <= 12 ? 'strong' : '']);
+        if (a.growth > 20) sig.push(['Growth', 'Headcount up ' + a.growth + '% in the last year', '']);
+        if (!sig.length) sig.push(['Quiet', 'No strong signals yet. Rechecked weekly.', '']);
+        return '<ul class="lp-signals">' + sig.map(s => '<li class="' + s[2] + '"><span>' + s[0] + '</span>' + esc(s[1]) + '</li>').join('') + '</ul>';
+      } },
+      { title: 'Decision-Maker', min: 2, rows: 4, render: a => {
+        const conf = (0.86 + (a.emp % 12) / 100).toFixed(2);
+        return '<div class="lp-dm"><span class="lp-av">' + initials(a.dm[0]) + '</span><div><div class="lp-dm-name">' + esc(a.dm[0]) + '</div><div class="lp-dm-title">' + esc(a.dm[1]) + ', ' + esc(a.name) + '</div></div><span class="lp-conf">' + conf + '<small>confidence</small></span></div>' +
+          '<div class="lp-grid">' + kv('Email', maskEmail(slugEmail(a)) + ' <span class="lp-up">verified</span>') + kv('Domain check', 'Matches ' + esc(a.domain) + ' ✓') + '</div>' +
+          '<div class="lp-evidence"><span>Evidence</span>Named as ' + esc(a.dm[1]) + ' on <u>' + esc(a.domain) + '/about/team</u></div>' +
+          '<div class="lp-review"><i>◆</i> Approved in human review</div>';
+      } },
+      { title: 'Score', min: 3, rows: 6, render: a => {
+        const s = score(a), rules = scoreRules(a), C = 2 * Math.PI * 34;
+        return '<div class="lp-score-wrap"><svg class="lp-ring" viewBox="0 0 80 80" aria-label="Score ' + s + ' out of 100"><circle cx="40" cy="40" r="34" class="lp-ring-bg"/><circle cx="40" cy="40" r="34" class="lp-ring-fg" style="stroke-dasharray:' + C.toFixed(1) + ';stroke-dashoffset:' + C.toFixed(1) + '" data-target="' + (C * (1 - s / 100)).toFixed(1) + '"/><text x="40" y="44" text-anchor="middle">' + s + '</text></svg>' +
+          '<div class="lp-score-side"><div class="lp-score-tier">' + tier(s) + '</div><div class="lp-score-note">Every point has a reason. Change a rule and every account rescores.</div></div></div>' +
+          '<ul class="lp-rules">' + rules.map(r => '<li class="' + (r.hit ? 'hit' : 'miss') + '"><span>' + r.label + '</span><span class="lp-rule-bar"><i style="width:' + (r.hit ? r.pts * 5 : 0) + '%"></i></span><b>' + (r.hit ? '+' + r.pts : '0') + '</b></li>').join('') + '</ul>';
+      } },
+      { title: 'Guardrails', min: 0, rows: 4, render: a => {
+        const g = [
+          ['Business account, not a consumer', true],
+          ['Data sources permitted by their terms', true],
+          ['Not on the suppression list', true],
+          ['Email domain matches the company', a.stage >= 2 ? true : null],
+          ['Draft approved by a person before sending', a.stage >= 4 ? 'wait' : null]
+        ];
+        return '<ul class="lp-guards">' + g.map(x => '<li class="' + (x[1] === true ? 'ok' : x[1] === 'wait' ? 'wait' : 'na') + '"><i>' + (x[1] === true ? '✓' : x[1] === 'wait' ? '◆' : '·') + '</i>' + x[0] + (x[1] === 'wait' ? ' <em>awaiting review</em>' : x[1] === null ? ' <em>not reached</em>' : '') + '</li>').join('') + '</ul>';
+      } },
+      { title: 'In Your CRM', min: 4, rows: 5, render: a => {
+        const s = score(a);
+        const opener = 'Hi ' + first(a.dm[0]) + ', ' + (a.users ? a.users + ' people at ' + a.name + ' are already using the free plan' : a.name + ' is growing fast') +
+          (a.hiring ? ', and you are hiring ' + a.hiring + ' AE' + (a.hiring > 1 ? 's' : '') : '') + '. Teams at that point usually want the reps they hire to start on accounts that are already warm. Worth a short call to show you which ones?';
+        return '<div class="lp-grid">' + kv('Record', 'HubSpot company + contact, associated', 'Sync') + kv('Duplicates', 'None. Re-runs write nothing new') +
+          kv('Lifecycle', 'Sales-qualified lead') + kv('Owner', 'Routed to AE team, ' + tier(s)) + '</div>' +
+          '<div class="lp-draft"><div class="lp-draft-head"><span>First draft</span><em>◆ Awaiting human review</em></div><p>' + esc(opener) + '</p></div>';
+      } },
+      { title: 'Event Log', min: 0, rows: 4, render: a => {
+        const ev = [['Sourced from the ICP list', 0]];
+        if (a.stage >= 1) ev.push(['Enriched: profile, headcount, funding, and stack for $' + enrichCost(a), 1]);
+        if (a.stage >= 2) ev.push(['Decision-maker found with evidence URL', 2], ['Approved in human review', 2]);
+        if (a.stage >= 3) ev.push(['Scored ' + score(a) + ' across 7 rules', 3]);
+        if (a.stage >= 4) ev.push(['Synced to HubSpot', 4], ['First draft queued for review', 4]);
+        const now = new Date();
+        return '<ol class="lp-log">' + ev.reverse().map((e, i) => {
+          const t = new Date(now - (i * 47 + 3) * 60000);
+          return '<li><time>' + t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</time>' + esc(e[0]) + '</li>';
+        }).join('') + '</ol><div class="lp-log-note">Append-only. Nothing in this history can be edited or deleted.</div>';
+      } }
+    ];
+
+    async function openDossier(id, trigger) {
+      const a = ACCOUNTS.find(x => x.id === id);
+      if (!a) return;
+      const run = ++runId;
+      lastFocus = trigger || document.activeElement;
+      track('pipeline_demo_open', { account: a.id, stage: STAGES[a.stage].key });
+
+      document.getElementById('lpDAv').textContent = initials(a.name);
+      document.getElementById('lpDName').textContent = a.name;
+      document.getElementById('lpDMeta').textContent = a.domain + ' · ' + a.hq;
+      document.getElementById('lpDSteps').innerHTML = STAGES.map((s, i) =>
+        '<span class="' + (i < a.stage ? 'done' : i === a.stage ? 'now' : '') + '"><i></i>' + s.key + '</span>').join('');
+
+      // Ghost-load every section first
+      body.innerHTML = SECTIONS.map(sec => '<div class="lp-sec" data-sec><div class="lp-sec-title">' + sec.title + '</div>' + skBlock(sec.rows) + '</div>').join('');
+      dlg.hidden = false;
+      requestAnimationFrame(() => dlg.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      dlg.querySelector('.lp-close').focus();
+      statusEl.classList.remove('done');
+
+      const els = body.querySelectorAll('[data-sec]');
+      for (let i = 0; i < SECTIONS.length; i++) {
+        const sec = SECTIONS[i];
+        const stepIdx = Math.min(Math.max(sec.min, 0), 4);
+        statusText.textContent = sec.min > a.stage ? 'Checking ' + sec.title.toLowerCase() + '…' : STAGES[Math.min(stepIdx, a.stage)].step + '…';
+        await wait(i === 0 ? 650 : 380);
+        if (run !== runId) return;
+        const html = sec.min > a.stage ? pendingHTML(sec.title, sec.min) : '<div class="lp-sec lp-in"><div class="lp-sec-title">' + sec.title + '</div>' + sec.render(a) + '</div>';
+        els[i].outerHTML = html;
+        const ring = body.querySelector('.lp-ring-fg[data-target]');
+        if (ring) { requestAnimationFrame(() => { ring.style.strokeDashoffset = ring.dataset.target; ring.removeAttribute('data-target'); }); }
+      }
+      statusText.textContent = 'Up to date. ' + (a.stage < 4 ? 'Next step: ' + STAGES[a.stage + 1].key + '.' : 'Ready for your reps.');
+      statusEl.classList.add('done');
+    }
+
+    function closeDossier() {
+      if (dlg.hidden) return;
+      runId++;
+      dlg.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { dlg.hidden = true; }, reduce ? 0 : 300);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    dlg.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeDossier));
+    document.addEventListener('keydown', e => {
+      if (dlg.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeDossier(); }
+      if (e.key === 'Tab') {
+        const f = dlg.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+        if (!f.length) return;
+        const firstEl = f[0], lastEl = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+      }
     });
   })();
 
