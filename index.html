@@ -4083,6 +4083,26 @@
     .lp-call-k { grid-column: 1 / -1; }
     .lp-call-head em { margin-left: 0; }
   }
+
+  /* Recommended build */
+  .lp-build-intro { font-size: 13px; color: var(--white); line-height: 1.55; margin-bottom: 10px; }
+  .lp-build-profile { font-size: 12px; color: var(--muted); line-height: 1.55; padding: 10px 12px; background: var(--surface); border-left: 2px solid var(--line); margin-bottom: 14px; }
+  .lp-build { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .lp-build li { padding: 14px; border: 1px solid rgba(201,168,76,0.22); background: rgba(201,168,76,0.03); }
+  .lp-build-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+  .lp-build-num { font-family: var(--font-display); font-size: 15px; color: var(--gold-soft); letter-spacing: 0.08em; }
+  .lp-build-name { font-family: var(--font-display); font-size: 20px; letter-spacing: 0.04em; color: var(--white); line-height: 1; }
+  .lp-build-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .lp-tool { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--white); border: 1px solid rgba(255,255,255,0.12); padding: 4px 8px; }
+  .lp-tool i { width: 14px; height: 14px; flex-shrink: 0; background: var(--gold); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
+  .lp-build-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .lp-build-not { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .lp-build-not li { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .lp-build-not span { color: var(--white); opacity: 0.7; margin-right: 8px; }
+  .lp-build-eng { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 12px 14px; background: var(--gold); color: var(--black); }
+  .lp-build-eng span { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(0,0,0,0.6); width: 100%; }
+  .lp-build-eng b { font-family: var(--font-display); font-size: 22px; font-weight: 400; letter-spacing: 0.04em; }
+  .lp-build-eng em { font-style: normal; font-size: 12px; color: rgba(0,0,0,0.7); }
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
     max-width: 900px;
@@ -6167,13 +6187,71 @@
 
     const sk = (w, h) => '<span class="sk" style="width:' + (w || '100%') + ';height:' + (h || 12) + 'px"></span>';
     const skBlock = rows => '<div class="lp-sk-block">' + Array.from({ length: rows }, (_, i) => sk((60 + (i * 17) % 40) + '%')).join('') + '</div>';
-    const pendingHTML = (title, stageIdx) => '<div class="lp-sec lp-sec-pending"><div class="lp-sec-title">' + title + '</div><div class="lp-pending-box">Runs at the <b>' + STAGES[stageIdx].key + '</b> step. This account has not reached it yet.</div></div>';
+    const pendingHTML = (title, stageIdx) => '<div class="lp-sec lp-sec-pending"><div class="lp-sec-title">' + title + '</div><div class="lp-pending-box">' + (title === 'Recommended Build' ? 'We need their stack first. This fills in after the <b>Enriched</b> step.' : 'Runs at the <b>' + STAGES[stageIdx].key + '</b> step. This account has not reached it yet.') + '</div></div>';
 
     function spark(a) {
       const pts = Array.from({ length: 8 }, (_, i) => a.emp / (1 + a.growth / 100) * (1 + (a.growth / 100) * (i / 7)) * (1 + Math.sin(i * 1.7 + a.emp) * 0.015));
       const min = Math.min(...pts), max = Math.max(...pts);
       const xy = pts.map((p, i) => (i * 100 / 7).toFixed(1) + ',' + (28 - ((p - min) / (max - min || 1)) * 24).toFixed(1)).join(' ');
       return '<svg class="lp-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + xy + '"/></svg>';
+    }
+
+    // ── Recommended build: which of our services and toolkit tools fit each account ──
+    const SERVICES = {
+      '01': 'GTM Data & Enrichment', '02': 'AI Research Agents', '03': 'CRM & RevOps', '04': 'Outbound & Lifecycle',
+      '05': 'Product-Led Growth', '06': 'Conversation Intelligence', '07': 'Launch Content & Creative'
+    };
+    // Tool logos come straight from the toolkit section, so chips always match it
+    const TOOL_ICONS = {};
+    document.querySelectorAll('.tech-stack-item').forEach(item => {
+      const name = item.querySelector('.tech-stack-name');
+      const icon = item.querySelector('.tech-stack-icon');
+      const m = icon && (icon.getAttribute('style') || '').match(/mask-image:url\(['"]?([^'")]+)/);
+      if (name && m) TOOL_ICONS[name.textContent.trim()] = m[1];
+    });
+    const has = (a, tool) => a.stack.includes(tool);
+    function recommend(a) {
+      const crm = ['Salesforce', 'HubSpot', 'Pipedrive'].find(c => has(a, c));
+      const plg = a.model === 'Product-led' && a.users > 0;
+      const recs = [], notNow = [];
+      const add = (num, score, tools, why) => recs.push({ num, score, tools, why });
+
+      add('03', 90, [crm || 'HubSpot', ...(plg ? ['Chili Piper'] : [])],
+        crm ? 'Scoring and routing inside the ' + crm + ' they already run, no migration' : 'No CRM detected, so we would stand up HubSpot first');
+      if (plg) add('05', 70 + Math.min(a.users, 20),
+        [has(a, 'Segment') ? 'Segment' : 'PostHog', ...(has(a, 'Snowflake') ? ['Snowflake', 'Hightouch'] : [])],
+        a.users + ' people on the free plan. Usage ' + (has(a, 'Snowflake') ? 'flows from Snowflake' : 'flows') + ' into the CRM so reps see who is ready to buy');
+      else notNow.push(['05', a.users > 0 ? 'Only ' + a.users + ' free-plan users. Too few to build a product-led motion around yet' : 'No free plan to build on yet']);
+      add('01', a.users === 0 ? 88 : 60, ['Clay', a.emp >= 150 ? 'ZoomInfo' : 'Apollo', ...(a.hiring >= 2 ? ['Sales Navigator'] : [])],
+        a.users === 0 ? 'No product signal, so outbound data has to lead' : 'Enrich the companies behind every signup to find the real buyers');
+      if (a.hiring >= 2) add('02', 70 + a.hiring * 3, ['Claude', 'Clay'],
+        'Hiring ' + a.hiring + ' AEs. Researched accounts and decision-makers ready on day one');
+      if (a.hiring > 0 || a.users === 0) {
+        const seq = has(a, 'Outreach') ? 'Outreach' : (a.emp >= 150 ? 'Salesloft' : 'Smartlead');
+        add('04', 66, [seq, ...(plg && a.users >= 5 ? ['Sendblue'] : [])],
+          (has(a, 'Outreach') ? 'Keep their Outreach sequences, feed them better lists' : 'Sequencing on a separate sending domain') + (plg && a.users >= 5 ? ', plus iMessage for active users who opted in' : ''));
+      }
+      if (CALLS[a.id]) add('06', 80, [CALLS[a.id].team === 'Product' ? 'Granola' : 'Fathom', crm || 'HubSpot'],
+        'Their ' + CALLS[a.id].team.toLowerCase() + ' team already meets these users. Notes become CRM fields and product requests');
+      else if (has(a, 'Gong')) add('06', 80, ['Gong', crm || 'HubSpot'], 'Gong already records their calls. We turn those notes into CRM fields');
+      else if (a.model === 'Sales-assisted' || a.emp >= 150) add('06', 62, [a.emp >= 150 ? 'Granola' : 'Fathom', crm || 'HubSpot'],
+        'Longer sales cycles, so call notes carry the signal');
+      else notNow.push(['06', 'Too few sales calls yet to mine']);
+      if (a.months <= 12) add('07', 55, ['Premiere Pro', 'Meta Ads'], 'Fresh ' + a.round + '. Launch content gives outbound something to point at');
+      else notNow.push(['07', 'No recent launch or round to build content around']);
+
+      recs.sort((x, y) => y.score - x.score);
+      const picks = recs.slice(0, 4);
+      const engagement = a.hiring >= 2 && picks.length >= 3
+        ? ['Pipeline Build', 'Several pieces at once and new reps starting soon']
+        : a.emp >= 200
+          ? ['Fractional GTM Engineer', 'A larger team that needs ongoing builds, not one project']
+          : ['GTM Audit', 'Start by finding the one fix that pays for the rest'];
+      return { crm, picks, notNow: notNow.slice(0, 2), engagement };
+    }
+    function toolChip(t) {
+      const url = TOOL_ICONS[t];
+      return '<span class="lp-tool">' + (url ? '<i style="-webkit-mask-image:url(' + url + ');mask-image:url(' + url + ')"></i>' : '') + esc(t) + '</span>';
     }
     function kv(k, v, src) {
       return '<div class="lp-kv"><span class="lp-k">' + k + '</span><span class="lp-v">' + v + (src ? '<i class="lp-src">' + src + '</i>' : '') + '</span></div>';
@@ -6236,6 +6314,17 @@
           ['Draft approved by a person before sending', a.stage >= 4 ? 'wait' : null]
         ];
         return '<ul class="lp-guards">' + g.map(x => '<li class="' + (x[1] === true ? 'ok' : x[1] === 'wait' ? 'wait' : 'na') + '"><i>' + (x[1] === true ? '✓' : x[1] === 'wait' ? '◆' : '·') + '</i>' + x[0] + (x[1] === 'wait' ? ' <em>awaiting review</em>' : x[1] === null ? ' <em>not reached</em>' : '') + '</li>').join('') + '</ul>';
+      } },
+      { title: 'Recommended Build', min: 1, rows: 7, render: a => {
+        const r = recommend(a);
+        const profile = [r.crm ? 'Runs ' + r.crm : 'No CRM detected', a.stack.filter(t => t !== r.crm).join(' + '), a.model.toLowerCase(),
+          a.hiring ? 'hiring ' + a.hiring + ' AE' + (a.hiring > 1 ? 's' : '') : 'not hiring sales', a.users ? a.users + ' on the free plan' : 'no free-plan users'].filter(Boolean).join(' · ');
+        return '<p class="lp-build-intro">If ' + esc(a.name) + ' hired us, this is what we would build first, picked from their stack and signals.</p>' +
+          '<div class="lp-build-profile">' + esc(profile) + '</div>' +
+          '<ol class="lp-build">' + r.picks.map(p => '<li><div class="lp-build-head"><span class="lp-build-num">' + p.num + '</span><span class="lp-build-name">' + SERVICES[p.num] + '</span></div>' +
+            '<div class="lp-build-tools">' + p.tools.map(toolChip).join('') + '</div><p class="lp-build-why">' + esc(p.why) + '</p></li>').join('') + '</ol>' +
+          (r.notNow.length ? '<ul class="lp-build-not">' + r.notNow.map(n => '<li><span>' + n[0] + ' ' + SERVICES[n[0]] + '</span>Not now: ' + esc(n[1]) + '</li>').join('') + '</ul>' : '') +
+          '<div class="lp-build-eng"><span>Suggested engagement</span><b>' + r.engagement[0] + '</b><em>' + esc(r.engagement[1]) + '</em></div>';
       } },
       { title: 'In Your CRM', min: 4, rows: 3, render: a => {
         const s = score(a);
