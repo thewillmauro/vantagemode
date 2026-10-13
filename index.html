@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="https://www.vantagemode.com/og.png?v=2">
 <meta name="theme-color" content="#080808">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Vantage Mode", "url": "https://www.vantagemode.com/", "logo": "https://www.vantagemode.com/og.png", "image": "https://www.vantagemode.com/og.png", "description": "GTM engineering for early-stage software companies growing their sales team. We build the systems behind your pipeline: account data, Clay enrichment, AI research agents, scoring, HubSpot sync, and outbound.", "email": "will@vantagemode.com", "areaServed": "Worldwide", "address": {"@type": "PostalAddress", "addressLocality": "Princeton", "addressRegion": "NJ", "addressCountry": "US"}, "founder": {"@type": "Person", "name": "William Mauro", "jobTitle": "GTM Engineer"}, "knowsAbout": ["GTM engineering", "Clay", "HubSpot", "Lead scoring", "AI research agents", "Outbound automation", "Product-led growth"], "sameAs": ["https://www.linkedin.com/company/vantage-mode", "https://www.instagram.com/vantagemode"]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does a GTM engineer actually do?", "acceptedAnswer": {"@type": "Answer", "text": "A GTM engineer builds the systems your sales and marketing teams run on: where account data comes from, how it gets enriched and researched, how leads are scored and routed, how records sync to your CRM, and how outreach and reporting work. Think of it as software engineering pointed at pipeline instead of product."}}, {"@type": "Question", "name": "Do you work in our existing stack?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Our default stack is Clay, HubSpot, Supabase, and Claude, but the approach does not depend on any one tool. We start from what you already pay for and only add something new when it clearly earns its place."}}, {"@type": "Question", "name": "Will you send email on our behalf?", "acceptedAnswer": {"@type": "Answer", "text": "By default, no. We build the drafting, review, and sending infrastructure, and a person on your team approves what goes out. Sending domains are kept separate from your main domain, suppression lists are honored, and every message stays CAN-SPAM compliant."}}, {"@type": "Question", "name": "How do you keep AI research accurate?", "acceptedAnswer": {"@type": "Answer", "text": "Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM."}}, {"@type": "Question", "name": "Do you still produce video?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as part of go-to-market. Launch films, ad creative, founder content, and product demos are produced in house, so the creative and the pipeline it runs through are planned together."}}, {"@type": "Question", "name": "How does pricing work?", "acceptedAnswer": {"@type": "Answer", "text": "Audits and builds are fixed-scope and fixed-price, whether you start with one piece or the full pipeline. Fractional work and upkeep are monthly retainers. Tools like Clay and your sequencer run on your own accounts, and you pay those vendors directly. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does a GTM engineer actually do?", "acceptedAnswer": {"@type": "Answer", "text": "A GTM engineer builds the systems your sales and marketing teams run on: where account data comes from, how it gets enriched and researched, how leads are scored and routed, how records sync to your CRM, and how outreach and reporting work. Think of it as software engineering pointed at pipeline instead of product."}}, {"@type": "Question", "name": "Do you work in our existing stack?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Our default stack is Clay, HubSpot, Supabase, and Claude, but the approach does not depend on any one tool. We start from what you already pay for and only add something new when it clearly earns its place."}}, {"@type": "Question", "name": "Will you send email on our behalf?", "acceptedAnswer": {"@type": "Answer", "text": "By default, no. We build the drafting, review, and sending infrastructure, and a person on your team approves what goes out. Sending domains are kept separate from your main domain, suppression lists are honored, and every message stays CAN-SPAM compliant."}}, {"@type": "Question", "name": "How do you keep AI research accurate?", "acceptedAnswer": {"@type": "Answer", "text": "Agents have to cite the page where they found each answer, and they are graded against a hand-labeled set of your real accounts before they run on the full list. Anything uncertain goes to a human review step instead of straight into your CRM."}}, {"@type": "Question", "name": "Do you still produce video?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, as part of go-to-market. Launch films, ad creative, founder content, and product demos are produced in house, so the creative and the pipeline it runs through are planned together."}}, {"@type": "Question", "name": "How does pricing work?", "acceptedAnswer": {"@type": "Answer", "text": "Audits and builds are fixed-scope and fixed-price, whether you start with one piece or the full pipeline. Fractional work and upkeep are monthly retainers. Tools like Clay and your sequencer run on your own accounts, and you pay those vendors directly. After a discovery call, we send a proposal with clear deliverables, a timeline, and a price. No surprises."}}, {"@type": "Question", "name": "What do you do with our call notes?", "acceptedAnswer": {"@type": "Answer", "text": "We usually work from the notes your AI notetaker already writes, not the raw recordings. The system pulls out the fields your teams care about, like pains, objections, competitors, feature requests, and next steps, and writes them to your CRM. Recording consent stays with your existing process, personal details are redacted before anything syncs, and access follows your CRM permissions."}}]}</script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -4059,6 +4059,30 @@
     .sk, .lp-live i, .lp-pending i, .lp-spin, .lp-steps .now i { animation: none; }
     .lp-card, .lp-sec.lp-in, .lp-feed-text.in { animation: none; }
   }
+
+  /* Conversation notes */
+  .lp-call { border: 1px solid rgba(255,255,255,0.08); background: var(--surface); }
+  .lp-call-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 13px; color: var(--white); }
+  .lp-call-team { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 3px 8px; }
+  .lp-call-head em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--muted); }
+  .lp-call-who { padding: 10px 14px 0; font-size: 12px; color: var(--muted); }
+  .lp-call-quote { margin: 12px 14px; padding: 10px 14px; border-left: 2px solid var(--gold); font-family: var(--font-italic); font-style: italic; font-size: 15px; line-height: 1.55; color: var(--white); }
+  .lp-call-quote span { display: block; margin-top: 6px; font-family: var(--font-body); font-style: normal; font-size: 11px; color: var(--muted); }
+  .lp-call-items { list-style: none; padding: 0 14px; }
+  .lp-call-items li { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+  .lp-call-k { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-soft); }
+  .lp-call-v { color: var(--white); }
+  .lp-call-dest { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; border: 1px solid; white-space: nowrap; }
+  .lp-dest-crm { color: var(--gold); border-color: rgba(201,168,76,0.35); }
+  .lp-dest-product { color: #8ab4ff; border-color: rgba(138,180,255,0.35); }
+  .lp-dest-task { color: #3ecf8e; border-color: rgba(62,207,142,0.35); }
+  .lp-dest-score { color: var(--gold-bright); border-color: rgba(240,201,107,0.4); }
+  .lp-call-checks { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 12px 14px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 11px; color: #3ecf8e; }
+  @media (max-width: 768px) {
+    .lp-call-items li { grid-template-columns: 1fr auto; }
+    .lp-call-k { grid-column: 1 / -1; }
+    .lp-call-head em { margin-left: 0; }
+  }
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
     max-width: 900px;
@@ -4394,8 +4418,8 @@
     </div>
     <div class="gtm-flow-step">
       <div class="gtm-flow-num">06</div>
-      <div class="gtm-flow-title">MEASURE</div>
-      <div class="gtm-flow-desc">Funnel reporting in SQL, spend tracked per step, and an audit log of every change to every record.</div>
+      <div class="gtm-flow-title">MEASURE &amp; LEARN</div>
+      <div class="gtm-flow-desc">Funnel reporting in SQL, plus notes from every sales, success, and product call turned into CRM data, so the system learns from what customers say.</div>
     </div>
   </div>
 
@@ -4544,8 +4568,21 @@
         </div>
         <span class="service-item-arrow">→</span>
       </div>
-      <div class="service-item reveal reveal-delay-3" data-num="06">
+      <div class="service-item reveal reveal-delay-2" data-num="06">
         <div class="service-item-num">06</div>
+        <div class="service-item-title">CONVERSATION INTELLIGENCE</div>
+        <div class="service-item-desc">Your sales, success, and product calls are already being summarized by AI notetakers. We turn those notes into CRM data: pains, objections, competitors, feature requests, stakeholders, and next steps. Reps follow up faster, product gets a ranked list of what customers ask for, and targeting and messaging learn from what people actually say.</div>
+        <div class="service-item-tags">
+          <span class="service-tag">Call Notes to CRM</span>
+          <span class="service-tag">Objection Tracking</span>
+          <span class="service-tag">Feature Request Routing</span>
+          <span class="service-tag">Churn &amp; Expansion Signals</span>
+          <span class="service-tag">Voice of the Customer</span>
+        </div>
+        <span class="service-item-arrow">→</span>
+      </div>
+      <div class="service-item reveal reveal-delay-3" data-num="07">
+        <div class="service-item-num">07</div>
         <div class="service-item-title">LAUNCH CONTENT &amp; CREATIVE</div>
         <div class="service-item-desc">The pipeline needs something worth clicking. Launch films, paid social creative, founder content, and product demos, shot and cut in house so the message and the system ship together.</div>
         <div class="service-item-tags">
@@ -4596,6 +4633,7 @@
           <ul class="pb-hub-list">
             <li>Every account</li>
             <li>Every change, logged</li>
+            <li>Every call, summarized</li>
             <li>Scores with reasons</li>
           </ul>
         </div>
@@ -4718,7 +4756,7 @@
       <div class="pb-loop-text">
         <div class="pb-block-label">Why It Compounds</div>
         <ol class="pb-loop-list">
-          <li><b>Signal.</b> Every signup, reply, and upgrade lands in one place.</li>
+          <li><b>Signal.</b> Every signup, reply, upgrade, and call note lands in one place.</li>
           <li><b>Targeting.</b> You learn who actually buys.</li>
           <li><b>Replies.</b> Better targets get more replies.</li>
           <li><b>Customers.</b> More replies turn into more customers.</li>
@@ -5862,6 +5900,34 @@
     const SIGNAL_SOURCED = ['fernwork', 'quillstack', 'sablepoint', 'lumen'];
     const fromSignal = a => SIGNAL_SOURCED.includes(a.id);
     const sourceLine = a => fromSignal(a) ? 'a product signal: ' + a.users + ' free-plan users' : 'the ICP list';
+    // Fictional call notes, already structured from an AI notetaker
+    const CALLS = {
+      lumen: {
+        team: 'Customer Success', title: 'Onboarding call with two free-plan admins', length: '32 min',
+        who: 'Jamie (your CS lead) with 2 finance managers at Lumen Ledger',
+        quote: 'Month-end close still takes us six days. If approvals lived in here we would move the whole team over.', quoteBy: 'Finance manager, Lumen Ledger',
+        items: [
+          ['Pain', 'Month-end close takes 6 days', 'crm'],
+          ['Feature request', 'Approval workflows for expenses', 'product'],
+          ['Objection', 'Worried about switching tools mid-quarter', 'crm'],
+          ['Competitor', 'Also evaluating one other tool', 'crm'],
+          ['Expansion', 'Finance team of 12 would need seats', 'score'],
+          ['Next step', 'Send pricing for 15 seats by Friday', 'task']
+        ]
+      },
+      ridgeway: {
+        team: 'Product', title: 'User research call with a free-plan team', length: '41 min',
+        who: 'Sam (your PM) with 3 data engineers at Ridgeway Data',
+        quote: 'We love the free plan, but we hit the row limit every week and end up exporting to spreadsheets.', quoteBy: 'Data engineer, Ridgeway Data',
+        items: [
+          ['Pain', 'Hits the free-plan row limit weekly', 'crm'],
+          ['Feature request', 'Scheduled exports to their warehouse', 'product'],
+          ['Stakeholder', 'Head of Data signs off on tools', 'crm'],
+          ['Expansion', 'Usage pattern fits the paid plan', 'score'],
+          ['Next step', 'Intro the AE to their Head of Data', 'task']
+        ]
+      }
+    };
     const ICP_STACK = ['HubSpot', 'Segment'];
     function scoreRules(a) {
       return [
@@ -5924,13 +5990,24 @@
 
     // Load the board when it scrolls into view, after a short ghost-loading beat
     let loaded = false;
-    const io = new IntersectionObserver(entries => {
-      if (loaded || !entries.some(e => e.isIntersecting)) return;
+    function loadBoard() {
+      if (loaded) return;
       loaded = true;
       io.disconnect();
+      window.removeEventListener('scroll', checkInView);
       setTimeout(() => { renderBoard(); startFeed(); }, reduce ? 0 : 1100);
+    }
+    // Scroll check backs up the observer in browsers where it fires late or not at all
+    function checkInView() {
+      const r = board.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) loadBoard();
+    }
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) loadBoard();
     }, { threshold: 0.15 });
     io.observe(board);
+    window.addEventListener('scroll', checkInView, { passive: true });
+    checkInView();
 
     // ── Activity feed ──
     function startFeed() {
@@ -6040,6 +6117,18 @@
         return '<div class="lp-grid">' + kv('Record', 'HubSpot company + contact, associated', 'Sync') + kv('Duplicates', 'None. Re-runs write nothing new') +
           kv('Lifecycle', 'Sales-qualified lead') + kv('Owner', 'Routed to AE team, ' + tier(s)) + '</div>';
       } },
+      { title: 'Conversation Notes', min: 0, rows: 6, render: a => {
+        const call = CALLS[a.id];
+        if (!call || a.stage < 4) {
+          return '<div class="lp-pending-box">No calls yet. When anyone on your sales, success, or product team meets with ' + esc(a.name) + ', the AI notes land here as CRM fields automatically.</div>';
+        }
+        const dest = { crm: 'CRM field', product: 'Product backlog', task: 'AE task', score: 'Score' };
+        return '<div class="lp-call"><div class="lp-call-head"><span class="lp-call-team">' + call.team + '</span><span>' + esc(call.title) + '</span><em>' + call.length + ' · AI notes</em></div>' +
+          '<div class="lp-call-who">' + esc(call.who) + '</div>' +
+          '<blockquote class="lp-call-quote">“' + esc(call.quote) + '”<span>' + esc(call.quoteBy) + '</span></blockquote>' +
+          '<ul class="lp-call-items">' + call.items.map(it => '<li><span class="lp-call-k">' + it[0] + '</span><span class="lp-call-v">' + esc(it[1]) + '</span><span class="lp-call-dest lp-dest-' + it[2] + '">→ ' + dest[it[2]] + '</span></li>').join('') + '</ul>' +
+          '<div class="lp-call-checks"><span>✓ Recording consent captured</span><span>✓ Personal details redacted before sync</span><span>✓ Visible only to people with CRM access</span></div></div>';
+      } },
       { title: 'Email Draft · In Review', min: 4, rows: 8, render: a => {
         const fn = first(a.dm[0]);
         const refs = [];
@@ -6083,7 +6172,9 @@
         if (a.stage >= 1) ev.push(['Enriched: profile, headcount, funding, and stack for $' + enrichCost(a), 1]);
         if (a.stage >= 2) ev.push(['Decision-maker found with evidence URL', 2], ['Approved in human review', 2]);
         if (a.stage >= 3) ev.push(['Scored ' + score(a) + ' across 7 rules', 3]);
-        if (a.stage >= 4) ev.push(['Synced to HubSpot', 4], ['First draft queued for review', 4]);
+        if (a.stage >= 4) ev.push(['Synced to HubSpot', 4]);
+        if (a.stage >= 4 && CALLS[a.id]) ev.push(['Call notes synced: ' + CALLS[a.id].items.length + ' fields from a ' + CALLS[a.id].team.toLowerCase() + ' call', 4]);
+        if (a.stage >= 4) ev.push(['First draft queued for review', 4]);
         const now = new Date();
         return '<ol class="lp-log">' + ev.reverse().map((e, i) => {
           const t = new Date(now - (i * 47 + 3) * 60000);
@@ -6601,4 +6692,14 @@
   bindLightbox();
 </script>
 </body>
-</html>
+</html>      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          What do you do with our call notes?
+          <div class="faq-icon">+</div>
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We usually work from the notes your AI notetaker already writes, not the raw recordings. The system pulls out the fields your teams care about, like pains, objections, competitors, feature requests, and next steps, and writes them to your CRM. Recording consent stays with your existing process, personal details are redacted before anything syncs, and access follows your CRM permissions.</div>
+        </div>
+      </div>
+
+
