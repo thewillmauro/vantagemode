@@ -16,26 +16,23 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 - **Fonts**: Bebas Neue (display), DM Sans (body), Playfair Display italic (accent)
 - **Custom cursor**: Gold dot + ring, hidden on mobile via `@media (pointer: coarse)`
 - **Film grain overlay**: SVG noise texture on `body::before`
+- **Themes**: dark by default, light via `html[data-theme="light"]` overriding the same tokens (plus `--ink-rgb`, `--bg-rgb`, `--on-gold-rgb`, `--ok`, `--bad`, `--info`). Use those tokens, never raw white/black rgba, so both themes keep working. The nav toggle saves the choice in localStorage (`vm-theme`); a one-line script in `<head>` applies it before paint, the only script outside the main block
 
 ## Site Sections (in order)
 
-1. **Nav**: Fixed top nav (Approach, Services, Playbook, Metrics, Toolkit, About), hamburger menu, "Start a Project" CTA
+1. **Nav**: Fixed top nav (Approach, Services, Playbook, Metrics, Toolkit, About), theme toggle, hamburger menu, "Start a Project" CTA
 2. **Hero**: GTM positioning for early-stage software companies growing their sales team, 3 pillars (Data / AI Agents / RevOps)
-2b. **Credibility strip** (`.cred`): photo, one line about Will, three background points, link to `#founder`. Facts must match the founder bio
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
-4. **Live Pipeline demo** (`#pipeline`): "What your reps open every morning." Kanban board of 11 fictional accounts across 5 stages (ghost-loads on scroll via IntersectionObserver with a scroll-position fallback, live activity feed). Clicking an account opens a dossier panel that ghost-loads section by section (including Conversation Notes from fictional calls in `CALLS`, shown before the email draft; call content is never quoted in outbound emails); a "Recommended Build" section (from the Enriched stage on) picks the best 3-4 of our services for that company with toolkit tools and one-line reasons, plus "Not now" services and a suggested engagement, all from rules in `recommend()` over the account's stack, motion, hiring, free-plan users, funding, and calls. Tool chip logos are read from the toolkit DOM, so a tool must exist in the toolkit to show its logo; depth depends on the account's stage. All data is fictional (`.example` domains) and labeled as sample data. Scores are computed from the rules in `scoreRules()`, so the card score and the breakdown always match
-5. **Services**: Seven GTM services with counter (01-07), including Conversation Intelligence (call notes from sales, CS, and product turned into CRM data) and launch content and video
-6. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy (inbound/product-led + targeted outbound feeding one source of truth, the bridge, revenue equation, compounding flywheel, interactive SDR savings calculator with transparent formulas, phased rollout, guardrails). No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
-7. **Scoreboard** (`#metrics`): KPI tree (revenue growth → Pipeline, Conversion, Deal Size, Retention, plus Efficiency and System Health), 21 expandable KPIs with definition, formula, and the services that move them; weekly/monthly/quarterly review cadence; experiment loop. Definitions only, no benchmarks or claimed results
-8. **Client Journey** (`#journey`): "Your first three years." Five clickable phases (Baseline, Foundation, Pipeline Engine, Year 2 Conversion & Efficiency, Year 3 Compounding), each with engagement, services, KPIs in focus, deliverables, the decision, and what healthy looks like (directional, no targets); KPI focus heat map (15 KPIs x 5 phases) whose column highlights with the selected phase
-9. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, plus two smaller options below the cards (Single-Piece Build, System Upkeep). No prices on the site. Clients pay for tools on their own accounts, and we never bill tools. The SDR calculator shows the gross value of SDR time freed (no system cost subtracted), so it never implies a price
-10. **Toolkit** (`#stack`): 59 logos in 10 groups (Prospecting & Outreach, CRMs, Call Notes, Calling & Dialers, Product Analytics & Data, Automation & Scheduling, AI Models & Tools, Build & Ship, Operations, Content & Ads), shuffled within each group on load. Intro says these are platforms we build with plus ones we work in for clients. Logos without a simple-icons entry are one-color masks in `images/logos/`, built from each company's own icon
-11. **Founder**: William Mauro bio with photo
-12. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
+4. **See It Run** (`#pipeline`): sample pipeline demo, labeled fictional
+5. **Services**: GTM services with counter, including launch content and video
+6. **Engagements** (`#pricing`): GTM Audit / Pipeline Build / Fractional GTM Engineer, plus two smaller options below the cards (Single-Piece Build, System Upkeep). No prices on the site. The SDR calculator's $2,500 a month is the upkeep fee only; clients pay for tools on their own accounts, and we never bill tools. Sits right after Services so offers come early
+7. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy and the interactive SDR savings calculator with transparent formulas; revenue lever, flywheel, phased rollout and guardrails sit in a fold. No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
+8. **Scoreboard** (`#metrics`), **Client journey** (`#journey`): KPI tree and phases; detail sits in folds
+9. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load; first two groups shown, rest in a fold
+10. **Founder**: William Mauro bio with photo
+11. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
-## Share Links
-
-- `/playbook`, `/sdr-calculator`, `/pipeline-demo` are small static pages (each folder's `index.html`) with their own title and Open Graph tags for LinkedIn previews. They forward to the matching homepage anchor (`#playbook`, `#sdr-math`, `#pipeline`) and keep UTM params. They are `noindex` on purpose; real search-ranking pages would need full content
+**Folds**: a section with class `folds` hides its `.fold` blocks until its `.fold-toggle` button is pressed. Put deep-dive detail in a fold rather than making the page longer.
 
 ## Interactive Elements
 
