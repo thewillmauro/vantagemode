@@ -4183,6 +4183,62 @@
     .lp-health { grid-template-columns: repeat(2, 1fr); }
     .sb-cad { padding: 20px; }
   }
+
+  /* ── CLIENT JOURNEY ── */
+  .jr { background: var(--black); }
+  .jr-inner { max-width: 1200px; margin: 0 auto; }
+  .jr-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 48px; }
+  .jr-lede { font-size: 16px; color: var(--white); opacity: 0.85; line-height: 1.75; }
+  .jr-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; position: relative; }
+  .jr-step { text-align: left; background: var(--surface); border: 0; border-top: 2px solid rgba(255,255,255,0.08); padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 4px; cursor: none; font-family: var(--font-body); color: var(--white); transition: background 0.25s, border-color 0.25s; min-height: 44px; }
+  .jr-step:hover, .jr-step:focus-visible { background: var(--surface2); outline: none; }
+  .jr-step.active { border-top-color: var(--gold); background: rgba(201,168,76,0.07); }
+  .jr-step-num { font-family: var(--font-display); font-size: 13px; color: var(--gold-soft); letter-spacing: 0.1em; }
+  .jr-step-name { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.04em; line-height: 1.05; }
+  .jr-step-when { font-size: 11px; color: var(--muted); }
+  .jr-step.active .jr-step-when { color: var(--gold); }
+  .jr-panels { border: 1px solid rgba(201,168,76,0.22); border-top: 0; background: rgba(201,168,76,0.03); }
+  .jr-panel { padding: 22px 24px 24px; animation: lpFeedIn 0.35s ease; }
+  .jr-panel-head { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .jr-eng { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--black); background: var(--gold); padding: 5px 10px; }
+  .jr-svc { font-size: 11px; color: var(--white); border: 1px solid rgba(255,255,255,0.14); padding: 4px 9px; }
+  .jr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .jr-grid div { font-size: 14px; color: var(--white); line-height: 1.6; }
+  .jr-grid span { display: block; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .jr-legend { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; font-size: 11px; color: var(--muted); }
+  .jr-legend span { display: flex; align-items: center; gap: 8px; }
+  .jr-legend i, .jr-table td i { display: inline-block; width: 14px; height: 14px; border-radius: 50%; }
+  .lv-p i, i.lv-p { background: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.5); }
+  .lv-t i, i.lv-t { background: rgba(201,168,76,0.45); }
+  .lv-m i, i.lv-m { background: transparent; border: 1.5px solid var(--gold-dim); }
+  .lv-n i, i.lv-n { background: transparent; border: 1px dashed rgba(255,255,255,0.15); }
+  .jr-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(255,255,255,0.06); }
+  .jr-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  .jr-table th, .jr-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .jr-table thead th { font-family: var(--font-display); font-weight: 400; font-size: 15px; letter-spacing: 0.04em; color: var(--white); text-align: center; background: var(--surface); vertical-align: bottom; transition: background 0.25s, color 0.25s; }
+  .jr-table thead th span { display: block; font-size: 11px; color: var(--gold-soft); }
+  .jr-table thead th.jr-kpi-col { text-align: left; color: var(--muted); font-family: var(--font-body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .jr-table tbody th { text-align: left; font-weight: 400; font-size: 13px; color: var(--white); background: var(--deep); position: sticky; left: 0; z-index: 1; min-width: 180px; }
+  .jr-table tbody th small { display: block; font-size: 11px; color: var(--muted); }
+  .jr-table td { text-align: center; background: var(--deep); transition: background 0.25s; }
+  .jr-table .on { background: rgba(201,168,76,0.07); }
+  .jr-table thead th.on { background: rgba(201,168,76,0.16); color: var(--gold-bright); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 1100px) {
+    .jr-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .jr-header { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+    .jr-steps { grid-template-columns: repeat(5, minmax(150px, 1fr)); overflow-x: auto; scroll-snap-type: x mandatory; }
+    .jr-step { scroll-snap-align: start; }
+  }
+  @media (max-width: 768px) {
+    .jr { padding: 80px 20px !important; }
+    .jr-steps { margin: 0 -20px; padding: 0 20px; grid-template-columns: repeat(5, 62vw); }
+    .jr-panel { padding: 18px 16px 20px; }
+    .jr-grid { grid-template-columns: 1fr; gap: 14px; }
+    .jr-table tbody th { min-width: 150px; }
+  }
   /* ── TOOLKIT GROUPS ── */
   .tech-stack-groups {
     max-width: 900px;
@@ -5200,6 +5256,14 @@
             </div>
           </details>
           <details class="kpi">
+            <summary><span class="kpi-name">LTV to CAC</span><i aria-hidden="true">+</i></summary>
+            <div class="kpi-body">
+              <p>Lifetime gross margin from a customer compared with what it cost to win them.</p>
+              <div class="kpi-formula"><span>Formula</span>(Monthly revenue per customer × gross margin ÷ monthly churn rate) ÷ CAC</div>
+              <div class="kpi-moved"><span>Moved by</span><b title="CRM &amp; RevOps">03 CRM &amp; RevOps</b><b title="Product-Led Growth">05 Product-Led Growth</b><b title="Conversation Intelligence">06 Conversation Intelligence</b></div>
+            </div>
+          </details>
+          <details class="kpi">
             <summary><span class="kpi-name">Rep selling time</span><i aria-hidden="true">+</i></summary>
             <div class="kpi-body">
               <p>Share of rep hours spent with buyers instead of research and list building.</p>
@@ -5277,6 +5341,96 @@
         <div class="sb-step"><span>04</span><b>DECIDE</b><p>Keep the channel that books more meetings without raising opt-outs. Log the result either way.</p></div>
       </div>
       <p class="sb-note reveal">An example of how we test. Decision rules are agreed before the test starts, so the result decides, not opinions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT JOURNEY -->
+<section class="jr" id="journey">
+  <div class="jr-inner">
+    <div class="jr-header">
+      <div class="reveal">
+        <p class="section-label">After You Sign</p>
+        <h2 class="section-title">YOUR FIRST<br><span class="italic">three years</span></h2>
+      </div>
+      <p class="jr-lede reveal reveal-delay-2">What we measure changes as the system matures. First we prove the data is right. Then we grow pipeline, then sharpen conversion and efficiency, then compound through retention and expansion. The scoreboard and our work evolve together.</p>
+    </div>
+
+    <div class="jr-steps reveal" role="tablist" aria-label="Client journey phases">
+        <button type="button" class="jr-step active" role="tab" aria-selected="true" data-phase="0">
+          <span class="jr-step-num">00</span><span class="jr-step-name">Baseline</span><span class="jr-step-when">Weeks 1 to 3</span>
+        </button>
+        <button type="button" class="jr-step" role="tab" aria-selected="false" data-phase="1">
+          <span class="jr-step-num">01</span><span class="jr-step-name">Foundation</span><span class="jr-step-when">Year 1 · Months 1 to 3</span>
+        </button>
+        <button type="button" class="jr-step" role="tab" aria-selected="false" data-phase="2">
+          <span class="jr-step-num">02</span><span class="jr-step-name">Pipeline Engine</span><span class="jr-step-when">Year 1 · Months 4 to 12</span>
+        </button>
+        <button type="button" class="jr-step" role="tab" aria-selected="false" data-phase="3">
+          <span class="jr-step-num">03</span><span class="jr-step-name">Conversion &amp; Efficiency</span><span class="jr-step-when">Year 2</span>
+        </button>
+        <button type="button" class="jr-step" role="tab" aria-selected="false" data-phase="4">
+          <span class="jr-step-num">04</span><span class="jr-step-name">Compounding</span><span class="jr-step-when">Year 3</span>
+        </button>
+    </div>
+    <div class="jr-panels reveal">
+      <div class="jr-panel" role="tabpanel" data-panel="0">
+        <div class="jr-panel-head"><span class="jr-eng">GTM Audit</span></div>
+        <div class="jr-grid">
+          <div><span>In focus</span>Every metric on the scoreboard, measured as it is today</div>
+          <div><span>You get</span>A baseline scoreboard and a ranked build plan</div>
+          <div><span>The decision</span>What to build first, and what success means in numbers we agree on together</div>
+          <div><span>Healthy looks like</span>Every KPI has a baseline, a source, and an owner</div>
+        </div>
+      </div>
+      <div class="jr-panel" role="tabpanel" data-panel="1" hidden>
+        <div class="jr-panel-head"><span class="jr-eng">Pipeline Build</span><span class="jr-svc">01 Data &amp; Enrichment</span><span class="jr-svc">03 CRM &amp; RevOps</span><span class="jr-svc">02 AI Research</span></div>
+        <div class="jr-grid">
+          <div><span>In focus</span>Data health, decision-maker accuracy, and speed to lead</div>
+          <div><span>You get</span>A clean CRM, enrichment, scoring, and a weekly health report</div>
+          <div><span>The decision</span>Is the data trustworthy enough to scale on?</div>
+          <div><span>Healthy looks like</span>Match rate and accuracy rising, duplicates near zero, faster first touch</div>
+        </div>
+      </div>
+      <div class="jr-panel" role="tabpanel" data-panel="2" hidden>
+        <div class="jr-panel-head"><span class="jr-eng">Pipeline Build into System Upkeep</span><span class="jr-svc">02 AI Research</span><span class="jr-svc">04 Outbound &amp; Lifecycle</span><span class="jr-svc">05 Product-Led Growth</span></div>
+        <div class="jr-grid">
+          <div><span>In focus</span>Qualified pipeline, reply and meeting rates, product-qualified accounts, cost per qualified account</div>
+          <div><span>You get</span>Monthly KPI reviews and channel tests</div>
+          <div><span>The decision</span>Which segments and channels to fund, and which to cut</div>
+          <div><span>Healthy looks like</span>More qualified pipeline each quarter at a steady or falling cost per account</div>
+        </div>
+      </div>
+      <div class="jr-panel" role="tabpanel" data-panel="3" hidden>
+        <div class="jr-panel-head"><span class="jr-eng">Fractional GTM Engineer or System Upkeep</span><span class="jr-svc">03 CRM &amp; RevOps</span><span class="jr-svc">05 Product-Led Growth</span><span class="jr-svc">06 Conversation Intelligence</span></div>
+        <div class="jr-grid">
+          <div><span>In focus</span>Win rate by segment, free-to-paid conversion, CAC payback, contract value</div>
+          <div><span>You get</span>Quarterly business reviews, scoring v2, and insights from call notes</div>
+          <div><span>The decision</span>Refine the ICP, feed pricing input to product, and point reps at the segments that close</div>
+          <div><span>Healthy looks like</span>Win rate climbing in target segments and payback shortening</div>
+        </div>
+      </div>
+      <div class="jr-panel" role="tabpanel" data-panel="4" hidden>
+        <div class="jr-panel-head"><span class="jr-eng">Fractional GTM Engineer or System Upkeep</span><span class="jr-svc">05 Product-Led Growth</span><span class="jr-svc">06 Conversation Intelligence</span><span class="jr-svc">07 Launch Content</span></div>
+        <div class="jr-grid">
+          <div><span>In focus</span>Net revenue retention, expansion pipeline, churn signals actioned, LTV to CAC</div>
+          <div><span>You get</span>An annual retrospective and the next 12-month roadmap</div>
+          <div><span>The decision</span>New segments, new markets, and where the next build goes</div>
+          <div><span>Healthy looks like</span>Existing customers drive a growing share of new revenue</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-block">
+      <div class="pb-block-label reveal">How the KPI Focus Shifts</div>
+      <div class="jr-legend reveal"><span><i class="lv-p"></i>Primary focus</span><span><i class="lv-t"></i>Tracked</span><span><i class="lv-m"></i>Monitored</span><span><i class="lv-n"></i>Not yet</span></div>
+      <div class="jr-table-wrap reveal">
+        <table class="jr-table">
+          <thead><tr><th scope="col" class="jr-kpi-col">KPI</th><th scope="col" data-col="0" class="on"><span>00</span>Baseline</th><th scope="col" data-col="1"><span>01</span>Foundation</th><th scope="col" data-col="2"><span>02</span>Pipeline Engine</th><th scope="col" data-col="3"><span>03</span>Conversion &amp; Efficiency</th><th scope="col" data-col="4"><span>04</span>Compounding</th></tr></thead>
+          <tbody><tr><th scope="row">Data health<small>Match rate, duplicates, freshness</small></th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="2" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="3" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="4" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td></tr><tr><th scope="row">Decision-maker accuracy</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="2" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="3" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="4" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td></tr><tr><th scope="row">Speed to lead</th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="2" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td></tr><tr><th scope="row">Qualified pipeline created</th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="2" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Reply and meeting rates</th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="2" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td></tr><tr><th scope="row">Product-qualified accounts</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="2" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Cost per qualified account</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="2" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="3" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Rep selling time</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="2" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td></tr><tr><th scope="row">Win rate by segment</th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="3" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Free-to-paid conversion</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="3" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">CAC payback</th><td data-col="0" class="lv-p on"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="3" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Average contract value</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-m"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="3" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td><td data-col="4" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td></tr><tr><th scope="row">Net revenue retention</th><td data-col="0" class="lv-t on"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td></tr><tr><th scope="row">Expansion pipeline</th><td data-col="0" class="lv-m on"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td></tr><tr><th scope="row">LTV to CAC</th><td data-col="0" class="lv-m on"><i title="Monitored"></i><span class="sr">Monitored</span></td><td data-col="1" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="2" class="lv-n"><i title="Not yet"></i><span class="sr">Not yet</span></td><td data-col="3" class="lv-t"><i title="Tracked"></i><span class="sr">Tracked</span></td><td data-col="4" class="lv-p"><i title="Primary"></i><span class="sr">Primary</span></td></tr></tbody>
+        </table>
+      </div>
+      <p class="sb-note reveal">Every client starts at Baseline. The pace through each phase depends on your data, your team, and your sales cycle.</p>
     </div>
   </div>
 </section>
@@ -6890,6 +7044,32 @@
         if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
         else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
       }
+    });
+  })();
+
+
+  // ── CLIENT JOURNEY TABS ──
+  (function clientJourney() {
+    const steps = document.querySelectorAll('.jr-step');
+    if (!steps.length) return;
+    const panels = document.querySelectorAll('.jr-panel');
+    const cells = document.querySelectorAll('.jr-table [data-col]');
+    function select(i) {
+      steps.forEach((b, j) => { b.classList.toggle('active', i === j); b.setAttribute('aria-selected', i === j ? 'true' : 'false'); });
+      panels.forEach((p, j) => { p.hidden = i !== j; });
+      cells.forEach(c => c.classList.toggle('on', +c.dataset.col === i));
+      const strip = steps[i].parentElement;
+      if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: steps[i].offsetLeft - 20, behavior: 'smooth' });
+      track('journey_phase', { phase: i });
+    }
+    steps.forEach((b, i) => {
+      b.addEventListener('click', () => select(i));
+      b.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const next = (i + (e.key === 'ArrowRight' ? 1 : -1) + steps.length) % steps.length;
+        steps[next].focus(); select(next);
+      });
     });
   })();
 
