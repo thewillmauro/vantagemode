@@ -5462,7 +5462,7 @@
         </div>
       </div>
       </div>
-      <p class="sb-hint">Tap any metric for its definition, formula, and the services that move it.</p>
+      <p class="sb-hint">Tap any metric for its definition, formula, and the services that move it. <a href="/kpi-scoreboard" class="kpi-link" data-cta="scoreboard" style="color:var(--gold-ink);">Get the whole scoreboard as a free spreadsheet →</a></p>
     </div>
 
     <div class="fold">
@@ -6172,6 +6172,7 @@
       <li><a href="#metrics">Metrics</a></li>
       <li><a href="#pricing">Engagements</a></li>
       <li><a href="/scorecard" class="scorecard-link" data-cta="footer">GTM Scorecard</a></li>
+      <li><a href="/kpi-scoreboard" class="kpi-link" data-cta="footer">KPI Template</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
@@ -7281,6 +7282,9 @@
   }
   document.querySelectorAll('.scorecard-link').forEach(a => {
     a.addEventListener('click', () => track('cta_scorecard', { location: a.dataset.cta || 'unknown' }));
+  });
+  document.querySelectorAll('.kpi-link').forEach(a => {
+    a.addEventListener('click', () => track('cta_kpi_template', { location: a.dataset.cta || 'unknown' }));
   });
   document.querySelectorAll('.open-wizard').forEach(btn => {
     btn.addEventListener('click', e => {

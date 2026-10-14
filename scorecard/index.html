@@ -160,6 +160,11 @@
   .cta-box .btn { background: var(--on-gold); color: var(--gold); }
   html[data-theme="light"] .cta-box .btn { color: var(--black); }
   .retake { margin-top: 32px; }
+  .xsell { display: flex; gap: 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 40px; padding: 22px 24px; border: 1px solid rgba(var(--ink-rgb),0.12); }
+  .xsell div { flex: 1 1 320px; }
+  .xsell b { display: block; font-weight: 500; margin-bottom: 4px; }
+  .xsell span { font-size: 14px; color: var(--muted); }
+  .xsell .btn-ghost { text-decoration: none; }
 
   @media (max-width: 640px) {
     .sc-nav { padding: 16px; }
@@ -247,6 +252,10 @@
       <h2>Your first <em>90 days</em></h2>
       <p class="lead" id="planIntro" style="font-size:16px;margin-bottom:20px"></p>
       <div class="plan" id="plan"></div>
+      <div class="xsell">
+        <div><b>Measure it before you fix it</b><span>Get the free KPI Scoreboard: all 22 metrics with formulas, weekly to quarterly tabs, and an experiment log.</span></div>
+        <a class="btn-ghost" id="kpiLink" href="/downloads/gtm-kpi-scoreboard.xlsx" download>Download the template</a>
+      </div>
       <div class="note" id="saveNote" hidden></div>
       <div class="cta-box">
         <h2>Want a second pair of eyes?</h2>
@@ -407,7 +416,7 @@
     const weakest = Object.keys(pillars).sort((a, b) => pillars[a] - pillars[b])[0];
     return { pillars, overall, band, gaps, weakest };
   }
-  function finish() {
+  function finish(fromLink) {
     result = score();
     show('results');
     $('overall').textContent = result.overall;
@@ -422,6 +431,7 @@
     }));
     $('gate').hidden = false;
     $('report').hidden = true;
+    if (fromLink) return;
     $('resultsTitle').focus();
     track('scorecard_completed', { overall: result.overall, band: result.band.name, weakest: result.weakest });
   }
@@ -442,11 +452,14 @@
     $('planIntro').textContent = plan.intro;
     $('plan').innerHTML = plan.steps.map(s => '<div><b>' + s[0] + '</b><span>' + esc(s[1]) + '</span></div>').join('');
   }
+  // Every answer is one digit, so the full report fits in a short link (used in follow-up emails)
+  function reportURL() { return 'https://www.vantagemode.com/scorecard?r=' + QUESTIONS.map(q => answers[q.id]).join(''); }
   function summary() {
     const lines = ['GTM Readiness Scorecard: ' + result.overall + '/100 (' + result.band.name + ')',
       'Data ' + result.pillars.data + ' · AI Agents ' + result.pillars.ai + ' · RevOps ' + result.pillars.revops,
       'Weakest: ' + PILLARS[result.weakest],
-      'Top gaps: ' + (result.gaps.map(x => x.q.gap).join('; ') || 'none'), '', 'Answers:'];
+      'Top gaps: ' + (result.gaps.map(x => x.q.gap).join('; ') || 'none'),
+      'Report link: ' + reportURL(), '', 'Answers:'];
     QUESTIONS.forEach(q => lines.push(q.id + ' ' + q.text + ' → ' + q.options[answers[q.id]]));
     return lines.join('\n');
   }
@@ -508,6 +521,7 @@
     Object.keys(answers).forEach(k => delete answers[k]);
     idx = 0; show('quiz'); render();
   });
+  $('kpiLink').addEventListener('click', () => track('kpi_template_downloaded', { location: 'scorecard_report' }));
   $('teardownBtn').addEventListener('click', () => track('cta_teardown', { location: 'scorecard' }));
   document.addEventListener('keydown', e => {
     if ($('quiz').hidden || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -515,6 +529,19 @@
     const i = '1234'.indexOf(e.key) >= 0 ? '1234'.indexOf(e.key) : 'abcd'.indexOf(e.key.toLowerCase());
     if (i >= 0 && e.key.length === 1) choose(i);
   });
+
+  // ── REPORT LINK: /scorecard?r=<15 digits> opens the full report directly ──
+  (function () {
+    const code = new URLSearchParams(location.search).get('r') || '';
+    if (!new RegExp('^[0-3]{' + QUESTIONS.length + '}$').test(code)) return;
+    QUESTIONS.forEach((q, i) => { answers[q.id] = Number(code[i]); });
+    result = score();
+    finish(true);
+    renderReport();
+    $('gate').hidden = true;
+    $('report').hidden = false;
+    track('scorecard_report_viewed');
+  })();
 
   // ── THEME TOGGLE (shared with the homepage via localStorage) ──
   (function () {
