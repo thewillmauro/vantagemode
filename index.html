@@ -4173,6 +4173,13 @@
   .lp-build-eng em { font-style: normal; font-size: 12px; color: rgba(var(--on-gold-rgb),0.8); }
 
   /* ── SCOREBOARD ── */
+  .scb { padding: 72px 60px; border-top: 1px solid rgba(var(--ink-rgb),0.08); border-bottom: 1px solid rgba(var(--ink-rgb),0.08); }
+  .scb-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
+  .scb-inner > div { flex: 1 1 520px; }
+  .scb-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: 0.02em; margin-bottom: 14px; }
+  .scb-title .italic { font-family: var(--font-italic); font-style: italic; color: var(--gold-display); letter-spacing: 0; }
+  .scb-sub { color: var(--muted); max-width: 600px; }
+  @media (max-width: 768px) { .scb { padding: 56px 16px; } .scb-inner { gap: 28px; } }
   .sb { background: var(--deep); position: relative; }
   .sb-inner { max-width: 1200px; margin: 0 auto; }
   .sb-header { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 56px; }
@@ -4549,7 +4556,7 @@
       <a href="#" class="btn-primary open-teardown" data-cta="hero"><span>Get a Free Pipeline Teardown</span></a>
       <a href="#playbook" class="btn-outline">See the Playbook</a>
     </div>
-    <p class="hero-offer-note">20 minutes. Three fixes you can use, whether or not you hire us.</p>
+    <p class="hero-offer-note">20 minutes. Three fixes you can use, whether or not you hire us. Not ready to talk? <a href="/scorecard" class="scorecard-link" data-cta="hero" style="color:var(--gold-ink);">Take the 2-minute scorecard</a>.</p>
 
     <!-- Hero Pillars -->
     <div class="hero-pillars">
@@ -5495,6 +5502,18 @@
   </div>
 </section>
 
+<!-- SCORECARD BAND -->
+<section class="scb" id="scorecard" aria-label="GTM Readiness Scorecard">
+  <div class="scb-inner reveal">
+    <div>
+      <div class="section-label">Free · 2 minutes</div>
+      <h2 class="scb-title">How does <span class="italic">your</span> system score?</h2>
+      <p class="scb-sub">Twelve questions on your data, AI agents, and revenue operations (RevOps). See your score for each, then get your top three gaps, the metrics to watch, and a first 90-day plan.</p>
+    </div>
+    <a href="/scorecard" class="btn-primary scorecard-link" data-cta="metrics_band"><span>Take the scorecard</span></a>
+  </div>
+</section>
+
 <!-- CLIENT JOURNEY -->
 <section class="jr folds" id="journey">
   <div class="jr-inner">
@@ -6152,6 +6171,7 @@
       <li><a href="#playbook">Playbook</a></li>
       <li><a href="#metrics">Metrics</a></li>
       <li><a href="#pricing">Engagements</a></li>
+      <li><a href="/scorecard" class="scorecard-link" data-cta="footer">GTM Scorecard</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#cta">Contact</a></li>
     </ul>
@@ -7253,6 +7273,14 @@
   }
   document.querySelectorAll('.open-teardown').forEach(btn => {
     btn.addEventListener('click', e => { e.preventDefault(); openTeardown(btn.dataset.cta); });
+  });
+  // /#teardown (linked from /scorecard) opens the teardown flow on arrival, after the rest of this script has run
+  if (location.hash === '#teardown') {
+    history.replaceState(null, '', location.pathname + location.search);
+    setTimeout(() => openTeardown('scorecard'), 0);
+  }
+  document.querySelectorAll('.scorecard-link').forEach(a => {
+    a.addEventListener('click', () => track('cta_scorecard', { location: a.dataset.cta || 'unknown' }));
   });
   document.querySelectorAll('.open-wizard').forEach(btn => {
     btn.addEventListener('click', e => {

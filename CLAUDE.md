@@ -34,6 +34,15 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 
 **Folds**: a section with class `folds` hides its `.fold` blocks until its `.fold-toggle` button is pressed. Put deep-dive detail in a fold rather than making the page longer.
 
+## Scorecard (`/scorecard`)
+
+- Standalone lead-magnet page in `scorecard/index.html` (its own CSS/JS, same tokens and `vm-theme` key). Indexable, unlike the redirect share pages
+- 3 unscored context questions + 12 scored (4 each for Data / AI Agents / RevOps, 0 to 3 points). Pillar = points / 12 x 100, overall = average. Bands: 0-39 Running on effort, 40-69 Partly systemized, 70+ Systemized
+- Score and pillar bars are free; the email gate unlocks the top 3 gaps (lowest answers, ties to the weaker pillar), metrics to watch, services, and a 90-day plan for the weakest pillar. The report shows even if the lead save fails, with a mailto fallback
+- Saves to `leads` with `source: 'scorecard'`, `service: 'GTM Scorecard'`, company in `brand`, scores and every answer in `message`
+- Homepage entry points: hero note link, band after Scoreboard (`#scorecard`), footer link (all `.scorecard-link`). `/#teardown` opens the teardown flow on arrival
+- Events: scorecard_started, scorecard_completed, scorecard_email_submitted, cta_scorecard
+
 ## Interactive Elements
 
 - **Leads**: all forms call `saveLead()`, which inserts into the Supabase `leads` table and shows an email fallback if the insert fails. Never show a success message without checking the insert result

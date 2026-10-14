@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>/* theme before paint; same key as the homepage */try{var t=localStorage.getItem('vm-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM Readiness Scorecard | Vantage Mode</title>
+<meta name="description" content="A free 2-minute go-to-market (GTM) scorecard for early-stage software companies. Score your data, AI agents, and revenue operations, then get the first three fixes.">
+<link rel="canonical" href="https://www.vantagemode.com/scorecard">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vantage Mode">
+<meta property="og:title" content="GTM Readiness Scorecard | Vantage Mode">
+<meta property="og:description" content="12 questions, about 2 minutes. See where your data, AI agents, and revenue operations stand, and the first three things to fix.">
+<meta property="og:url" content="https://www.vantagemode.com/scorecard">
+<meta property="og:image" content="https://www.vantagemode.com/og.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GTM Readiness Scorecard | Vantage Mode">
+<meta name="twitter:description" content="12 questions, about 2 minutes. See where your data, AI agents, and revenue operations stand, and the first three things to fix.">
+<meta name="twitter:image" content="https://www.vantagemode.com/og.png?v=2">
+<meta name="theme-color" content="#080808">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --surface: #141414;
+    --surface2: #1c1c1c;
+    --gold: #c9a84c;
+    --gold-bright: #f0c96b;
+    --gold-ink: #c9a84c;
+    --gold-display: #c9a84c;
+    --on-gold: #080808;
+    --white: #f5f0e8;
+    --muted: #a39b8c;
+    --line: #6b6458;
+    --ink-rgb: 255,255,255;
+    --bad: #e06c75;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-italic: 'Playfair Display', serif;
+  }
+  html[data-theme="light"] {
+    --black: #f5f0e8;
+    --surface: #ece5d8;
+    --surface2: #e6dece;
+    --white: #1a1712;
+    --muted: #5a5346;
+    --line: #b9b09d;
+    --gold: #c9a84c;
+    --gold-bright: #d6b85e;
+    --gold-ink: #7a5b0b;
+    --gold-display: #a07818;
+    --on-gold: #1a1712;
+    --ink-rgb: 26,23,18;
+    --bad: #b23a44;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--black); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  a { color: var(--gold-ink); }
+  abbr { text-decoration: none; cursor: help; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  /* nav */
+  .sc-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 48px; border-bottom: 1px solid rgba(var(--ink-rgb),0.08); }
+  .sc-logo { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.12em; color: var(--white); text-decoration: none; }
+  .sc-logo span { color: var(--gold-display); }
+  .sc-nav-right { display: flex; align-items: center; gap: 14px; }
+  .sc-home { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .sc-home:hover { color: var(--gold-ink); }
+  .theme-toggle { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; background: none; border: 1px solid rgba(var(--ink-rgb),0.15); border-radius: 50%; color: var(--muted); cursor: pointer; }
+  .theme-toggle:hover { border-color: var(--gold); color: var(--gold-ink); }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  .theme-toggle .icon-sun { display: none; }
+  html[data-theme="light"] .theme-toggle .icon-sun { display: block; }
+  html[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 18px; }
+  h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(48px, 9vw, 84px); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 24px; }
+  h1 em, h2 em { font-family: var(--font-italic); font-style: italic; color: var(--gold-display); letter-spacing: 0; }
+  h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 6vw, 48px); line-height: 1; letter-spacing: 0.02em; margin-bottom: 16px; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 600px; margin-bottom: 32px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--on-gold); border: none; padding: 16px 32px; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .btn:hover { background: var(--gold-bright); }
+  .btn:disabled { opacity: 0.6; cursor: wait; }
+  .btn-ghost { background: none; border: 1px solid rgba(var(--ink-rgb),0.2); color: var(--muted); padding: 12px 20px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-ink); }
+  [hidden] { display: none !important; }
+
+  /* intro */
+  .intro-points { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(var(--ink-rgb),0.08); border: 1px solid rgba(var(--ink-rgb),0.08); margin: 40px 0; }
+  .intro-points li { background: var(--black); padding: 20px; }
+  .intro-points b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: 0.05em; color: var(--gold-display); margin-bottom: 4px; }
+  .intro-points span { font-size: 14px; color: var(--muted); }
+  .fine { font-size: 13px; color: var(--muted); margin-top: 16px; }
+
+  /* quiz */
+  .progress { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .progress-bar { flex: 1; height: 2px; background: rgba(var(--ink-rgb),0.1); }
+  .progress-fill { height: 100%; background: var(--gold); width: 0; transition: width 0.3s; }
+  .progress-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .q-pillar { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 12px; }
+  .q-text { font-size: clamp(22px, 4vw, 28px); font-weight: 400; line-height: 1.3; margin-bottom: 28px; }
+  .q-text:focus { outline: none; }
+  .options { display: grid; gap: 10px; margin-bottom: 32px; }
+  .opt { text-align: left; background: var(--surface); border: 1px solid rgba(var(--ink-rgb),0.08); padding: 18px 20px; font-size: 16px; cursor: pointer; display: flex; gap: 14px; align-items: baseline; transition: border-color 0.15s, background 0.15s; }
+  .opt:hover { border-color: var(--gold); }
+  .opt[aria-pressed="true"] { border-color: var(--gold); background: var(--surface2); }
+  .opt-key { font-family: var(--font-display); font-size: 16px; color: var(--gold-ink); min-width: 14px; }
+
+  /* results */
+  .score-hero { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; padding: 32px; background: var(--surface); border-left: 2px solid var(--gold); margin: 32px 0; }
+  .score-num { font-family: var(--font-display); font-size: 104px; line-height: 0.85; color: var(--gold-display); }
+  .score-num small { font-size: 32px; color: var(--muted); }
+  .score-band { font-family: var(--font-display); font-size: 30px; letter-spacing: 0.04em; line-height: 1; margin-bottom: 8px; }
+  .score-verdict { color: var(--muted); max-width: 420px; }
+  .pillars { display: grid; gap: 18px; margin-bottom: 48px; }
+  .pillar-row { display: grid; grid-template-columns: 130px 1fr 44px; gap: 16px; align-items: center; }
+  .pillar-name { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .pillar-track { height: 10px; background: rgba(var(--ink-rgb),0.08); }
+  .pillar-fill { height: 100%; background: var(--gold); width: 0; transition: width 0.8s ease; }
+  .pillar-val { font-family: var(--font-display); font-size: 24px; text-align: right; }
+
+  .gate { padding: 32px; border: 1px solid rgba(var(--ink-rgb),0.12); }
+  .gate p { color: var(--muted); margin-bottom: 20px; }
+  .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .gate-grid .full { grid-column: 1 / -1; }
+  .gate label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .gate input { width: 100%; background: var(--surface); border: 1px solid rgba(var(--ink-rgb),0.12); color: var(--white); padding: 14px 16px; font: inherit; font-size: 16px; }
+  .gate input:focus { border-color: var(--gold); outline: none; }
+  .gate input.err { border-color: var(--bad); }
+  .gate-err { color: var(--bad); font-size: 13px; margin-top: -6px; margin-bottom: 12px; }
+
+  .report h2 { margin-top: 56px; }
+  .gap { padding: 28px 0; border-top: 1px solid rgba(var(--ink-rgb),0.1); }
+  .gap-head { display: flex; gap: 16px; align-items: baseline; margin-bottom: 10px; }
+  .gap-n { font-family: var(--font-display); font-size: 32px; color: var(--gold-display); line-height: 1; }
+  .gap-title { font-size: 20px; font-weight: 400; }
+  .gap-answer { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .gap-answer i { font-style: normal; color: var(--white); }
+  .gap p { color: var(--muted); margin-bottom: 14px; }
+  .gap-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .gap-meta div { background: var(--surface); padding: 14px 16px; }
+  .gap-meta b { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 4px; }
+  .gap-meta span { font-size: 14px; }
+  .plan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(var(--ink-rgb),0.08); border: 1px solid rgba(var(--ink-rgb),0.08); }
+  .plan div { background: var(--black); padding: 22px; }
+  .plan b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: 0.05em; color: var(--gold-display); margin-bottom: 6px; }
+  .plan span { font-size: 14px; color: var(--muted); }
+  .note { font-size: 14px; color: var(--muted); padding: 14px 16px; background: var(--surface); margin-top: 20px; }
+  .cta-box { margin-top: 56px; padding: 40px 32px; background: var(--gold); color: var(--on-gold); }
+  .cta-box h2 { color: var(--on-gold); margin: 0 0 12px; }
+  .cta-box p { margin-bottom: 24px; max-width: 520px; }
+  .cta-box .btn { background: var(--on-gold); color: var(--gold); }
+  html[data-theme="light"] .cta-box .btn { color: var(--black); }
+  .retake { margin-top: 32px; }
+
+  @media (max-width: 640px) {
+    .sc-nav { padding: 16px; }
+    .sc-home { display: none; }
+    main { padding: 40px 16px 72px; }
+    .intro-points, .plan, .gap-meta, .gate-grid { grid-template-columns: 1fr; }
+    .score-hero { padding: 24px; gap: 16px; }
+    .score-num { font-size: 84px; }
+    .pillar-row { grid-template-columns: 96px 1fr 36px; gap: 10px; }
+    .pillar-name { font-size: 10px; letter-spacing: 0.1em; }
+    .gate, .cta-box { padding: 24px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<nav class="sc-nav">
+  <a href="/" class="sc-logo">VANTAGE<span>MODE</span></a>
+  <div class="sc-nav-right">
+    <a href="/" class="sc-home">Back to site</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Switch theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="eyebrow">Free · 2 minutes</div>
+    <h1>The <abbr title="go-to-market">GTM</abbr> Readiness <em>Scorecard</em></h1>
+    <p class="lead">Twelve questions about how your company finds, researches, and works its pipeline. You get a score for each part of your go-to-market system and the first three things to fix.</p>
+    <ul class="intro-points">
+      <li><b>Data</b><span>Is your account list, enrichment, and CRM trustworthy?</span></li>
+      <li><b>AI Agents</b><span>Do research and first drafts happen before a rep touches an account?</span></li>
+      <li><b>RevOps</b><span>Do leads reach the right rep fast, and do you know your numbers?</span></li>
+    </ul>
+    <button class="btn" id="startBtn" type="button">Start the scorecard →</button>
+    <p class="fine">Built for early-stage software companies growing a sales team. Pick the answer closest to today, not the plan.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" hidden>
+    <div class="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-label" id="progLabel">1 of 15</div>
+    </div>
+    <div class="q-pillar" id="qPillar"></div>
+    <h2 class="q-text" id="qText" tabindex="-1"></h2>
+    <div class="options" id="qOptions" role="group" aria-labelledby="qText"></div>
+    <button class="btn-ghost" id="backBtn" type="button">← Back</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results" hidden>
+    <div class="eyebrow">Your score</div>
+    <h2 id="resultsTitle" tabindex="-1">Your <abbr title="go-to-market">GTM</abbr> system, <em>scored</em></h2>
+    <div class="score-hero">
+      <div class="score-num"><span id="overall">0</span><small>/100</small></div>
+      <div>
+        <div class="score-band" id="band"></div>
+        <div class="score-verdict" id="verdict"></div>
+      </div>
+    </div>
+    <div class="pillars" id="pillars"></div>
+
+    <form class="gate" id="gate" novalidate>
+      <h2>Get your top 3 <em>fixes</em></h2>
+      <p>See your three biggest gaps, the metrics to watch for each one, and a suggested first 90 days. Will also reads every scorecard personally.</p>
+      <div class="gate-grid">
+        <div class="full"><label for="gEmail">Work email</label><input id="gEmail" type="email" autocomplete="email" required></div>
+        <div><label for="gName">Name (optional)</label><input id="gName" type="text" autocomplete="name"></div>
+        <div><label for="gCompany">Company (optional)</label><input id="gCompany" type="text" autocomplete="organization"></div>
+      </div>
+      <div class="gate-err" id="gateErr" hidden>Please enter a valid email.</div>
+      <button class="btn" type="submit">Show my full report →</button>
+      <p class="fine">No newsletter spam. We use your answers to tailor the report and any follow-up.</p>
+    </form>
+
+    <div class="report" id="report" hidden>
+      <h2 tabindex="-1" id="reportTitle">Your top 3 <em>gaps</em></h2>
+      <div id="gaps"></div>
+      <h2>Your first <em>90 days</em></h2>
+      <p class="lead" id="planIntro" style="font-size:16px;margin-bottom:20px"></p>
+      <div class="plan" id="plan"></div>
+      <div class="note" id="saveNote" hidden></div>
+      <div class="cta-box">
+        <h2>Want a second pair of eyes?</h2>
+        <p>Book a free 20-minute Pipeline Teardown. We walk through your scorecard and your current setup, and you leave with the first fixes we would make. No pitch deck.</p>
+        <a class="btn" id="teardownBtn" href="/#teardown">Book a free teardown →</a>
+      </div>
+    </div>
+    <button class="btn-ghost retake" id="retakeBtn" type="button">Retake the scorecard</button>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  function track(name, data) {
+    try { if (window.va) window.va('event', data ? { name, data } : { name }); } catch (e) {}
+  }
+
+  // ── QUESTIONS ── answers are listed 0 → 3 points; context questions are not scored
+  const SERVICES = {
+    '01': 'GTM Data & Enrichment', '02': 'AI Research Agents', '03': 'CRM & RevOps', '04': 'Outbound & Lifecycle',
+    '05': 'Product-Led Growth', '06': 'Conversation Intelligence', '07': 'Launch Content & Creative'
+  };
+  const PILLARS = { data: 'Data', ai: 'AI Agents', revops: 'RevOps' };
+  const QUESTIONS = [
+    { id: 'C1', pillar: null, text: 'How many people sell today?', options: ['Just the founders', '1 to 3', '4 to 10', '11 or more'] },
+    { id: 'C2', pillar: null, text: 'How do most customers find you?', options: ['Inbound or a free plan', 'Outbound', 'Both', 'Not sure yet'] },
+    { id: 'C3', pillar: null, text: 'Which CRM do you use?', options: ['HubSpot', 'Salesforce', 'Attio or another CRM', 'A spreadsheet, or none'] },
+
+    { id: 'D1', pillar: 'data', text: 'When a new lead comes in, what do you know about them automatically?',
+      options: ['Name and email only', 'Someone looks up the company by hand', 'A tool fills in some fields', 'Company, role, tech stack, and funding are filled in within minutes'],
+      gap: 'Leads arrive without context', why: 'Every lead that arrives as just a name and email costs a rep research time before the first reply, and slow first replies lose meetings. Automatic enrichment puts company, role, and buying context on the record the moment it is created.',
+      kpis: 'Enrichment match rate, Speed to lead', svc: ['01'] },
+    { id: 'D2', pillar: 'data', text: 'How current is your target account list?',
+      options: ["We don't have one", 'Built once, rarely touched', 'Updated every quarter', 'Refreshed continuously from signals like hiring and funding'],
+      gap: 'Your target list goes stale', why: 'A list built once drifts away from reality as companies hire, raise, and change tools. Reps end up working accounts that no longer fit while new fits go unnoticed.',
+      kpis: 'Qualified pipeline created, Cost per qualified account', svc: ['01', '02'] },
+    { id: 'D3', pillar: 'data', text: 'Do you track signs that an account is ready to buy, like hiring, funding, product usage, or site visits?',
+      options: ['No', 'We notice sometimes', 'Tracked in a few places', 'Combined into one score reps can see'],
+      gap: 'Buying signals are invisible', why: 'Signals spread across your product, website, and news feeds only help when they are combined into one view a rep can act on. Otherwise the best moment to reach out passes unnoticed.',
+      kpis: 'Product-qualified accounts, Qualified pipeline created', svc: ['01', '05'] },
+    { id: 'D4', pillar: 'data', text: 'How much do you trust your CRM data?',
+      options: ['Not at all', 'Lots of duplicates and old contacts', 'Mostly clean, cleaned by hand', 'It cleans and refreshes itself'],
+      gap: "Your CRM can't be trusted", why: 'When the CRM is full of duplicates and old contacts, reps stop using it and reporting stops meaning anything. Cleanup by hand never keeps pace, so it has to be automated.',
+      kpis: 'Duplicate rate, Data freshness', svc: ['03'] },
+
+    { id: 'A1', pillar: 'ai', text: 'How do reps research an account before reaching out?',
+      options: ["They mostly don't", 'By hand, 20 minutes or more each', 'A tool helps for some accounts', 'A research brief is already waiting for them'],
+      gap: 'Research eats selling time', why: 'Manual account research is the biggest hidden cost in outbound. A research agent can assemble the brief before a rep opens the account, so reps spend their time on conversations instead.',
+      kpis: 'Rep selling time', svc: ['02'] },
+    { id: 'A2', pillar: 'ai', text: 'How are first outbound emails written?',
+      options: ['Same template for everyone', 'Template plus first name', 'Reps personalize by hand', 'Drafts built from research, reviewed by a rep'],
+      gap: 'Outreach reads like a template', why: 'Buyers ignore emails that could have been sent to anyone. Drafts built from real research, with a rep approving every send, get relevance without giving up quality control.',
+      kpis: 'Positive reply rate, Draft approval rate, Deliverability', svc: ['04', '02'] },
+    { id: 'A3', pillar: 'ai', text: 'What happens to what customers say on sales, support, and product calls?',
+      options: ['It stays in people\'s heads', 'Some notes in docs', 'Recorded but rarely used', 'Key points land in the CRM automatically'],
+      gap: 'Call insights are lost', why: 'Objections, feature requests, and churn warnings come up on calls every day. When they stay in recordings or memories, sales, success, and product teams each miss what the others heard.',
+      kpis: 'Churn signals actioned, Win rate', svc: ['06'] },
+    { id: 'A4', pillar: 'ai', text: 'How does AI show up in your sales process?',
+      options: ["It doesn't", 'Reps use chat tools on their own', 'One or two workflows', 'Built into daily work with human review'],
+      gap: 'AI is ad hoc, not a system', why: 'Reps pasting into chat tools on their own produces uneven quality and no shared learning. AI built into the workflow, with review steps and guardrails, gives consistent output you can measure.',
+      kpis: 'Draft approval rate, Rep selling time', svc: ['02'] },
+
+    { id: 'R1', pillar: 'revops', text: 'How fast does a new inbound lead hear from you?',
+      options: ['Days, or not sure', 'Same day', 'Within an hour', 'Minutes, routed automatically'],
+      gap: 'Inbound leads wait too long', why: 'Interest fades fast after someone raises their hand. Automatic routing and alerts get the right rep in front of the lead while they are still paying attention.',
+      kpis: 'Speed to lead, Meeting rate', svc: ['03', '04'] },
+    { id: 'R2', pillar: 'revops', text: 'Do you know your pipeline numbers each week?',
+      options: ['No', 'Only when someone asks', 'A monthly report', 'A dashboard we review weekly'],
+      gap: "You can't see your pipeline", why: 'Without weekly numbers, problems show up a quarter late. A short weekly review of a few metrics catches a slowdown while there is still time to fix it.',
+      kpis: 'Qualified pipeline created, Win rate', svc: ['03'] },
+    { id: 'R3', pillar: 'revops', text: 'How does a lead reach the right rep?',
+      options: ['Whoever sees it first', 'Someone assigns it by hand', 'Rules, with gaps', 'Automatic, with a clear owner and response time'],
+      gap: 'Lead routing is guesswork', why: 'When nobody clearly owns a lead, it either gets worked twice or not at all. Clear routing rules with an owner and a response-time target close that gap.',
+      kpis: 'Speed to lead', svc: ['03'] },
+    { id: 'R4', pillar: 'revops', text: "How much of a rep's week goes to actual selling?",
+      options: ['Not sure', 'Under a third', 'About half', 'Most of it, admin is automated'],
+      gap: 'Reps are buried in admin', why: 'Logging calls, updating fields, and chasing data pull reps away from buyers. Automating that admin is often the fastest way to add selling capacity without adding headcount.',
+      kpis: 'Rep selling time', svc: ['03', '02'] }
+  ];
+  const SCORED = QUESTIONS.filter(q => q.pillar);
+
+  const BANDS = [
+    { min: 70, name: 'Systemized', verdict: 'Your foundation is in place. The gains now come from tuning: tighter scoring, better drafts, and faster feedback loops.' },
+    { min: 40, name: 'Partly systemized', verdict: 'Some parts run on their own, others still run on effort. Fixing the weakest links will lift everything else.' },
+    { min: 0, name: 'Running on effort', verdict: 'Pipeline depends on people working hard by hand. A few core systems would free up a lot of selling time.' }
+  ];
+  const PLANS = {
+    data: { intro: 'Data is your weakest area, so start where every other system gets its inputs.',
+      steps: [['Days 1 to 30', 'Define your ideal customer in writing, then dedupe and clean the CRM against it.'],
+              ['Days 31 to 60', 'Turn on automatic enrichment for new leads and combine buying signals into one score.'],
+              ['Days 61 to 90', 'Feed reps a refreshed list of target accounts every week, ranked by that score.']] },
+    ai: { intro: 'AI Agents is your weakest area, so start by taking research and first drafts off your reps\' plates.',
+      steps: [['Days 1 to 30', 'Measure how long reps spend researching and writing, and pick the accounts that matter most.'],
+              ['Days 31 to 60', 'Set up a research agent that writes an account brief into the CRM before outreach.'],
+              ['Days 61 to 90', 'Generate first drafts from that research, with a rep approving every send. Track the approval rate.']] },
+    revops: { intro: 'RevOps is your weakest area, so start with visibility and routing.',
+      steps: [['Days 1 to 30', 'Stand up a weekly dashboard for pipeline created, meetings, and win rate, and review it every week.'],
+              ['Days 31 to 60', 'Add routing rules so every lead has one owner and a response-time target.'],
+              ['Days 61 to 90', 'Automate CRM admin like call logging and field updates, then measure rep selling time.']] }
+  };
+
+  // ── STATE ──
+  const answers = {};
+  let idx = 0;
+  let started = false;
+  let result = null;
+
+  // ── QUIZ ──
+  function show(section) {
+    ['intro', 'quiz', 'results'].forEach(s => { $(s).hidden = s !== section; });
+    window.scrollTo(0, 0);
+  }
+  function render() {
+    const q = QUESTIONS[idx];
+    $('progFill').style.width = (idx / QUESTIONS.length * 100) + '%';
+    $('progLabel').textContent = (idx + 1) + ' of ' + QUESTIONS.length;
+    $('qPillar').textContent = q.pillar ? PILLARS[q.pillar] : 'About you';
+    $('qText').textContent = q.text;
+    const box = $('qOptions');
+    box.innerHTML = '';
+    q.options.forEach((label, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt';
+      b.setAttribute('aria-pressed', answers[q.id] === i ? 'true' : 'false');
+      b.innerHTML = '<span class="opt-key">' + 'ABCD'[i] + '</span><span></span>';
+      b.lastChild.textContent = label;
+      b.addEventListener('click', () => choose(i));
+      box.appendChild(b);
+    });
+    $('backBtn').style.visibility = idx === 0 ? 'hidden' : 'visible';
+    $('qText').focus();
+  }
+  function choose(i) {
+    const q = QUESTIONS[idx];
+    answers[q.id] = i;
+    if (idx < QUESTIONS.length - 1) { idx++; setTimeout(render, 120); }
+    else { setTimeout(finish, 120); }
+  }
+
+  // ── SCORING ──
+  function score() {
+    const pillars = {};
+    Object.keys(PILLARS).forEach(p => {
+      const qs = SCORED.filter(q => q.pillar === p);
+      const pts = qs.reduce((s, q) => s + answers[q.id], 0);
+      pillars[p] = Math.round(pts / (qs.length * 3) * 100);
+    });
+    const overall = Math.round(Object.values(pillars).reduce((a, b) => a + b, 0) / 3);
+    const band = BANDS.find(b => overall >= b.min);
+    // Top gaps: lowest answers first, ties go to the weaker pillar, then question order
+    const gaps = SCORED.filter(q => answers[q.id] < 3)
+      .map((q, order) => ({ q, pts: answers[q.id], pillarScore: pillars[q.pillar], order }))
+      .sort((a, b) => a.pts - b.pts || a.pillarScore - b.pillarScore || a.order - b.order)
+      .slice(0, 3);
+    const weakest = Object.keys(pillars).sort((a, b) => pillars[a] - pillars[b])[0];
+    return { pillars, overall, band, gaps, weakest };
+  }
+  function finish() {
+    result = score();
+    show('results');
+    $('overall').textContent = result.overall;
+    $('band').textContent = result.band.name;
+    $('verdict').textContent = result.band.verdict;
+    $('pillars').innerHTML = Object.keys(PILLARS).map(p =>
+      '<div class="pillar-row"><div class="pillar-name">' + PILLARS[p] + '</div>' +
+      '<div class="pillar-track" role="img" aria-label="' + PILLARS[p] + ' ' + result.pillars[p] + ' out of 100"><div class="pillar-fill" data-w="' + result.pillars[p] + '"></div></div>' +
+      '<div class="pillar-val">' + result.pillars[p] + '</div></div>').join('');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.querySelectorAll('.pillar-fill').forEach(el => { el.style.width = el.dataset.w + '%'; });
+    }));
+    $('gate').hidden = false;
+    $('report').hidden = true;
+    $('resultsTitle').focus();
+    track('scorecard_completed', { overall: result.overall, band: result.band.name, weakest: result.weakest });
+  }
+
+  // ── REPORT ──
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function renderReport() {
+    const g = result.gaps;
+    $('reportTitle').innerHTML = g.length ? 'Your top ' + g.length + ' <em>gap' + (g.length > 1 ? 's' : '') + '</em>' : 'No major <em>gaps</em>';
+    $('gaps').innerHTML = g.length ? g.map((x, i) =>
+      '<div class="gap"><div class="gap-head"><div class="gap-n">0' + (i + 1) + '</div><div class="gap-title">' + esc(x.q.gap) + '</div></div>' +
+      '<div class="gap-answer">' + esc(PILLARS[x.q.pillar]) + ' · You answered: <i>' + esc(x.q.options[x.pts]) + '</i></div>' +
+      '<p>' + esc(x.q.why) + '</p>' +
+      '<div class="gap-meta"><div><b>Metrics to watch</b><span>' + esc(x.q.kpis) + '</span></div>' +
+      '<div><b>What fixes it</b><span>' + x.q.svc.map(s => s + ' ' + esc(SERVICES[s])).join(', ') + '</span></div></div></div>'
+    ).join('') : '<div class="gap"><p>You picked the strongest answer on every question. The next gains come from measuring each system and tuning it, which is exactly what a teardown is for.</p></div>';
+    const plan = PLANS[result.weakest];
+    $('planIntro').textContent = plan.intro;
+    $('plan').innerHTML = plan.steps.map(s => '<div><b>' + s[0] + '</b><span>' + esc(s[1]) + '</span></div>').join('');
+  }
+  function summary() {
+    const lines = ['GTM Readiness Scorecard: ' + result.overall + '/100 (' + result.band.name + ')',
+      'Data ' + result.pillars.data + ' · AI Agents ' + result.pillars.ai + ' · RevOps ' + result.pillars.revops,
+      'Weakest: ' + PILLARS[result.weakest],
+      'Top gaps: ' + (result.gaps.map(x => x.q.gap).join('; ') || 'none'), '', 'Answers:'];
+    QUESTIONS.forEach(q => lines.push(q.id + ' ' + q.text + ' → ' + q.options[answers[q.id]]));
+    return lines.join('\n');
+  }
+
+  // ── EMAIL GATE ──
+  const sb = window.supabase ? window.supabase.createClient(
+    'https://tnkqxniwjomkojufuxlp.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U'
+  ) : null;
+  async function saveLead(lead) {
+    try {
+      if (!sb) throw new Error('Supabase client missing');
+      const { error } = await sb.from('leads').insert([lead]);
+      if (error) throw error;
+      track('lead_submitted', { source: lead.source, service: lead.service });
+      return true;
+    } catch (e) {
+      console.error('Lead save error:', e);
+      track('lead_save_failed', { source: lead.source });
+      return false;
+    }
+  }
+  $('gate').addEventListener('submit', async e => {
+    e.preventDefault();
+    const emailEl = $('gEmail');
+    const email = emailEl.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.classList.add('err'); $('gateErr').hidden = false; emailEl.focus(); return; }
+    emailEl.classList.remove('err');
+    $('gateErr').hidden = true;
+    const btn = $('gate').querySelector('button');
+    btn.disabled = true;
+    const lead = { name: $('gName').value.trim(), email, brand: $('gCompany').value.trim(), service: 'GTM Scorecard', message: summary(), source: 'scorecard' };
+    const ok = await saveLead(lead);
+    btn.disabled = false;
+    track('scorecard_email_submitted', { saved: ok ? 'yes' : 'no' });
+    // The report shows either way: the visitor did their part. A failed save gets an email fallback.
+    renderReport();
+    const note = $('saveNote');
+    if (ok) {
+      note.hidden = true;
+    } else {
+      const body = 'Email: ' + email + '\n\n' + summary();
+      note.innerHTML = 'We could not save your scorecard on our side. If you would like Will to review it, <a href="mailto:will@vantagemode.com?subject=' +
+        encodeURIComponent('My GTM Scorecard') + '&body=' + encodeURIComponent(body) + '">email it to will@vantagemode.com</a> and your answers will be filled in.';
+      note.hidden = false;
+    }
+    $('gate').hidden = true;
+    $('report').hidden = false;
+    $('reportTitle').focus();
+  });
+
+  // ── CONTROLS ──
+  $('startBtn').addEventListener('click', () => {
+    if (!started) { started = true; track('scorecard_started'); }
+    idx = 0; show('quiz'); render();
+  });
+  $('backBtn').addEventListener('click', () => { if (idx > 0) { idx--; render(); } });
+  $('retakeBtn').addEventListener('click', () => {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    idx = 0; show('quiz'); render();
+  });
+  $('teardownBtn').addEventListener('click', () => track('cta_teardown', { location: 'scorecard' }));
+  document.addEventListener('keydown', e => {
+    if ($('quiz').hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    const i = '1234'.indexOf(e.key) >= 0 ? '1234'.indexOf(e.key) : 'abcd'.indexOf(e.key.toLowerCase());
+    if (i >= 0 && e.key.length === 1) choose(i);
+  });
+
+  // ── THEME TOGGLE (shared with the homepage via localStorage) ──
+  (function () {
+    const root = document.documentElement;
+    const btn = $('themeToggle');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const apply = t => {
+      if (t === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+      meta.setAttribute('content', t === 'light' ? '#f5f0e8' : '#080808');
+    };
+    apply(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      apply(next);
+      try { localStorage.setItem('vm-theme', next); } catch (e) {}
+    });
+  })();
+})();
+</script>
+</body>
+</html>
