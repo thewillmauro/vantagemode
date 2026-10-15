@@ -1203,6 +1203,14 @@
   .team-role { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); margin-top: 6px; line-height: 1.4; }
   .team-tag { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 3px 8px; }
   .team-bio { font-size: 14px; color: var(--muted); line-height: 1.75; }
+  .team-head-row { display: flex; align-items: center; gap: 16px; padding: 18px 22px; background: var(--surface); border-top: 2px solid var(--gold); margin-bottom: 40px; }
+  .team-head-row img { width: 56px; height: 56px; object-fit: cover; object-position: center top; flex: none; border: 1px solid var(--gold-dim); }
+  .team-head-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.08em; color: var(--white); line-height: 1; }
+  .team-head-role { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-ink); margin-top: 6px; line-height: 1.5; }
+  .team-tier { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  .team-tier span { color: var(--gold-ink); }
+  .team-grid + .team-tier { margin-top: 40px; }
+  .team-reports { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-ink); }
   .team-how { margin-top: 64px; }
   .team-how-cap { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .team-how-title { font-family: var(--font-italic); font-style: italic; font-size: clamp(24px, 2.6vw, 32px); color: var(--white); margin-bottom: 28px; }
@@ -5972,10 +5980,15 @@
     <div class="team-head">
       <div class="reveal">
         <p class="section-label">The Team</p>
-        <h2 class="section-title" id="teamTitle">One Engineer. <span class="italic">Six agents.</span></h2>
+        <h2 class="section-title" id="teamTitle">One Engineer. <span class="italic">Nine agents.</span></h2>
       </div>
-      <p class="team-intro reveal reveal-delay-2">Vantage Mode runs the way we build for clients: a human in charge, with AI agents doing focused work. Everyone below is an AI agent with a defined job and written rules. Their names and portraits are invented. They plan, research, draft, build, and challenge each other's thinking. Will makes the calls, reviews the work, and is the only one who talks to clients.</p>
+      <p class="team-intro reveal reveal-delay-2">Vantage Mode runs the way we build for clients: a human in charge, with AI agents doing focused work. Everyone below Will is an AI agent with a defined job, a lead they report to, and written rules. Their names and portraits are invented. They plan, research, draft, build, and challenge each other's thinking. Will makes the calls, reviews the work, and is the only one who talks to clients.</p>
     </div>
+    <div class="team-head-row reveal">
+      <img src="images/will-mauro.jpg" width="56" height="56" loading="lazy" decoding="async" alt="William Mauro">
+      <div><p class="team-head-name">William Mauro</p><p class="team-head-role">Founder &amp; <abbr title="go-to-market">GTM</abbr> Engineer · makes every final call</p></div>
+    </div>
+    <p class="team-tier reveal"><span>Leads</span> report to Will</p>
     <div class="team-grid reveal">
       <article class="team-card">
         <div class="team-card-top">
@@ -6020,12 +6033,39 @@
         <p class="team-bio">Keeps the books honest. Daniel checks the math on every engagement, flags legal and data risk, and makes the strongest case against every big decision. On purpose.</p>
       </article>
     </div>
+    <p class="team-tier reveal"><span>Specialists</span> report to a lead</p>
+    <div class="team-grid reveal">
+      <article class="team-card">
+        <div class="team-card-top">
+          <img src="images/team/hannah.jpg" width="72" height="72" loading="lazy" decoding="async" alt="Hannah Brooks, AI-generated portrait">
+          <div><h3 class="team-name">Hannah Brooks</h3><p class="team-role">Client Success Lead</p><span class="team-tag">Agent</span></div>
+        </div>
+        <p class="team-bio">Makes sure every client gets the result they paid for, and stays. Hannah plans onboarding, drafts client updates and quarterly reviews, and flags risk early.</p>
+        <p class="team-reports">Reports to Marcus Reed</p>
+      </article>
+      <article class="team-card">
+        <div class="team-card-top">
+          <img src="images/team/leila.jpg" width="72" height="72" loading="lazy" decoding="async" alt="Leila Nasser, AI-generated portrait">
+          <div><h3 class="team-name">Leila Nasser</h3><p class="team-role">Delivery &amp; Quality Lead</p><span class="team-tag">Agent</span></div>
+        </div>
+        <p class="team-bio">Gets client work delivered on time. Leila turns each scope into a plan, watches for scope creep, and tests every agent against hand-labeled accounts before it runs.</p>
+        <p class="team-reports">Reports to Priya Nair</p>
+      </article>
+      <article class="team-card">
+        <div class="team-card-top">
+          <img src="images/team/kenji.jpg" width="72" height="72" loading="lazy" decoding="async" alt="Kenji Watanabe, AI-generated portrait">
+          <div><h3 class="team-name">Kenji Watanabe</h3><p class="team-role">Data &amp; Insights Lead</p><span class="team-tag">Agent</span></div>
+        </div>
+        <p class="team-bio">Turns “it worked” into numbers anyone can check. Kenji records each client’s baseline before we build, keeps the scoreboard current, and sources every result we publish.</p>
+        <p class="team-reports">Reports to Daniel Okafor</p>
+      </article>
+    </div>
     <div class="team-how reveal">
       <p class="team-how-cap">Inside Vantage Mode</p>
       <h3 class="team-how-title">How we decide</h3>
       <ol class="team-steps">
         <li class="team-step"><h4>Brief</h4><p>The decision, the options, and the facts on one page.</p></li>
-        <li class="team-step"><h4>Weigh in</h4><p>All six answer at once, independently. Daniel makes the case against.</p></li>
+        <li class="team-step"><h4>Weigh in</h4><p>The six leads answer at once, specialists advise. Daniel argues against.</p></li>
         <li class="team-step"><h4>Synthesize</h4><p>Where we agree, the real disagreement, a recommendation, how to undo it.</p></li>
         <li class="team-step is-will"><h4>Will decides</h4><p>Then the work ships through a preview first.</p></li>
       </ol>
