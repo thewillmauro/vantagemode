@@ -4542,6 +4542,8 @@
     .pillar-label { font-size: 16px; white-space: nowrap; }
     .pillar-cycle { display: none; }
   }
+  /* Honeypot: off-screen field bots fill and people never see. Not display:none, which some bots skip. */
+  .hp-field { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -5090,6 +5092,7 @@
             <label class="pb-sdr-capture-lbl" for="sdrEmail">Want these numbers checked against your real pipeline?</label>
             <div class="pb-sdr-capture-row">
               <input type="email" id="sdrEmail" placeholder="you@company.com" autocomplete="email" required>
+              <div class="hp-field" aria-hidden="true"><label for="sdrWebsite">Website (leave blank)</label><input type="text" id="sdrWebsite" name="website" tabindex="-1" autocomplete="off"></div>
               <button type="submit">Send Me the Breakdown</button>
             </div>
             <p class="pb-sdr-capture-note" id="sdrCaptureNote">Will reviews every breakdown personally and replies within one business day. Or <a href="#" class="open-teardown" data-cta="calculator">book a free teardown</a> with these numbers.</p>
@@ -6254,6 +6257,7 @@
           <label class="sow-label">Tell us about your go-to-market</label>
           <textarea class="sow-textarea" id="ct-message" placeholder="Who do you sell to? What does your stack look like today? What's breaking or missing?" style="background:var(--surface2);height:88px;"></textarea>
         </div>
+        <div class="hp-field" aria-hidden="true"><label for="ct-website">Website (leave blank)</label><input type="text" id="ct-website" name="website_url" tabindex="-1" autocomplete="off"></div>
         <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
           <p style="font-size:12px;color:var(--muted);">We respond within 24 hours. No spam, no cold calls. Just a real conversation about your pipeline.</p>
           <button class="sow-submit" onclick="submitContact()" style="padding:14px 48px;white-space:nowrap;">Send Brief →</button>
@@ -6447,6 +6451,7 @@
           <label for="wizBrand">Company / Organization</label>
           <input type="text" id="wizBrand" placeholder="Your company or organization name">
         </div>
+        <div class="hp-field" aria-hidden="true"><label for="wizWebsite">Website (leave blank)</label><input type="text" id="wizWebsite" name="company_website" tabindex="-1" autocomplete="off"></div>
       </div>
     </div>
 
@@ -6634,7 +6639,7 @@
       fields.forEach(f => { if (!f.value.trim()) f.style.borderColor = 'rgba(230,57,70,0.6)'; else f.style.borderColor = ''; });
       return;
     }
-    const lead = { name, email, service: type, source: 'sow_form' };
+    const lead = { name, email, service: type, source: 'sow_form', hp: honeypot('sow-website') };
     const ok = await saveLead(lead);
     const succ = document.getElementById('sowSuccess');
     if (!ok) succ.innerHTML = fallbackHTML(lead);
@@ -6648,7 +6653,18 @@
   function track(name, data) {
     try { if (window.va) window.va('event', data ? { name, data } : { name }); } catch (e) {}
   }
+  // Honeypot: a filled hidden field means a bot. Send it as hp so the database trigger drops the
+  // row, never track it, and show the normal success state. Real visitors never send an hp key.
+  function honeypot(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
   async function saveLead(lead) {
+    if (lead.hp) {
+      try { await sbClient.from('leads').insert([lead]); } catch (e) {}
+      return true;
+    }
+    delete lead.hp;
     try {
       const { error } = await sbClient.from('leads').insert([lead]);
       if (error) throw error;
@@ -6690,7 +6706,8 @@
       service: document.getElementById('ct-service').value,
       timeline: document.getElementById('ct-timeline').value,
       message: document.getElementById('ct-message').value.trim(),
-      source: 'contact_form'
+      source: 'contact_form',
+      hp: honeypot('ct-website')
     };
     if (sdrTouched) lead.message = (lead.message ? lead.message + '\n\n' : '') + sdrSnapshot;
     const ok = await saveLead(lead);
@@ -6777,7 +6794,7 @@
       emailEl.classList.remove('err');
       const btn = form.querySelector('button');
       btn.disabled = true;
-      const lead = { name: '', email, service: 'SDR Calculator Breakdown', message: sdrSnapshot, source: 'sdr_calculator' };
+      const lead = { name: '', email, service: 'SDR Calculator Breakdown', message: sdrSnapshot, source: 'sdr_calculator', hp: honeypot('sdrWebsite') };
       const ok = await saveLead(lead);
       btn.disabled = false;
       form.classList.add('done');
@@ -7549,7 +7566,8 @@
         timeline: wizardData.timeline,
         budget: wizardData.service === 'Pipeline Teardown' ? '' : wizardData.budget,
         message: wizardData.message + (sdrTouched ? (wizardData.message ? '\n\n' : '') + sdrSnapshot : ''),
-        source: wizardData.service === 'Pipeline Teardown' ? 'teardown' : 'project_wizard'
+        source: wizardData.service === 'Pipeline Teardown' ? 'teardown' : 'project_wizard',
+        hp: honeypot('wizWebsite')
       };
       wizardNext.disabled = true;
       const ok = await saveLead(lead);
