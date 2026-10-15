@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>try{var t=localStorage.getItem('vm-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unsubscribe | Vantage Mode</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;500&display=swap" rel="stylesheet">
+<style>
+  :root { --black: #080808; --surface: #141414; --gold: #c9a84c; --gold-bright: #f0c96b; --gold-ink: #c9a84c; --on-gold: #080808; --white: #f5f0e8; --muted: #a39b8c; --bad: #e06c75; }
+  html[data-theme="light"] { --black: #f5f0e8; --surface: #ece5d8; --gold: #c9a84c; --gold-bright: #d6b85e; --gold-ink: #7a5b0b; --on-gold: #1a1712; --white: #1a1712; --muted: #5a5346; --bad: #b23a44; color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+  .box { max-width: 480px; width: 100%; background: var(--surface); border-left: 2px solid var(--gold); padding: 36px 32px; }
+  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.12em; color: var(--white); text-decoration: none; display: inline-block; margin-bottom: 24px; }
+  .logo span { color: var(--gold); }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 40px; line-height: 1; letter-spacing: 0.02em; margin-bottom: 12px; }
+  p { color: var(--muted); margin-bottom: 20px; overflow-wrap: anywhere; }
+  b { color: var(--white); font-weight: 500; }
+  button { background: var(--gold); color: var(--on-gold); border: none; padding: 14px 28px; font: inherit; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; }
+  button:hover { background: var(--gold-bright); }
+  button:disabled { opacity: 0.6; cursor: wait; }
+  a { color: var(--gold-ink); }
+  .err { color: var(--bad); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main class="box">
+  <a href="/" class="logo">VANTAGE<span>MODE</span></a>
+  <div id="ask">
+    <h1>Unsubscribe</h1>
+    <p>Stop follow-up emails to <b id="who"></b>?</p>
+    <button id="go" type="button">Unsubscribe</button>
+    <p class="err" id="err" hidden></p>
+  </div>
+  <div id="ok" hidden>
+    <h1>You are unsubscribed</h1>
+    <p>We will not send you any more follow-up emails. If you ever want to talk, <a href="mailto:will@vantagemode.com">will@vantagemode.com</a> still reaches us.</p>
+  </div>
+  <div id="bad" hidden>
+    <h1>Link not recognized</h1>
+    <p>This unsubscribe link looks incomplete. Reply to any of our emails with "unsubscribe", or email <a href="mailto:will@vantagemode.com?subject=Unsubscribe">will@vantagemode.com</a>, and we will remove you.</p>
+  </div>
+</main>
+<script>
+(function () {
+  const q = new URLSearchParams(location.search);
+  const u = q.get('u') || '', t = q.get('t') || '';
+  const $ = id => document.getElementById(id);
+  if (!u || !t) { $('ask').hidden = true; $('bad').hidden = false; return; }
+  $('who').textContent = u;
+  $('go').addEventListener('click', async () => {
+    $('go').disabled = true;
+    $('err').hidden = true;
+    try {
+      const res = await fetch('https://tnkqxniwjomkojufuxlp.supabase.co/functions/v1/nurture?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), { method: 'POST' });
+      if (res.status === 400) { $('ask').hidden = true; $('bad').hidden = false; return; }
+      if (!res.ok) throw new Error(res.status);
+      $('ask').hidden = true;
+      $('ok').hidden = false;
+    } catch (e) {
+      $('go').disabled = false;
+      $('err').innerHTML = 'Something went wrong. Please try again, or email <a href="mailto:will@vantagemode.com?subject=Unsubscribe">will@vantagemode.com</a> and we will remove you.';
+      $('err').hidden = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
