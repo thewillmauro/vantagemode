@@ -1,8 +1,6 @@
 -- /leads dashboard: only Will's auth user can read leads. NOT APPLIED YET.
 --
--- Before applying: create Will's user in Supabase Auth (dashboard), then replace
--- <WILL_USER_UUID> below with its id. As written, the placeholder is not a valid uuid,
--- so this migration fails instead of applying a policy that matches nobody.
+-- Will's auth user (will@vantagemode.com) id is filled in below. Created 2026-10-15.
 --
 -- Effect:
 --   * authenticated users can select only when auth.uid() is Will's id (RLS policy).
@@ -17,7 +15,7 @@ create policy "Will reads leads"
   on public.leads
   for select
   to authenticated
-  using ((select auth.uid()) = '<WILL_USER_UUID>'::uuid);
+  using ((select auth.uid()) = 'adc80ff8-93f9-4353-8d60-96dd924ea525'::uuid);
 
 revoke select, update, delete, truncate on public.leads from anon;
 revoke insert, update, delete, truncate, references, trigger on public.leads from authenticated;
