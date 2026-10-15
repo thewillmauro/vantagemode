@@ -134,6 +134,11 @@
   .gate label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .gate input { width: 100%; background: var(--surface); border: 1px solid rgba(var(--ink-rgb),0.12); color: var(--white); padding: 14px 16px; font: inherit; font-size: 16px; }
   .gate input:focus { border-color: var(--gold); outline: none; }
+  /* Keep browser autofill from painting inputs light blue in the dark theme */
+  .gate input:-webkit-autofill, .gate input:-webkit-autofill:hover, .gate input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--white); caret-color: var(--white);
+    -webkit-box-shadow: 0 0 0 1000px var(--surface) inset; transition: background-color 9999s;
+  }
   .gate input.err { border-color: var(--bad); }
   .gate-err { color: var(--bad); font-size: 13px; margin-top: -6px; margin-bottom: 12px; }
 
@@ -238,8 +243,9 @@
       <p>See your three biggest gaps, the metrics to watch for each one, and a suggested first 90 days. Will also reads every scorecard personally.</p>
       <div class="gate-grid">
         <div class="full"><label for="gEmail">Work email</label><input id="gEmail" type="email" autocomplete="email" required></div>
-        <div><label for="gName">Name (optional)</label><input id="gName" type="text" autocomplete="name"></div>
-        <div><label for="gCompany">Company (optional)</label><input id="gCompany" type="text" autocomplete="organization"></div>
+        <div><label for="gFirst">First name (optional)</label><input id="gFirst" type="text" autocomplete="given-name"></div>
+        <div><label for="gLast">Last name (optional)</label><input id="gLast" type="text" autocomplete="family-name"></div>
+        <div class="full"><label for="gCompany">Company (optional)</label><input id="gCompany" type="text" autocomplete="organization"></div>
       </div>
       <div class="gate-err" id="gateErr" hidden>Please enter a valid email.</div>
       <button class="btn" type="submit">Show my full report →</button>
@@ -491,7 +497,7 @@
     $('gateErr').hidden = true;
     const btn = $('gate').querySelector('button');
     btn.disabled = true;
-    const lead = { name: $('gName').value.trim(), email, brand: $('gCompany').value.trim(), service: 'GTM Scorecard', message: summary(), source: 'scorecard' };
+    const lead = { name: [$('gFirst').value.trim(), $('gLast').value.trim()].filter(Boolean).join(' '), email, brand: $('gCompany').value.trim(), service: 'GTM Scorecard', message: summary(), source: 'scorecard' };
     const ok = await saveLead(lead);
     btn.disabled = false;
     track('scorecard_email_submitted', { saved: ok ? 'yes' : 'no' });

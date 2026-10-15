@@ -100,9 +100,16 @@
   .gate { padding: 32px; background: var(--surface); border-left: 2px solid var(--gold); position: sticky; top: 24px; }
   .gate p { color: var(--muted); margin-bottom: 20px; font-size: 15px; }
   .field { margin-bottom: 12px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 400px) { .field-row { grid-template-columns: 1fr; gap: 0; } }
   .gate label { display: block; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .gate input { width: 100%; background: var(--black); border: 1px solid rgba(var(--ink-rgb),0.12); color: var(--white); padding: 14px 16px; font: inherit; font-size: 16px; }
   .gate input:focus { border-color: var(--gold); outline: none; }
+  /* Keep browser autofill from painting inputs light blue in the dark theme */
+  .gate input:-webkit-autofill, .gate input:-webkit-autofill:hover, .gate input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--white); caret-color: var(--white);
+    -webkit-box-shadow: 0 0 0 1000px var(--black) inset; transition: background-color 9999s;
+  }
   .gate input.err { border-color: var(--bad); }
   .gate-err { color: var(--bad); font-size: 13px; margin-bottom: 12px; }
   .done h2 { margin-bottom: 10px; }
@@ -172,7 +179,10 @@
         <h2>Get the <em>template</em></h2>
         <p>Enter your email and the download starts right away.</p>
         <div class="field"><label for="gEmail">Work email</label><input id="gEmail" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="gName">Name (optional)</label><input id="gName" type="text" autocomplete="name"></div>
+        <div class="field-row">
+          <div class="field"><label for="gFirst">First name (optional)</label><input id="gFirst" type="text" autocomplete="given-name"></div>
+          <div class="field"><label for="gLast">Last name (optional)</label><input id="gLast" type="text" autocomplete="family-name"></div>
+        </div>
         <div class="field"><label for="gCompany">Company (optional)</label><input id="gCompany" type="text" autocomplete="organization"></div>
         <div class="gate-err" id="gateErr" hidden>Please enter a valid email.</div>
         <button class="btn" type="submit">Download the template →</button>
@@ -257,7 +267,7 @@
     $('gateErr').hidden = true;
     const btn = $('gate').querySelector('button');
     btn.disabled = true;
-    const lead = { name: $('gName').value.trim(), email, brand: $('gCompany').value.trim(), service: 'KPI Scoreboard Template', message: 'Downloaded the GTM KPI Scoreboard template.', source: 'kpi_template' };
+    const lead = { name: [$('gFirst').value.trim(), $('gLast').value.trim()].filter(Boolean).join(' '), email, brand: $('gCompany').value.trim(), service: 'KPI Scoreboard Template', message: 'Downloaded the GTM KPI Scoreboard template.', source: 'kpi_template' };
     const ok = await saveLead(lead);
     btn.disabled = false;
     track('kpi_template_downloaded', { location: 'kpi_page', saved: ok ? 'yes' : 'no' });
