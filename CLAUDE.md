@@ -30,7 +30,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 8. **Scoreboard** (`#metrics`), **Client journey** (`#journey`): KPI tree and phases; detail sits in folds
 9. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load; first two groups shown, rest in a fold
 10. **Founder**: William Mauro bio with photo
-11. **Team** (`#team`): the six AI agents (Maya Chen, Marcus Reed, Priya Raman, Elena Ruiz, Jordan Blake, Daniel Okafor), always labeled as AI, with a line saying their names and portraits are invented. Avatars live in `images/team/`. Bios mirror the agent definitions in `~/.claude/agents/` and the charter in `~/.claude/team/charter.md`: change both together
+11. **Team** (`#team`): the six AI agents (Maya Chen, Marcus Reed, Priya Nair, Elena Ruiz, Jordan Blake, Daniel Okafor), always labeled as AI, with a line saying their names and portraits are invented. Avatars live in `images/team/`. Bios mirror the agent definitions in `~/.claude/agents/` and the charter in `~/.claude/team/charter.md`: change both together
 12. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
 **Folds**: a section with class `folds` hides its `.fold` blocks until its `.fold-toggle` button is pressed. Put deep-dive detail in a fold rather than making the page longer.
