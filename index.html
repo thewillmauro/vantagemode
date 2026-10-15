@@ -4189,9 +4189,11 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 48px;
     text-align: left;
   }
+  /* Groups inside the fold are not direct flex children, so give the open fold the same column gap */
+  .tech-stack-groups > .fold { display: flex; flex-direction: column; gap: inherit; }
   .tech-stack-group-label {
     font-size: 10px;
     letter-spacing: 0.3em;
