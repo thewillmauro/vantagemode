@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="forge avatar">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#1c1a15"/>
+      <stop offset="1" stop-color="#080808"/>
+    </radialGradient>
+  </defs>
+  <rect width="240" height="240" fill="url(#g)"/>
+  <rect x="10" y="10" width="220" height="220" fill="none" stroke="#c9a84c" stroke-opacity=".35" stroke-width="1.5"/>
+  <path d="M10 34V10h24M230 206v24h-24" fill="none" stroke="#c9a84c" stroke-width="3"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 52l59 34v68l-59 34-59-34V86z" stroke="#c9a84c" stroke-width="5"/>
+    <path d="M102 100l-20 20 20 20M138 100l20 20-20 20" stroke="#4d9bff" stroke-width="6"/>
+    <path d="M126 96l-12 48" stroke="#c9a84c" stroke-width="5"/>
+  </g>
+</svg>
