@@ -2241,7 +2241,8 @@
     position: fixed;
     inset: 0;
     z-index: 9500;
-    background: rgba(var(--bg-rgb),0.97);
+    /* Fully opaque theme background: at 0.97 the page read through behind the wizard */
+    background: var(--black);
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
@@ -7277,12 +7278,38 @@
     wizardModal.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
     showWizardStep(1);
     wizardModal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    lockPageScroll();
   }
 
   function closeWizard() {
+    if (!wizardModal.classList.contains('open')) return;
     wizardModal.classList.remove('open');
+    unlockPageScroll();
+  }
+
+  // Pin the page while a modal is open (overflow:hidden alone does not stop iOS from scrolling the body),
+  // and put the scroll position back afterwards
+  let lockedScrollY = 0, pageLocked = false;
+  function lockPageScroll() {
+    if (pageLocked) return;
+    pageLocked = true;
+    lockedScrollY = window.scrollY;
+    document.body.style.top = -lockedScrollY + 'px';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+  function unlockPageScroll() {
+    if (!pageLocked) return;
+    pageLocked = false;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
     document.body.style.overflow = '';
+    const html = document.documentElement, prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, lockedScrollY);
+    html.style.scrollBehavior = prev;
   }
 
   function showWizardStep(n) {
@@ -7314,19 +7341,14 @@
   // Open wizard from all triggers
   // Mobile menu: body is pinned with position:fixed while open (stops iOS background scroll),
   // so remember the scroll position and put it back on close instead of jumping to the top
-  let menuScrollY = 0;
   function openMobileMenu() {
     const mm = document.getElementById('mobileMenu'), hb = document.getElementById('hamburger');
-    menuScrollY = window.scrollY;
     mm.classList.add('open');
     mm.setAttribute('aria-hidden', 'false');
     hb.classList.add('open');
     hb.setAttribute('aria-expanded', 'true');
     hb.setAttribute('aria-label', 'Close menu');
-    document.body.style.top = -menuScrollY + 'px';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
+    lockPageScroll();
   }
   function closeMobileMenu() {
     const mm = document.getElementById('mobileMenu'), hb = document.getElementById('hamburger');
@@ -7336,15 +7358,7 @@
     hb.classList.remove('open');
     hb.setAttribute('aria-expanded', 'false');
     hb.setAttribute('aria-label', 'Open menu');
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-    // Jump straight back (no smooth scroll) so the page does not visibly travel from the top
-    const html = document.documentElement, prev = html.style.scrollBehavior;
-    html.style.scrollBehavior = 'auto';
-    window.scrollTo(0, menuScrollY);
-    html.style.scrollBehavior = prev;
+    unlockPageScroll();
   }
   function openTeardown(cta) {
     track('cta_teardown', { location: cta || 'unknown' });
