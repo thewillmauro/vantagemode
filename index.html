@@ -6634,16 +6634,12 @@
       fields.forEach(f => { if (!f.value.trim()) f.style.borderColor = 'rgba(230,57,70,0.6)'; else f.style.borderColor = ''; });
       return;
     }
-    try {
-      await sbClient.from('leads').insert([{
-        name,
-        email,
-        service: type,
-        source: 'sow_form'
-      }]);
-    } catch (e) { console.error('SOW lead save error:', e); }
+    const lead = { name, email, service: type, source: 'sow_form' };
+    const ok = await saveLead(lead);
+    const succ = document.getElementById('sowSuccess');
+    if (!ok) succ.innerHTML = fallbackHTML(lead);
     document.getElementById('sowForm').style.display = 'none';
-    document.getElementById('sowSuccess').style.display = 'block';
+    succ.style.display = 'block';
   }
 
 
