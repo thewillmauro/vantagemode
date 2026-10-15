@@ -41,7 +41,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 - 3 unscored context questions + 12 scored (4 each for Data / AI Agents / RevOps, 0 to 3 points). Pillar = points / 12 x 100, overall = average. Bands: 0-39 Running on effort, 40-69 Partly systemized, 70+ Systemized
 - Score and pillar bars are free; the email gate unlocks the top 3 gaps (lowest answers, ties to the weaker pillar), metrics to watch, services, and a 90-day plan for the weakest pillar. The report shows even if the lead save fails, with a mailto fallback
 - Saves to `leads` with `source: 'scorecard'`, `service: 'GTM Scorecard'`, company in `brand`, scores and every answer in `message`
-- Homepage entry points: hero note link, band after Scoreboard (`#scorecard`), footer link (all `.scorecard-link`). `/#teardown` opens the teardown flow on arrival
+- Homepage entry points: hero note link, band after Scoreboard (`#scorecard`), footer link (all `.scorecard-link`). `/#teardown` opens the booking page (or the teardown wizard if `BOOKING_URL` is empty) on arrival
 - Events: scorecard_started, scorecard_completed, scorecard_email_submitted, cta_scorecard
 - `/scorecard?r=<15 digits>` (one digit per answer, question order) opens the full report directly. The lead message includes this link, and the follow-up emails use it
 
@@ -61,7 +61,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 ## Interactive Elements
 
 - **Leads**: all forms call `saveLead()`, which inserts into the Supabase `leads` table and shows an email fallback if the insert fails. Never show a success message without checking the insert result
-- **Teardown offer**: `.open-teardown` buttons open the wizard preselected to "Pipeline Teardown". Set `BOOKING_URL` in the script to send them to a booking page instead
+- **Teardown offer**: `BOOKING_URL` is set to the Cal.com event (https://cal.com/william-mauro-ke6r6y/free-pipeline-teardown), so `.open-teardown` buttons open it in a new tab, and `/#teardown` (scorecard button, nurture emails) redirects to it in the same tab. Bookings live in Cal.com, not the `leads` table. Clear `BOOKING_URL` to fall back to the wizard preselected to "Pipeline Teardown"
 - **Analytics**: Vercel Web Analytics (`/_vercel/insights/script.js`). Custom events via `track(name, data)`: cta_teardown, cta_start_project, wizard_step, calculator_used, lead_submitted, lead_save_failed
 
 - **Project Wizard**: Multi-step modal form triggered by `.open-wizard` class

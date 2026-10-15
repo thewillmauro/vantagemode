@@ -6648,7 +6648,7 @@
 
 
   // ── ANALYTICS + LEADS ──
-  const BOOKING_URL = ''; // Set to a Cal.com / Calendly link to send teardown CTAs straight to booking
+  const BOOKING_URL = 'https://cal.com/william-mauro-ke6r6y/free-pipeline-teardown'; // Teardown CTAs open this booking page instead of the wizard
   function track(name, data) {
     try { if (window.va) window.va('event', data ? { name, data } : { name }); } catch (e) {}
   }
@@ -7427,7 +7427,13 @@
   // /#teardown (linked from /scorecard) opens the teardown flow on arrival, after the rest of this script has run
   if (location.hash === '#teardown') {
     history.replaceState(null, '', location.pathname + location.search);
-    setTimeout(() => openTeardown('scorecard'), 0);
+    if (BOOKING_URL) {
+      // A new tab opened without a click gets blocked, so go to the booking page in this tab
+      track('cta_teardown', { location: 'teardown_link' });
+      setTimeout(() => location.replace(BOOKING_URL), 150);
+    } else {
+      setTimeout(() => openTeardown('scorecard'), 0);
+    }
   }
   document.querySelectorAll('.scorecard-link').forEach(a => {
     a.addEventListener('click', () => track('cta_scorecard', { location: a.dataset.cta || 'unknown' }));
