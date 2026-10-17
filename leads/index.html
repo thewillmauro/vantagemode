@@ -44,11 +44,25 @@
     </form>
   </section>
 
+  <!-- Second step: TOTP code when the account has a verified authenticator -->
+  <section id="mfaView" class="lv-signin" hidden>
+    <p class="lv-muted">Enter the 6-digit code from your authenticator app.</p>
+    <form id="mfaForm" novalidate>
+      <label for="mfaFactor" id="mfaFactorLabel" hidden>Authenticator</label>
+      <select id="mfaFactor" class="lv-select" hidden></select>
+      <label for="mfaCode">Code</label>
+      <input id="mfaCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" required>
+      <p class="lv-err" id="mfaErr" role="alert" hidden></p>
+      <button class="lv-btn" id="mfaBtn" type="submit">Verify</button>
+    </form>
+  </section>
+
   <!-- Loading / errors while signed in -->
   <p class="lv-muted" id="statusLine" role="status" hidden></p>
 
   <!-- Signed in -->
   <section id="dashView" hidden>
+    <p class="lv-notice lv-v1note" id="v1Note" hidden>Status, notes, and demo data need the v2 migrations. Showing v1 fields only.</p>
     <div class="lv-new">
       <p><b id="newCount">0</b> <span id="newLabel">new since your last visit</span></p>
       <div class="lv-new-actions">
@@ -67,9 +81,16 @@
     </div>
 
     <div class="lv-filters">
+      <div class="lv-chips" id="statusChips" role="group" aria-label="Filter by status"></div>
       <div class="lv-chips" id="chips" role="group" aria-label="Filter by source"></div>
-      <label class="lv-toggle"><input type="checkbox" id="showInternal"> <span>Show internal tests</span></label>
+      <div class="lv-toggles">
+        <label class="lv-toggle"><input type="checkbox" id="showDemo"> <span>Show demo leads</span></label>
+        <label class="lv-toggle"><input type="checkbox" id="showSpam"> <span>Show spam</span></label>
+        <label class="lv-toggle"><input type="checkbox" id="showInternal"> <span>Show internal tests</span></label>
+      </div>
     </div>
+
+    <p class="lv-demo-banner" id="demoBanner" role="status" hidden>Showing demo data. These leads are made up and are left out of every count.</p>
 
     <p class="lv-muted lv-hidden-note" id="hiddenNote" hidden></p>
     <div id="cards" class="lv-cards"></div>
@@ -83,9 +104,40 @@
         <li>the SDR calculator breakdown on the homepage</li>
         <li>the project wizard and the contact form</li>
       </ul>
-      <p>Teardown bookings live in Cal.com, not here. <a href="https://app.cal.com/bookings/upcoming" target="_blank" rel="noopener noreferrer">See upcoming bookings</a>.</p>
+      <p>Teardown bookings arrive here from Cal.com once its webhook is set up. <a href="https://app.cal.com/bookings/upcoming" target="_blank" rel="noopener noreferrer">See upcoming bookings</a>.</p>
     </div>
     <p class="lv-muted" id="emptyFiltered" hidden>No leads match these filters.</p>
+
+    <details class="lv-security" id="securityPanel">
+      <summary>Security</summary>
+      <div class="lv-security-body">
+        <p class="lv-muted">Two-step sign-in with an authenticator app (TOTP). Enroll two: your phone app and your password manager, so losing one does not lock you out. Once both work, the aal2 policy can be applied and leads become readable only after a code.</p>
+        <p class="lv-aal" id="aalLine"></p>
+        <h3>Your authenticators</h3>
+        <ul class="lv-factors" id="factorList"></ul>
+        <form class="lv-enroll" id="enrollForm" novalidate>
+          <label for="enrollName">Name for this authenticator</label>
+          <input id="enrollName" type="text" maxlength="40" placeholder="Phone app" autocomplete="off" required>
+          <button class="lv-btn-ghost" id="enrollBtn" type="submit">Add authenticator</button>
+        </form>
+        <div class="lv-enroll-step" id="enrollStep" hidden>
+          <p>Scan this code with the app, or type the key in by hand.</p>
+          <div class="lv-qr" id="enrollQr" hidden></div>
+          <p class="lv-muted">Key</p>
+          <code class="lv-secret" id="enrollSecret"></code>
+          <form id="enrollVerifyForm" novalidate>
+            <label for="enrollCode">6-digit code from the app</label>
+            <input id="enrollCode" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" required>
+            <div class="lv-row">
+              <button class="lv-btn" id="enrollVerifyBtn" type="submit">Verify and save</button>
+              <button class="lv-btn-ghost" id="enrollCancelBtn" type="button">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <p class="lv-err" id="securityErr" role="alert" hidden></p>
+        <p class="lv-ok" id="securityOk" role="status" hidden></p>
+      </div>
+    </details>
   </section>
 </main>
 

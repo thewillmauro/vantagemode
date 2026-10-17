@@ -1,6 +1,6 @@
 // Run with: node supabase/functions/nurture/lib.test.ts  (Node 23+ runs TypeScript directly)
 import assert from "node:assert/strict";
-import { dueSends, type Lead, parseScorecard, render, unsubToken } from "./lib.ts";
+import { dueSends, type Lead, nurtureEligible, parseScorecard, render, unsubToken } from "./lib.ts";
 
 const msg = `GTM Readiness Scorecard: 50/100 (Partly systemized)
 Data 50 · AI Agents 17 · RevOps 83
@@ -54,6 +54,18 @@ assert.equal(dueSends([a], later, new Set(), [], day(20, 21), start)[0].step, 2)
 // Finished sequences stay finished
 const all = [0, 1, 2, 3, 4].map((s) => ({ lead_id: "a", step: s, sent_at: day(s * 3).toISOString() }));
 assert.equal(dueSends([a], all, new Set(), [], day(60), start).length, 0);
+
+// Demo rows and bookings never get the sequence; a later booking stops it like any other form
+const demo = { ...lead("d", "demo@x.example.com", "scorecard", day(0, 1), msg), is_demo: true };
+const booker = lead("k", "booker@x.com", "booking", day(0, 1));
+assert.equal(nurtureEligible(demo), false);
+assert.equal(nurtureEligible(booker), false);
+assert.equal(nurtureEligible(a), true);
+assert.deepEqual(dueSends([demo, booker], [], new Set(), [], day(0, 5), start), []);
+const aBooked = lead("a3", "ada@x.com", "booking", day(1));
+assert.deepEqual(dueSends([a], [], new Set(), [aBooked], day(2, 2), start), []);
+// a demo "conversion" with a real lead's email does not stop the real lead's sequence
+assert.equal(dueSends([a], [], new Set(), [{ ...aBooked, is_demo: true }], day(0, 5), start).length, 1);
 
 // Tokens are stable, case-insensitive, and differ by secret
 assert.equal(await unsubToken("Ada@X.com", "s1"), await unsubToken("ada@x.com", "s1"));

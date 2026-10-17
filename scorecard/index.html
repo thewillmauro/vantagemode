@@ -183,6 +183,7 @@
     .gate, .cta-box { padding: 24px 20px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .hp-field { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   @media (pointer: coarse) { .theme-toggle { width: 44px; height: 44px; } }
 </style>
 </head>
@@ -247,6 +248,7 @@
         <div><label for="gFirst">First name (optional)</label><input id="gFirst" type="text" autocomplete="given-name"></div>
         <div><label for="gLast">Last name (optional)</label><input id="gLast" type="text" autocomplete="family-name"></div>
         <div class="full"><label for="gCompany">Company (optional)</label><input id="gCompany" type="text" autocomplete="organization"></div>
+        <div class="hp-field" aria-hidden="true"><label for="gWebsite">Website (leave blank)</label><input type="text" id="gWebsite" name="website_url" tabindex="-1" autocomplete="off"></div>
       </div>
       <div class="gate-err" id="gateErr" hidden>Please enter a valid email.</div>
       <button class="btn" type="submit">Show my full report →</button>
@@ -478,7 +480,14 @@
     'https://tnkqxniwjomkojufuxlp.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U'
   ) : null);
+  // Honeypot: a filled hidden field means a bot. Send it as hp so the database trigger drops the
+  // row, never track it, and carry on as if it saved. Real visitors never send an hp key.
   async function saveLead(lead) {
+    if (lead.hp) {
+      try { const sb = getSb(); if (sb) await sb.from('leads').insert([lead]); } catch (e) {}
+      return true;
+    }
+    delete lead.hp;
     try {
       const sb = getSb();
       if (!sb) throw new Error('Supabase client missing');
@@ -501,7 +510,7 @@
     $('gateErr').hidden = true;
     const btn = $('gate').querySelector('button');
     btn.disabled = true;
-    const lead = { name: [$('gFirst').value.trim(), $('gLast').value.trim()].filter(Boolean).join(' '), email, brand: $('gCompany').value.trim(), service: 'GTM Scorecard', message: summary(), source: 'scorecard' };
+    const lead = { name: [$('gFirst').value.trim(), $('gLast').value.trim()].filter(Boolean).join(' '), email, brand: $('gCompany').value.trim(), service: 'GTM Scorecard', message: summary(), source: 'scorecard', hp: $('gWebsite').value.trim() };
     const ok = await saveLead(lead);
     btn.disabled = false;
     track('scorecard_email_submitted', { saved: ok ? 'yes' : 'no' });
