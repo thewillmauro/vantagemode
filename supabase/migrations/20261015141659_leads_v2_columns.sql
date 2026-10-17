@@ -1,5 +1,5 @@
--- /leads v2, step 1 of 6: pipeline columns and sanity CHECKs on form columns. NOT APPLIED YET.
--- Apply in order: 20261016100000 .. 20261016100500. The MFA policy change lives in
+-- /leads v2, step 1 of 6: pipeline columns and sanity CHECKs on form columns. Applied (in production history).
+-- Apply in order: 20261015141659 .. 20261015165127. The MFA policy change lives in
 -- supabase/manual/ and is applied separately, only after Will enrolls two TOTP factors.
 --
 -- New columns:

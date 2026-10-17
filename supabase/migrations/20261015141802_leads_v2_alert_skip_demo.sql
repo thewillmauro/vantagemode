@@ -1,4 +1,4 @@
--- /leads v2, step 5 of 6: demo rows never call lead-alert. NOT APPLIED YET. Requires step 1.
+-- /leads v2, step 5 of 6: demo rows never call lead-alert. Applied (in production history). Requires step 1.
 --
 -- Bookings (source 'booking', inserted by cal-webhook) still alert Will on purpose.
 -- The lead-alert function also sweeps unalerted rows, so it now filters is_demo=false

@@ -1,5 +1,5 @@
 -- /leads v2, step 6 of 6: seven demo personas so the dashboard has something to show.
--- NOT APPLIED YET. Apply LAST: after steps 1 to 5 AND after the updated lead-alert and
+-- Applied (in production history). Apply LAST: after steps 1 to 5 AND after the updated lead-alert and
 -- nurture functions are deployed (both skip is_demo rows).
 --
 -- Every row is is_demo = true. The dashboard badges them "Demo", leaves them out of every

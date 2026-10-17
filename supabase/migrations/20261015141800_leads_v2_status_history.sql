@@ -1,4 +1,4 @@
--- /leads v2, step 4 of 6: an append-only log of status changes. NOT APPLIED YET.
+-- /leads v2, step 4 of 6: an append-only log of status changes. Applied (in production history).
 -- Requires steps 1 and 3.
 --
 -- Written only by a SECURITY DEFINER trigger. RLS is on; Will can read it (the dashboard

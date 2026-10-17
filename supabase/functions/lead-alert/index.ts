@@ -3,7 +3,7 @@
 // It never trusts the request body: it reads unalerted leads with the service
 // role, so an outside caller can at most trigger one alert per existing lead.
 // Demo rows (is_demo) never alert. Bookings from cal-webhook do. Needs the is_demo column
-// (migration 20261016100000) before this version is deployed.
+// (migration 20261015141659) before this version is deployed.
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;

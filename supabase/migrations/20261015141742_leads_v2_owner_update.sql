@@ -1,4 +1,4 @@
--- /leads v2, step 3 of 6: Will can update status and notes, nothing else. NOT APPLIED YET.
+-- /leads v2, step 3 of 6: Will can update status and notes, nothing else. Applied (in production history).
 -- Requires step 1. Will's auth user id matches 20261015120000_leads_owner_read.sql.
 --
 -- Effect:

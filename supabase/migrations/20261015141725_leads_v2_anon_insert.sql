@@ -1,5 +1,5 @@
 -- /leads v2, step 2 of 6: anon can insert only the form columns, and a trigger guards them.
--- NOT APPLIED YET. Requires step 1 (20261016100000_leads_v2_columns.sql).
+-- Applied (in production history). Requires step 1 (20261015141659_leads_v2_columns.sql).
 --
 -- Columns the public forms write (checked on main 2026-10-16):
 --   index.html contact form   name, email, brand, service, timeline, message, source
