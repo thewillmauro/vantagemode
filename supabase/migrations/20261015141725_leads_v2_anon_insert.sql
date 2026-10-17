@@ -53,7 +53,7 @@ create trigger leads_guard_public_insert
 before insert on public.leads
 for each row execute function private.guard_public_lead_insert();
 
--- ROLLBACK (back to the 20261015120000 grants; anon keeps table-level INSERT):
+-- ROLLBACK (back to the 20261015132505 grants; anon keeps table-level INSERT):
 --   drop trigger if exists leads_guard_public_insert on public.leads;
 --   drop function if exists private.guard_public_lead_insert();
 --   revoke insert (name, email, brand, service, timeline, budget, message, source, hp) on public.leads from anon;

@@ -1,5 +1,5 @@
 -- /leads v2, step 3 of 6: Will can update status and notes, nothing else. Applied (in production history).
--- Requires step 1. Will's auth user id matches 20261015120000_leads_owner_read.sql.
+-- Requires step 1. Will's auth user id matches 20261015132505_leads_owner_read.sql.
 --
 -- Effect:
 --   * authenticated gets UPDATE on (status, notes) only; the RLS policy limits it to Will's rows

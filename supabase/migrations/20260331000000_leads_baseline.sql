@@ -6,7 +6,7 @@
 --
 -- Production grants at capture time were the Supabase defaults (anon and authenticated
 -- had every table privilege; RLS decides what they can actually do).
--- 20261015120000_leads_owner_read.sql tightens those grants.
+-- 20261015132505_leads_owner_read.sql tightens those grants.
 
 create table if not exists public.leads (
   id uuid not null default gen_random_uuid(),

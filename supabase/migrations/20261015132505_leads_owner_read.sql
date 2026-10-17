@@ -1,4 +1,4 @@
--- /leads dashboard: only Will's auth user can read leads. NOT APPLIED YET.
+-- /leads dashboard: only Will's auth user can read leads. Applied (in production history).
 --
 -- Will's auth user (will@vantagemode.com) id is filled in below. Created 2026-10-15.
 --
