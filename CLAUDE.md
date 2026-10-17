@@ -20,7 +20,7 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 
 ## Site Sections (in order)
 
-1. **Nav**: Fixed top nav (Approach, Services, Playbook, Metrics, Toolkit, About), theme toggle, hamburger menu, "Start a Project" CTA
+1. **Nav**: Fixed top nav (Approach, Services, Playbook, Metrics, Toolkit, Team), theme toggle, hamburger menu, "Start a Project" CTA
 2. **Hero**: GTM positioning for early-stage software companies growing their sales team, 3 pillars (Data / AI Agents / RevOps)
 3. **Approach** (`#approach`): 6-step GTM system flow + 4 principles
 4. **See It Run** (`#pipeline`): sample pipeline demo, labeled fictional
@@ -29,9 +29,8 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 7. **Playbook** (`#playbook`): Brand-neutral visual of the two-motion GTM strategy and the interactive SDR savings calculator with transparent formulas; revenue lever, flywheel, phased rollout and guardrails sit in a fold. No client or product names, and no unsourced performance claims: calculator defaults are labeled assumptions
 8. **Scoreboard** (`#metrics`), **Client journey** (`#journey`): KPI tree and phases; detail sits in folds
 9. **Toolkit** (`#stack`): Logos grouped by function, shuffled within each group on load; first two groups shown, rest in a fold
-10. **Founder**: William Mauro bio with photo
-11. **Team** (`#team`): an org of Will plus nine AI agents: six leads (Maya Chen, Marcus Reed, Priya Nair, Elena Ruiz, Jordan Blake, Daniel Okafor) and three specialists who report to a lead (Hannah Brooks to Marcus, Leila Nasser to Priya, Kenji Watanabe to Daniel), always labeled as AI, with a line saying their names and portraits are invented. Portraits are AI-generated (Higgsfield soul_2), 288px JPGs in `images/team/`; cards are tagged "Agent". Below the cards: a 4-step "How we decide" list, a guardrail strip, and a teardown CTA (`data-cta="team"`). Guardrail copy must stay literally true: `claude/**` auto-merge exists, so say "needs Will's yes", never "only Will ships". Bios mirror the agent definitions in `~/.claude/agents/` and the charter in `~/.claude/team/charter.md`: change both together
-12. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
+10. **Team** (`#team`): an org of Will (the top row, with his photo; there is no separate founder bio section, and nav "Team", the hero "Meet the team" link, and footer "The Team" all point here) plus nine AI agents: six leads (Maya Chen, Marcus Reed, Priya Nair, Elena Ruiz, Jordan Blake, Daniel Okafor) and three specialists who report to a lead (Hannah Brooks to Marcus, Leila Nasser to Priya, Kenji Watanabe to Daniel), always labeled as AI, with a line saying their names and portraits are invented. Portraits are AI-generated (Higgsfield soul_2), 288px JPGs in `images/team/`; cards are tagged "Agent". Below the cards: a 4-step "How we decide" list, a guardrail strip, and a teardown CTA (`data-cta="team"`). Guardrail copy must stay literally true: `claude/**` auto-merge exists, so say "needs Will's yes", never "only Will ships". Bios mirror the agent definitions in `~/.claude/agents/` and the charter in `~/.claude/team/charter.md`: change both together
+11. **FAQ**, **Ticker**, **CTA + contact form**, **Footer**
 
 **Folds**: a section with class `folds` hides its `.fold` blocks until its `.fold-toggle` button is pressed. Put deep-dive detail in a fold rather than making the page longer.
 

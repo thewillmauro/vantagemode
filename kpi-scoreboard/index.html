@@ -91,7 +91,11 @@
   .btn:disabled { opacity: 0.6; cursor: wait; }
   .fine { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-  .top { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
+  .top { display: grid; grid-template-columns: 1.1fr 0.9fr; grid-template-rows: auto 1fr; column-gap: 56px; row-gap: 0; align-items: start; }
+  /* Desktop: intro and tab list stack on the left, form on the right. Markup order is intro, form, list so phones get the form first */
+  .top > .intro { grid-column: 1; grid-row: 1; }
+  .top > .gate { grid-column: 2; grid-row: 1 / span 2; }
+  .top > .inside { grid-column: 1; grid-row: 2; }
   .inside { list-style: none; display: grid; gap: 1px; background: rgba(var(--ink-rgb),0.08); border: 1px solid rgba(var(--ink-rgb),0.08); }
   .inside li { background: var(--black); padding: 16px 18px; display: grid; grid-template-columns: 150px 1fr; gap: 14px; }
   .inside b { font-family: var(--font-display); font-weight: 400; font-size: 20px; letter-spacing: 0.05em; color: var(--gold-display); }
@@ -133,7 +137,8 @@
   .more span { color: var(--muted); font-size: 15px; }
 
   @media (max-width: 860px) {
-    .top { grid-template-columns: 1fr; gap: 40px; }
+    .top { grid-template-columns: 1fr; grid-template-rows: none; gap: 40px; }
+    .top > .intro, .top > .gate, .top > .inside { grid-column: auto; grid-row: auto; }
     .gate { position: static; }
   }
   @media (max-width: 640px) {
@@ -144,6 +149,8 @@
     .gate, .more { padding: 24px 20px; }
   }
   .hp-field { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .sheet-wrap.more-right { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
+  @media (pointer: coarse) { .theme-toggle { width: 44px; height: 44px; } }
 </style>
 </head>
 <body>
@@ -161,18 +168,10 @@
 
 <main>
   <div class="top">
-    <section>
+    <section class="intro">
       <div class="eyebrow">Free template · Excel and Google Sheets</div>
       <h1>The <abbr title="go-to-market">GTM</abbr> KPI <em>Scoreboard</em></h1>
       <p class="lead">The same scoreboard we set up for clients. Twenty-two go-to-market metrics with working formulas, so you can see what is moving revenue and what needs fixing, week by week.</p>
-      <ul class="inside">
-        <li><b>Start here</b><span>Which five metrics to start with, how to baseline, and the weekly, monthly, and quarterly review rhythm.</span></li>
-        <li><b>Weekly</b><span>13 weeks of reply, meeting, speed-to-lead, deliverability, and data-health metrics. Enter raw counts; the rates calculate.</span></li>
-        <li><b>Monthly</b><span>Pipeline created, product-qualified accounts, activation, free-to-paid, and cost per qualified account.</span></li>
-        <li><b>Quarterly</b><span>Win rate, contract value, net revenue retention, customer acquisition cost (CAC) payback, and lifetime value (LTV) to CAC.</span></li>
-        <li><b>Definitions</b><span>What every metric means, its formula, and what moves it.</span></li>
-        <li><b>Experiment log</b><span>Hypothesis, test, decision rule, and result for every change, so results decide instead of opinions.</span></li>
-      </ul>
     </section>
 
     <aside class="gate" id="gateBox">
@@ -201,6 +200,15 @@
         <div class="note" id="saveNote" hidden></div>
       </div>
     </aside>
+
+    <ul class="inside" aria-label="What is inside the template">
+      <li><b>Start here</b><span>Which five metrics to start with, how to baseline, and the weekly, monthly, and quarterly review rhythm.</span></li>
+      <li><b>Weekly</b><span>13 weeks of reply, meeting, speed-to-lead, deliverability, and data-health metrics. Enter raw counts; the rates calculate.</span></li>
+      <li><b>Monthly</b><span>Pipeline created, product-qualified accounts, activation, free-to-paid, and cost per qualified account.</span></li>
+      <li><b>Quarterly</b><span>Win rate, contract value, net revenue retention, customer acquisition cost (CAC) payback, and lifetime value (LTV) to CAC.</span></li>
+      <li><b>Definitions</b><span>What every metric means, its formula, and what moves it.</span></li>
+      <li><b>Experiment log</b><span>Hypothesis, test, decision rule, and result for every change, so results decide instead of opinions.</span></li>
+    </ul>
   </div>
 
   <section class="preview" aria-label="Template preview">
@@ -227,27 +235,37 @@
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
   const FILE = '/downloads/gtm-kpi-scoreboard.xlsx';
+  // Fade the preview table's right edge while there is more to scroll to (phones)
+  document.querySelectorAll('.sheet-wrap').forEach((w) => {
+    const update = () => w.classList.toggle('more-right', w.scrollLeft + w.clientWidth < w.scrollWidth - 4);
+    w.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
   function track(name, data) {
     try { if (window.va) window.va('event', data ? { name, data } : { name }); } catch (e) {}
   }
-  const sb = window.supabase ? window.supabase.createClient(
+  // supabase-js loads with defer, so create the client on first use, not while this script runs
+  let sbClient = null;
+  const getSb = () => sbClient || (sbClient = window.supabase ? window.supabase.createClient(
     'https://tnkqxniwjomkojufuxlp.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U'
-  ) : null;
+  ) : null);
   // Honeypot: a filled hidden field means a bot. Send it as hp so the database trigger drops the
   // row, never track it, and carry on as if it saved. Real visitors never send an hp key.
   async function saveLead(lead) {
     if (lead.hp) {
-      try { if (sb) await sb.from('leads').insert([lead]); } catch (e) {}
+      try { const sb = getSb(); if (sb) await sb.from('leads').insert([lead]); } catch (e) {}
       return true;
     }
     delete lead.hp;
     try {
+      const sb = getSb();
       if (!sb) throw new Error('Supabase client missing');
       const { error } = await sb.from('leads').insert([lead]);
       if (error) throw error;

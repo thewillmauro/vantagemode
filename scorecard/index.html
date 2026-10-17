@@ -184,6 +184,7 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   .hp-field { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (pointer: coarse) { .theme-toggle { width: 44px; height: 44px; } }
 </style>
 </head>
 <body>
@@ -275,7 +276,7 @@
   </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
@@ -473,19 +474,22 @@
   }
 
   // ── EMAIL GATE ──
-  const sb = window.supabase ? window.supabase.createClient(
+  // supabase-js loads with defer, so create the client on first use, not while this script runs
+  let sbClient = null;
+  const getSb = () => sbClient || (sbClient = window.supabase ? window.supabase.createClient(
     'https://tnkqxniwjomkojufuxlp.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U'
-  ) : null;
+  ) : null);
   // Honeypot: a filled hidden field means a bot. Send it as hp so the database trigger drops the
   // row, never track it, and carry on as if it saved. Real visitors never send an hp key.
   async function saveLead(lead) {
     if (lead.hp) {
-      try { if (sb) await sb.from('leads').insert([lead]); } catch (e) {}
+      try { const sb = getSb(); if (sb) await sb.from('leads').insert([lead]); } catch (e) {}
       return true;
     }
     delete lead.hp;
     try {
+      const sb = getSb();
       if (!sb) throw new Error('Supabase client missing');
       const { error } = await sb.from('leads').insert([lead]);
       if (error) throw error;
