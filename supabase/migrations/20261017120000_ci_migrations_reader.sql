@@ -16,8 +16,12 @@
 --     net.http_request_queue and net._http_response. This is the meaningful one: a session as
 --     this role could send outbound HTTP from the database and read or delete pg_net responses.
 --     default_transaction_read_only below blocks those writes by default, but a session can
---     turn it off with SET, so it is a default, not a control. Fixing it means revoking pg_net
---     from PUBLIC, which is a separate decision.
+--     turn it off with SET, so it is a default, not a control. It cannot be fixed per project:
+--     supabase_admin owns net and made these grants, so a REVOKE run as postgres is a no-op
+--     ("no privileges could be revoked"), and Supabase documents that removing the PUBLIC table
+--     grants would break pg_net for postgres (the lead-alert trigger and the nurture cron job).
+--     See supabase.com/docs/guides/troubleshooting/revoking-access-to-pg_net-objects-has-no-effect-0bbc16
+--     Also: queued pg_net requests, headers included, are readable by this role until sent.
 --   * EXECUTE on functions granted to PUBLIC in pg_catalog and information_schema
 --
 -- ROLLBACK:
