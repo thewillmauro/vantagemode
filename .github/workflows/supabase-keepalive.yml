@@ -1,32 +1,116 @@
 name: Supabase keep-alive
 
-# Free Supabase projects pause after a period of inactivity, which silently
-# breaks the site's lead forms. This pings the database once a day and
-# re-runs the lead-alert function to catch up on any missed alerts.
+# Free Supabase projects pause after a week of low database activity, which
+# silently breaks the site's lead forms. Once a day this:
+#   1. runs a read-only query in Postgres as the anon role (keeps the project
+#      active and checks the API and database are up), then
+#   2. calls lead-alert (with the LEAD_ALERT_SECRET header) to send any missed alerts.
+# Step 2 runs even when step 1 fails, and the job still ends red if either fails.
 on:
   schedule:
     - cron: '17 13 * * *'
   workflow_dispatch:
 
+permissions: {}
+
+env:
+  SUPABASE_URL: https://tnkqxniwjomkojufuxlp.supabase.co
+  # Public anon key, already shipped in index.html
+  ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U
+
 jobs:
   ping:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Ping leads endpoint
-        env:
-          # Public anon key, already shipped in index.html
-          ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRua3F4bml3am9ta29qdWZ1eGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MzE2OTUsImV4cCI6MjA5MDUwNzY5NX0.vwdflPZePcMKUQP5cI9jXu8bxiqa2O2NKFo_ycR5b0U
+      - name: Database health check
+        # Calls graphql_public.graphql() through PostgREST. It runs inside
+        # Postgres as anon and reads no table, so it does not depend on anon
+        # being able to read leads (revoked in 20261015120000_leads_owner_read).
+        # With pg_graphql off it answers 200 {"errors":[...not enabled...]};
+        # with it on, 200 {"data":{"__typename":"Query"}}. Both mean the
+        # database answered.
         run: |
-          code=$(curl -s -o /dev/null -w "%{http_code}" -m 30 \
-            "https://tnkqxniwjomkojufuxlp.supabase.co/rest/v1/leads?select=id&limit=1" \
-            -H "apikey: $ANON_KEY" -H "Authorization: Bearer $ANON_KEY")
-          echo "leads endpoint: $code"
-          if [ "$code" != "200" ]; then
-            echo "::error::Supabase leads endpoint returned $code. The project may be paused; restore it in the Supabase dashboard."
+          body=$(mktemp)
+          code=$(curl -s -o "$body" -w "%{http_code}" -m 30 \
+            "$SUPABASE_URL/rest/v1/rpc/graphql?query=%7B__typename%7D" \
+            -H "Accept-Profile: graphql_public" \
+            -H "apikey: $ANON_KEY" -H "Authorization: Bearer $ANON_KEY") || true
+          snippet=$(head -c 300 "$body" | tr '\n' ' ')
+          echo "database check: HTTP $code"
+          echo "response: $snippet"
+          if [ "$code" = "200" ] && jq -e 'has("data") or has("errors")' "$body" >/dev/null 2>&1; then
+            exit 0
+          fi
+          # Second opinion from the Auth service, to tell "whole project down"
+          # apart from "API up, database query failed".
+          auth=$(curl -s -o /dev/null -w "%{http_code}" -m 15 \
+            "$SUPABASE_URL/auth/v1/health" -H "apikey: $ANON_KEY") || true
+          echo "auth health: HTTP $auth"
+          case "$code" in
+            000) why="no response (timeout or network error)" ;;
+            401|403) why="HTTP $code, the anon role was refused (a grant or API key change?)" ;;
+            404) why="HTTP $code, endpoint not found (graphql_public schema or function missing?)" ;;
+            5*) why="HTTP $code, server error" ;;
+            *) why="HTTP $code" ;;
+          esac
+          if [ "$auth" != "200" ]; then
+            why="$why; Auth health also failed (HTTP $auth), so the project may be paused or down. Check the Supabase dashboard"
+          fi
+          echo "::error title=Database health check failed::$why. Response: $snippet"
+          exit 1
+
+      - name: Catch up lead alerts
+        # Runs even if the health check failed, so a broken check never blocks alerts.
+        if: ${{ !cancelled() }}
+        env:
+          # Must equal the lead-alert function's LEAD_ALERT_SECRET (and the Vault secret
+          # lead_alert_secret that the leads trigger sends). GitHub masks it in logs.
+          LEAD_ALERT_SECRET: ${{ secrets.LEAD_ALERT_SECRET }}
+        run: |
+          body=$(mktemp)
+          # The secret goes in a header file, not on the curl command line.
+          hdr=$(mktemp)
+          printf 'Content-Type: application/json\napikey: %s\nAuthorization: Bearer %s\n' "$ANON_KEY" "$ANON_KEY" > "$hdr"
+          if [ -n "$LEAD_ALERT_SECRET" ]; then
+            printf 'x-lead-alert-secret: %s\n' "$LEAD_ALERT_SECRET" >> "$hdr"
+          else
+            echo "::warning title=LEAD_ALERT_SECRET not set::The GitHub secret LEAD_ALERT_SECRET is empty, so lead-alert is called without it. Once lead-alert checks the secret, this call is rejected (401)."
+          fi
+          code=$(curl -s -o "$body" -w "%{http_code}" -m 60 -X POST \
+            "$SUPABASE_URL/functions/v1/lead-alert" \
+            -H @"$hdr" \
+            -d '{}') || true
+          rm -f "$hdr"
+          snippet=$(head -c 500 "$body" | tr '\n' ' ')
+          echo "lead-alert: HTTP $code"
+          echo "response: $snippet"
+          err=$(jq -r '.error // empty' "$body" 2>/dev/null || true)
+          if [ "$code" = "200" ]; then
+            if jq -e '.ok == true' "$body" >/dev/null 2>&1; then
+              echo "Sent $(jq -r '.pending' "$body") missed alert(s)."
+              exit 0
+            fi
+            failed=$(jq -r '[.results[]? | select(.sent | not)] | length' "$body" 2>/dev/null || echo "?")
+            echo "::error title=Lead alerts not sent::$failed of $(jq -r '.pending // "?"' "$body" 2>/dev/null) alert email(s) failed to send. Response: $snippet"
             exit 1
           fi
-      - name: Catch up lead alerts
-        run: |
-          curl -s -m 60 -X POST "https://tnkqxniwjomkojufuxlp.supabase.co/functions/v1/lead-alert" \
-            -H "Content-Type: application/json" -d '{}'
-          echo
+          if [ "$err" = "RESEND_API_KEY is not set" ]; then
+            echo "::error title=Lead alerts not configured::lead-alert is missing the RESEND_API_KEY secret, so no alert emails are sent. This is a config gap, not a paused project. Set it with: supabase secrets set RESEND_API_KEY=... --project-ref tnkqxniwjomkojufuxlp"
+            exit 1
+          fi
+          case "$code" in
+            401)
+              echo "::error title=lead-alert rejected the secret::HTTP 401. The x-lead-alert-secret header is missing or does not match. Check that GitHub secret LEAD_ALERT_SECRET equals the function secret LEAD_ALERT_SECRET."
+              exit 1 ;;
+          esac
+          if [ "$err" = "not_configured" ]; then
+            echo "::error title=lead-alert secret not configured::lead-alert has no LEAD_ALERT_SECRET function secret, so it rejects every call, including new-lead alerts from the database trigger. Set it with supabase secrets set (see the lead-alert PR rollout)."
+            exit 1
+          fi
+          if [ "$code" = "000" ]; then
+            echo "::error title=lead-alert unreachable::No response from lead-alert (timeout or network error)."
+          else
+            echo "::error title=lead-alert failed::HTTP $code. Response: $snippet"
+          fi
+          exit 1
