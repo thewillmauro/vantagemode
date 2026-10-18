@@ -4,7 +4,7 @@ name: Supabase keep-alive
 # silently breaks the site's lead forms. Once a day this:
 #   1. runs a read-only query in Postgres as the anon role (keeps the project
 #      active and checks the API and database are up), then
-#   2. calls lead-alert to send any alerts that were missed.
+#   2. calls lead-alert (with the LEAD_ALERT_SECRET header) to send any missed alerts.
 # Step 2 runs even when step 1 fails, and the job still ends red if either fails.
 on:
   schedule:
@@ -63,13 +63,25 @@ jobs:
       - name: Catch up lead alerts
         # Runs even if the health check failed, so a broken check never blocks alerts.
         if: ${{ !cancelled() }}
+        env:
+          # Must equal the lead-alert function's LEAD_ALERT_SECRET (and the Vault secret
+          # lead_alert_secret that the leads trigger sends). GitHub masks it in logs.
+          LEAD_ALERT_SECRET: ${{ secrets.LEAD_ALERT_SECRET }}
         run: |
           body=$(mktemp)
+          # The secret goes in a header file, not on the curl command line.
+          hdr=$(mktemp)
+          printf 'Content-Type: application/json\napikey: %s\nAuthorization: Bearer %s\n' "$ANON_KEY" "$ANON_KEY" > "$hdr"
+          if [ -n "$LEAD_ALERT_SECRET" ]; then
+            printf 'x-lead-alert-secret: %s\n' "$LEAD_ALERT_SECRET" >> "$hdr"
+          else
+            echo "::warning title=LEAD_ALERT_SECRET not set::The GitHub secret LEAD_ALERT_SECRET is empty, so lead-alert is called without it. Once lead-alert checks the secret, this call is rejected (401)."
+          fi
           code=$(curl -s -o "$body" -w "%{http_code}" -m 60 -X POST \
             "$SUPABASE_URL/functions/v1/lead-alert" \
-            -H "Content-Type: application/json" \
-            -H "apikey: $ANON_KEY" -H "Authorization: Bearer $ANON_KEY" \
+            -H @"$hdr" \
             -d '{}') || true
+          rm -f "$hdr"
           snippet=$(head -c 500 "$body" | tr '\n' ' ')
           echo "lead-alert: HTTP $code"
           echo "response: $snippet"
@@ -85,6 +97,15 @@ jobs:
           fi
           if [ "$err" = "RESEND_API_KEY is not set" ]; then
             echo "::error title=Lead alerts not configured::lead-alert is missing the RESEND_API_KEY secret, so no alert emails are sent. This is a config gap, not a paused project. Set it with: supabase secrets set RESEND_API_KEY=... --project-ref tnkqxniwjomkojufuxlp"
+            exit 1
+          fi
+          case "$code" in
+            401)
+              echo "::error title=lead-alert rejected the secret::HTTP 401. The x-lead-alert-secret header is missing or does not match. Check that GitHub secret LEAD_ALERT_SECRET equals the function secret LEAD_ALERT_SECRET."
+              exit 1 ;;
+          esac
+          if [ "$err" = "not_configured" ]; then
+            echo "::error title=lead-alert secret not configured::lead-alert has no LEAD_ALERT_SECRET function secret, so it rejects every call, including new-lead alerts from the database trigger. Set it with supabase secrets set (see the lead-alert PR rollout)."
             exit 1
           fi
           if [ "$code" = "000" ]; then
