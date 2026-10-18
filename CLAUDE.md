@@ -63,6 +63,14 @@ GTM Engineering Consultancy, founded by William Mauro. Copy uses "we" for the co
 - If the v2 columns are missing (migrations not applied yet), the page falls back to v1 fields and says so
 - Internal-test, bot-flag, "new", and scorecard-parsing rules are Kenji's definitions, implemented as pure functions at the top of `app.js`. Headers (`X-Frame-Options`, `Referrer-Policy`, `X-Robots-Tag`) live in `vercel.json`
 
+## Migrations (`supabase/migrations`)
+
+- Every file is named `<version>_<name>.sql` with the exact version and name production recorded in `supabase_migrations.schema_migrations`, and its SQL matches production's recorded statements. `scripts/check_migrations.mjs` enforces this: locally with a full content check (`--history` from the read-only export query in its header), and in CI (`.github/workflows/migration-check.yml`, every PR to main) on versions and names only. A new migration fails the check until it is applied to production and recorded under the file's version
+- **How to apply a migration so history records the file's own version**: `supabase db push` from a linked checkout (run `supabase migration list` first; only the new file should be local-only). The MCP `apply_migration` tool and the Management API record a new timestamp instead, so the file must then be renamed to that version. The SQL editor and psql record nothing
+- **CI role**: `20261017120000_ci_migrations_reader.sql` creates `ci_migrations_reader`, which can only read `version` and `name` of `schema_migrations`; it has no password in git. Secret `CI_MIGRATIONS_DB_URL` (GitHub, repo secret) is its Supavisor session-pooler string: `postgresql://ci_migrations_reader.tnkqxniwjomkojufuxlp:<password>@aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require`. Fork PRs skip; same-repo PRs fail until the secret exists. It still inherits PUBLIC grants (notably pg_net); see the migration header
+- The two baseline files (`20260331044531_create_leads_and_projects_tables.sql`, `20260331123349_update_leads_columns.sql`) are production's recorded statements, verbatim
+- **lead_alerts was applied outside migration history** (2026-10-07, no history entry). Its objects already live in production: `pg_net` in `extensions`, `leads.alerted_at`, schema `private`, `private.notify_new_lead()`, and the `leads_notify_new_lead` trigger (redefined by `20261015141802_leads_v2_alert_skip_demo.sql`). There is no file for it on purpose. Do not re-create it as a migration; change those objects with a new migration instead
+
 ## Cal.com webhook (`supabase/functions/cal-webhook`)
 
 - Deployed with verify_jwt off (`supabase/config.toml`). Secret `CAL_WEBHOOK_SECRET` must match the webhook secret in Cal.com (Settings > Developer > Webhooks, subscriber URL `https://tnkqxniwjomkojufuxlp.supabase.co/functions/v1/cal-webhook`, events Booking Created, Rescheduled, Cancelled)
