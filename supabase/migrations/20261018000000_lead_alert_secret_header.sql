@@ -57,7 +57,7 @@ end;
 $$;
 revoke all on function private.notify_new_lead() from public, anon, authenticated;
 
--- ROLLBACK (the 20261007000000 definition, which production runs as of 2026-10-18):
+-- ROLLBACK (production's definition as of 2026-10-18, applied 2026-10-07 outside migration history):
 --   create or replace function private.notify_new_lead()
 --   returns trigger language plpgsql security definer set search_path = '' as $f$
 --   begin
