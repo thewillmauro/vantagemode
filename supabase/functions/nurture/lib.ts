@@ -4,8 +4,9 @@
 
 export const SITE = "https://www.vantagemode.com";
 export const SOURCES = ["scorecard", "kpi_template"] as const;
-// A lead from any of these has already reached out, so the sequence stops for that email
-export const CONVERTED_SOURCES = ["teardown", "project_wizard", "contact_form", "sow_form"];
+// A lead from any of these has already reached out, so the sequence stops for that email.
+// "booking" rows come from the cal-webhook function (a Cal.com teardown booking).
+export const CONVERTED_SOURCES = ["teardown", "project_wizard", "contact_form", "sow_form", "booking"];
 // Days after signup for each of the five emails
 export const OFFSETS_DAYS = [0, 2, 5, 9, 14];
 const MIN_GAP_MS = 20 * 3600 * 1000; // never two emails within ~a day, even when catching up after downtime
@@ -17,6 +18,7 @@ export type Lead = {
   message: string | null;
   source: string | null;
   created_at: string;
+  is_demo?: boolean;
 };
 export type Send = { lead_id: string; step: number; sent_at: string };
 
@@ -52,10 +54,16 @@ export function parseScorecard(message: string | null): Scorecard | null {
   };
 }
 
+/** Only real scorecard/KPI leads get the sequence: never demo rows, and never bookings
+ * (a booker has not opted in to marketing email). */
+export function nurtureEligible(l: Lead): boolean {
+  return l.is_demo !== true && l.source !== "booking" && SOURCES.includes(l.source as typeof SOURCES[number]);
+}
+
 /**
  * Picks the next email for each lead that is due now.
  * One sequence per email address (the earliest qualifying lead), skipping
- * unsubscribed addresses and anyone who later reached out through another form.
+ * unsubscribed addresses and anyone who later reached out through another form or booked a call.
  */
 export function dueSends(
   leads: Lead[],
@@ -68,14 +76,14 @@ export function dueSends(
   const seen = new Set<string>();
   const out: { lead: Lead; step: number }[] = [];
   const sorted = [...leads]
-    .filter((l) => SOURCES.includes(l.source as typeof SOURCES[number]) && new Date(l.created_at) >= start)
+    .filter((l) => nurtureEligible(l) && new Date(l.created_at) >= start)
     .sort((a, b) => a.created_at.localeCompare(b.created_at));
   for (const lead of sorted) {
     const email = lead.email.trim().toLowerCase();
     if (seen.has(email)) continue;
     seen.add(email);
     if (unsubscribed.has(email)) continue;
-    if (converted.some((c) => c.email.trim().toLowerCase() === email && c.created_at > lead.created_at)) continue;
+    if (converted.some((c) => c.is_demo !== true && c.email.trim().toLowerCase() === email && c.created_at > lead.created_at)) continue;
     const mine = sends.filter((s) => s.lead_id === lead.id);
     const step = mine.length ? Math.max(...mine.map((s) => s.step)) + 1 : 0;
     if (step >= OFFSETS_DAYS.length) continue;

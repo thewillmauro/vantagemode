@@ -1,0 +1,12 @@
+# Edge Function settings for `supabase functions deploy` (project tnkqxniwjomkojufuxlp).
+# None of these functions is called with a Supabase user JWT: lead-alert by the leads insert
+# trigger, nurture by pg_cron and unsubscribe links, cal-webhook by Cal.com (HMAC-signed).
+# When deploying through the MCP deploy_edge_function tool, pass verify_jwt: false instead.
+[functions.lead-alert]
+verify_jwt = false
+
+[functions.nurture]
+verify_jwt = false
+
+[functions.cal-webhook]
+verify_jwt = false

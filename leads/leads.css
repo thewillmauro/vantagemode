@@ -13,6 +13,7 @@
   --ink-rgb: 255,255,255;
   --bad: #e06c75;
   --ok: #6fbf8a;
+  --info: #6fb3d2;
   --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
   --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
   color-scheme: dark;
@@ -31,6 +32,7 @@ html[data-theme="light"] {
   --ink-rgb: 26,23,18;
   --bad: #b23a44;
   --ok: #1f7a50;
+  --info: #1d5f80;
   color-scheme: light;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -141,6 +143,69 @@ h2 { font-family: var(--font-display); font-weight: 400; font-size: 32px; letter
 .lv-empty ul { margin: 0 0 14px 18px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
 
 .lv-foot { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center; padding: 24px 16px 32px; border-top: 1px solid rgba(var(--ink-rgb),0.08); font-size: 14px; }
+
+/* v2: status chips, toggles, demo banner */
+.lv-filters { flex-direction: column; align-items: stretch; }
+.lv-toggles { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.lv-chip.st-new .n, .lv-chip.st-contacted .n, .lv-chip.st-booked .n, .lv-chip.st-won .n, .lv-chip.st-lost .n, .lv-chip.st-spam .n { font-weight: 500; }
+.lv-demo-banner { margin-bottom: 12px; padding: 8px 12px; font-size: 13px; color: var(--white); background: var(--surface2); border-left: 2px solid var(--info); }
+.lv-v1note { margin: 0 0 16px; }
+.lv-card.is-demo { border-left-style: dashed; }
+.lv-card[data-status="spam"] { opacity: 0.75; }
+.lv-badge.demo { border-color: var(--info); color: var(--info); }
+.lv-badge.ok { border-color: var(--ok); color: var(--ok); }
+
+/* Booking cards */
+.lv-booking { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(var(--ink-rgb),0.08); }
+.lv-call { font-size: 15px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.lv-call b { font-weight: 500; }
+.lv-call.is-cancelled b { text-decoration: line-through; color: var(--muted); }
+.lv-call-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.lv-q { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.lv-booking + .lv-msg { margin-top: 4px; }
+
+/* Status and notes */
+.lv-pipe { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(var(--ink-rgb),0.08); display: grid; gap: 8px; }
+.lv-pipe-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.lv-pipe-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.lv-select { background: var(--black); color: var(--white); border: 1px solid rgba(var(--ink-rgb),0.18); padding: 8px 10px; font: inherit; font-size: 16px; min-height: 40px; border-radius: 0; }
+.lv-select:focus { border-color: var(--gold); outline: none; }
+.lv-status { border-left-width: 3px; }
+.lv-status[data-status="new"] { border-left-color: var(--gold); }
+.lv-status[data-status="contacted"] { border-left-color: var(--info); }
+.lv-status[data-status="booked"] { border-left-color: var(--gold-bright); }
+.lv-status[data-status="won"] { border-left-color: var(--ok); }
+.lv-status[data-status="lost"] { border-left-color: var(--muted); }
+.lv-status[data-status="spam"] { border-left-color: var(--bad); }
+.lv-stamp { font-size: 13px; color: var(--muted); }
+.lv-notes { width: 100%; min-height: 64px; resize: vertical; background: var(--black); color: var(--white); border: 1px solid rgba(var(--ink-rgb),0.12); padding: 10px 12px; font: inherit; font-size: 16px; line-height: 1.45; }
+.lv-notes:focus { border-color: var(--gold); outline: none; }
+.lv-save:disabled { opacity: 0.5; cursor: default; }
+.lv-count { font-size: 12px; color: var(--muted); }
+.lv-save-msg { font-size: 13px; color: var(--muted); }
+.lv-save-msg.is-ok { color: var(--ok); }
+.lv-save-msg.is-err { color: var(--bad); }
+
+/* Security panel */
+.lv-security { margin-top: 32px; background: var(--surface); border-left: 2px solid rgba(var(--ink-rgb),0.18); }
+.lv-security summary { cursor: pointer; padding: 14px 18px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); min-height: 44px; }
+.lv-security[open] summary { color: var(--gold-ink); }
+.lv-security-body { padding: 0 18px 18px; display: grid; gap: 10px; max-width: 560px; }
+.lv-security h3 { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+.lv-aal { font-size: 14px; }
+.lv-factors { list-style: none; display: grid; gap: 8px; font-size: 14px; }
+.lv-factors li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.lv-enroll, #enrollVerifyForm { display: grid; gap: 6px; }
+.lv-enroll label, #enrollVerifyForm label, .lv-signin select + label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.lv-enroll input, #enrollVerifyForm input { width: 100%; background: var(--black); border: 1px solid rgba(var(--ink-rgb),0.12); color: var(--white); padding: 11px 12px; font: inherit; font-size: 16px; }
+.lv-enroll .lv-btn-ghost { justify-self: start; margin-top: 6px; }
+.lv-enroll-step { display: grid; gap: 8px; }
+.lv-qr img { background: #fff; padding: 8px; width: 180px; height: 180px; }
+.lv-secret { font-family: ui-monospace, Menlo, monospace; font-size: 15px; letter-spacing: 0.08em; overflow-wrap: anywhere; user-select: all; padding: 8px 10px; background: var(--black); }
+.lv-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.lv-small { min-height: 32px; padding: 6px 10px; font-size: 10px; }
+.lv-ok { color: var(--ok); font-size: 14px; }
+.lv-signin .lv-select { width: 100%; }
 
 @media (max-width: 760px) {
   .lv-stats { grid-template-columns: 1fr 1fr; }

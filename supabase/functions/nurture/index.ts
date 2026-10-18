@@ -43,8 +43,8 @@ async function run() {
 
   const since = start.toISOString();
   const [leadsRes, convRes, sendsRes, unsubRes] = await Promise.all([
-    rest(`leads?select=id,name,email,message,source,created_at&source=in.(${SOURCES.join(",")})&created_at=gte.${since}&order=created_at.asc&limit=2000`),
-    rest(`leads?select=id,name,email,message,source,created_at&source=in.(${CONVERTED_SOURCES.join(",")})&created_at=gte.${since}&limit=2000`),
+    rest(`leads?select=id,name,email,message,source,created_at,is_demo&source=in.(${SOURCES.join(",")})&is_demo=is.false&created_at=gte.${since}&order=created_at.asc&limit=2000`),
+    rest(`leads?select=id,name,email,message,source,created_at,is_demo&source=in.(${CONVERTED_SOURCES.join(",")})&is_demo=is.false&created_at=gte.${since}&limit=2000`),
     rest("nurture_sends?select=lead_id,step,sent_at&limit=10000"),
     rest("nurture_unsubscribes?select=email&limit=10000"),
   ]);
