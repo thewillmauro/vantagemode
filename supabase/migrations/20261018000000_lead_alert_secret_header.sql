@@ -17,10 +17,15 @@
 -- (this function's owner, SECURITY DEFINER) and not by anon or authenticated (checked
 -- read-only on 2026-10-18).
 --
--- Note: pg_net keeps the queued request, headers included, in net.http_request_queue until
--- it is sent. anon and authenticated hold SELECT on that table by Supabase default, but the
--- net schema is not exposed through the API (PostgREST answers PGRST106) and anon cannot log
--- in, so it is not reachable. Never add net to the API's exposed schemas.
+-- Note: pg_net keeps each queued request, headers included (so this secret), in
+-- net.http_request_queue until its worker sends it. pg_net's tables are granted SELECT to
+-- PUBLIC by supabase_admin, and that grant can't be revoked per project (Supabase
+-- troubleshooting: "Revoking access to pg_net objects has no effect"). So ANY database role
+-- that can log in can read queued requests until they are sent. Today the only login roles
+-- are Supabase's built-ins: authenticator, pgbouncer, postgres and the supabase_* service
+-- roles (verified read-only 2026-10-18). Never expose the net schema through the API, never
+-- create an extra login role without considering this, and rotate the lead-alert secret if
+-- any database login is exposed.
 
 create or replace function private.notify_new_lead()
 returns trigger
