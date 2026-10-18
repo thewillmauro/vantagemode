@@ -11,7 +11,7 @@ for each row
 when (new.is_demo = false)
 execute function private.notify_new_lead();
 
--- ROLLBACK (the 20261007000000 definition):
+-- ROLLBACK (the original lead_alerts definition, applied 2026-10-07 outside migration history; see CLAUDE.md > Migrations):
 --   drop trigger if exists leads_notify_new_lead on public.leads;
 --   create trigger leads_notify_new_lead after insert on public.leads
 --     for each row execute function private.notify_new_lead();
