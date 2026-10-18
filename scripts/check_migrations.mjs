@@ -13,8 +13,7 @@
 //         select version, name, md5(regexp_replace(regexp_replace(
 //           array_to_string(statements, E'\n'), '--[^\n]*', '', 'g'), '\s+', '', 'g')) as norm_md5
 //         from supabase_migrations.schema_migrations) h;
-//   * Version and name only (CI): rows of {version, name}, read by the ci_migrations_reader
-//     role, which cannot see statements. See .github/workflows/migration-check.yml.
+//   * Version and name only: rows of {version, name} (for example the MCP list_migrations output).
 //
 // The file is a JSON array of {version, name?, norm_md5?, statements?}. A plain list of
 // versions, one per line, also works (then only versions are checked).
