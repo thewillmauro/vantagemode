@@ -1,0 +1,12 @@
+{
+  "name": "vantagemode-db-tests",
+  "private": true,
+  "description": "Database tests run against PGlite (Postgres in WebAssembly). Nothing here touches the real Supabase project.",
+  "type": "module",
+  "scripts": {
+    "test": "node lead_bot_flag.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8"
+  }
+}

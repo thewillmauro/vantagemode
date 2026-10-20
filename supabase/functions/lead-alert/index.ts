@@ -2,11 +2,27 @@
 // Called by the leads insert trigger and by the daily keep-alive workflow.
 // It never trusts the request body: it reads unalerted leads with the service
 // role, so an outside caller can at most trigger one alert per existing lead.
+// Demo rows (is_demo) and rows with status spam (auto-flagged likely bots, or marked spam
+// on /leads before they were alerted) never alert. Bookings from cal-webhook do. Needs the is_demo column
+// (migration 20261015141659) before this version is deployed.
+//
+// Auth: every request must be a POST with the shared secret in the x-lead-alert-secret
+// header (see auth.ts). verify_jwt is off (config.toml) because pg_net can't send a
+// Supabase JWT, so this header is the only auth. Callers: the leads insert trigger
+// (private.notify_new_lead, which reads the secret from Vault as lead_alert_secret) and
+// the keep-alive workflow (GitHub secret LEAD_ALERT_SECRET).
+//
+// Secrets (supabase secrets set ...):
+//   LEAD_ALERT_SECRET            required; fails closed (500) without it
+//   LEAD_ALERT_SECRET_PREVIOUS   optional, only during a rotation
+//   RESEND_API_KEY               required to send
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { authorize } from "./auth.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SECRETS = [Deno.env.get("LEAD_ALERT_SECRET") ?? "", Deno.env.get("LEAD_ALERT_SECRET_PREVIOUS") ?? ""];
 const ALERT_TO = Deno.env.get("ALERT_TO") ?? "thewillmauro@gmail.com";
 const ALERT_FROM = Deno.env.get("ALERT_FROM") ?? "Vantage Mode Leads <onboarding@resend.dev>";
 
@@ -66,12 +82,15 @@ function render(lead: Lead) {
   return { html, text, subject };
 }
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
+  const rejected = await authorize(req, SECRETS);
+  if (rejected) return rejected;
+
   if (!RESEND_API_KEY) {
     return Response.json({ ok: false, error: "RESEND_API_KEY is not set" }, { status: 500 });
   }
 
-  const res = await rest("leads?alerted_at=is.null&order=created_at.asc&limit=20&select=*");
+  const res = await rest("leads?alerted_at=is.null&is_demo=is.false&status=neq.spam&order=created_at.asc&limit=20&select=id,name,email,brand,company,service,timeline,budget,message,source,created_at");
   if (!res.ok) return Response.json({ ok: false, error: await res.text() }, { status: 500 });
   const leads: Lead[] = await res.json();
 

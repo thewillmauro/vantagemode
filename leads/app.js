@@ -1,8 +1,10 @@
 /* /leads private dashboard.
- * Security model: RLS on public.leads is the real control (only Will's auth user can select).
- * Every lead field is untrusted text from a public form. Render it ONLY via textContent /
- * createTextNode. Never innerHTML. Links: mailto: for valid-looking emails, and https report
- * links that match REPORT_RE exactly. Nothing else becomes a link.
+ * Security model: RLS on public.leads is the real control (only Will's auth user can select,
+ * and update only status and notes). Every lead field is untrusted text from a public form or
+ * a Cal.com booking. Render it ONLY via textContent / createTextNode / value. Never innerHTML.
+ * Links: mailto: for valid-looking emails, and https report links that match REPORT_RE
+ * exactly. Nothing else becomes a link. The only image is the MFA enrollment QR code, and only
+ * when it is a data:image/svg+xml URL returned by Supabase Auth.
  */
 (function () {
   'use strict';
@@ -13,11 +15,17 @@
   var OWNER_EMAIL = 'will@vantagemode.com';
   var LAST_SEEN_KEY = 'vm_leads_last_seen';
   var DAY = 86400000;
-  var COLUMNS = 'id,created_at,name,email,company,brand,service,project_type,budget,timeline,message,source';
+  var COLUMNS_V1 = 'id,created_at,name,email,company,brand,service,project_type,budget,timeline,message,source';
+  var COLUMNS = COLUMNS_V1 + ',status,notes,status_updated_at,is_demo,booking_uid';
+  // bot_reasons comes from 20261019120000_leads_bot_flag.sql; until it is applied, fetchLeads drops it.
+  var COLUMNS_BOT = COLUMNS + ',bot_reasons';
+  var NOTES_MAX = 5000;
 
-  var CHIPS = ['scorecard', 'kpi_template', 'sdr_calculator', 'teardown', 'project_wizard', 'contact', 'sow_form', 'other'];
-  var CHIP_LABELS = { scorecard: 'Scorecard', kpi_template: 'KPI template', sdr_calculator: 'SDR calculator', teardown: 'Teardown', project_wizard: 'Project wizard', contact: 'Contact', sow_form: 'SOW form', other: 'Other' };
+  var CHIPS = ['scorecard', 'kpi_template', 'sdr_calculator', 'booking', 'teardown', 'project_wizard', 'contact', 'sow_form', 'other'];
+  var CHIP_LABELS = { scorecard: 'Scorecard', kpi_template: 'KPI template', sdr_calculator: 'SDR calculator', booking: 'Booking', teardown: 'Teardown', project_wizard: 'Project wizard', contact: 'Contact', sow_form: 'SOW form', other: 'Other' };
   var DETAIL_SOURCES = ['project_wizard', 'contact', 'teardown', 'sow_form'];
+  var STATUSES = ['new', 'contacted', 'booked', 'won', 'lost', 'spam'];
+  var STATUS_LABELS = { new: 'New', contacted: 'Contacted', booked: 'Booked', won: 'Won', lost: 'Lost', spam: 'Spam' };
 
   // ── Kenji's rules (pure functions) ──
 
@@ -48,9 +56,24 @@
     return out;
   }
 
+  // Rules the database recorded when it auto-flagged the row as spam (private.lead_bot_reasons).
+  var BOT_REASON_LABELS = {
+    name_mixed_case: 'mixed-case noise in name', name_consonant_run: 'unpronounceable name',
+    company_mixed_case: 'mixed-case noise in company', company_consonant_run: 'unpronounceable company',
+    gmail_dots: 'dot-split gmail'
+  };
+  function autoFlagReasons(row) {
+    if (!Array.isArray(row.bot_reasons)) return [];
+    return row.bot_reasons.map(function (k) { return BOT_REASON_LABELS[k] || String(k); });
+  }
+
   function chipFor(source) {
     if (source === 'contact_form' || source === 'contact') return 'contact';
     return CHIPS.indexOf(source) !== -1 ? source : 'other';
+  }
+
+  function statusOf(row) {
+    return STATUSES.indexOf(row.status) !== -1 ? row.status : 'new';
   }
 
   function parseScorecard(message) {
@@ -66,6 +89,33 @@
     return { overall: Number(m[1]), band: m[2], pillars: pillars, weakest: w ? w[1].trim() : null, link: link ? link[1] : null };
   }
 
+  // Reads the message the cal-webhook function writes:
+  //   [Cal.com] Free Pipeline Teardown, Mon Oct 19, 2:00 PM ET (30 min)
+  //   What's breaking in your pipeline today? → <answer>
+  //   [Cal.com] Rescheduled to ...      (optional, may repeat)
+  //   [Cal.com] Cancelled (was ...)     (optional)
+  function parseBooking(message) {
+    var lines = String(message || '').split('\n');
+    var head = (lines[0] || '').match(/^\[Cal\.com\] [^,]+, (.+)$/);
+    if (!head) return null;
+    var out = { time: head[1], question: null, answer: null, rescheduled: false, cancelled: false };
+    var answerLines = [];
+    for (var i = 1; i < lines.length; i++) {
+      var l = lines[i];
+      var rs = l.match(/^\[Cal\.com\] Rescheduled to (.+)$/);
+      if (rs) { out.time = rs[1]; out.rescheduled = true; continue; }
+      if (/^\[Cal\.com\] Cancelled/.test(l)) { out.cancelled = true; continue; }
+      if (out.question === null) {
+        var k = l.indexOf(' → ');
+        if (k !== -1) { out.question = l.slice(0, k); answerLines.push(l.slice(k + 3)); continue; }
+      }
+      answerLines.push(l);
+    }
+    var a = answerLines.join('\n').trim();
+    out.answer = a || null;
+    return out;
+  }
+
   function readLastSeen() {
     try { return localStorage.getItem(LAST_SEEN_KEY); } catch (e) { return null; }
   }
@@ -73,7 +123,8 @@
     try { localStorage.setItem(LAST_SEEN_KEY, iso); return true; } catch (e) { return false; }
   }
 
-  // Annotate rows once: internal, bot reasons, real, new, chip.
+  // Annotate rows once: internal, bot reasons, demo, spam, real, new, chip.
+  // Demo rows and spam are never "real" and never "new".
   function classify(rows, lastSeenIso, now) {
     var lastSeen = lastSeenIso ? Date.parse(lastSeenIso) : NaN;
     var cutoff = isNaN(lastSeen) ? now - 7 * DAY : lastSeen;
@@ -81,15 +132,22 @@
       var reasons = botSignals(r);
       var internal = isInternal(r);
       var bot = reasons.length >= 2;
+      var demo = r.is_demo === true;
+      var spam = statusOf(r) === 'spam';
       var t = Date.parse(r.created_at);
-      return { row: r, t: t, internal: internal, bot: bot, reasons: reasons, real: !internal && !bot, isNew: t > cutoff, chip: chipFor(r.source) };
+      return {
+        row: r, t: t, internal: internal, bot: bot, reasons: reasons, demo: demo, spam: spam,
+        real: !internal && !bot && !demo && !spam,
+        isNew: !demo && !spam && t > cutoff,
+        chip: chipFor(r.source)
+      };
     });
   }
 
   function summarize(items, now) {
     var s = { newCount: 0, real7: 0, bots: 0, by30: {} };
     items.forEach(function (it) {
-      if (it.internal) return;
+      if (it.internal || it.demo) return;
       if (it.isNew) s.newCount++;
       if (it.bot) s.bots++;
       if (!it.real) return;
@@ -97,6 +155,20 @@
       if (it.t >= now - 30 * DAY) s.by30[it.chip] = (s.by30[it.chip] || 0) + 1;
     });
     return s;
+  }
+
+  function hasRealLeads(items) {
+    return items.some(function (it) { return !it.demo && !it.internal && !it.bot && !it.spam; });
+  }
+
+  // Which cards show. Spam is hidden unless "Show spam" is on or the Spam status chip is picked.
+  function isVisible(it, f) {
+    if (f.chip !== 'all' && it.chip !== f.chip) return false;
+    if (f.status !== 'all' && statusOf(it.row) !== f.status) return false;
+    if (it.internal && !f.showInternal) return false;
+    if (it.demo && !f.showDemo) return false;
+    if (it.spam && !f.showSpam && f.status !== 'spam') return false;
+    return true;
   }
 
   function timeAgo(t, now) {
@@ -121,10 +193,12 @@
   function show(node, on) { node.hidden = !on; }
 
   var EMAIL_RE = /^[^\s@<>"'()\\,;:]+@[^\s@<>"'()\\,;:]+\.[^\s@<>"'()\\,;:]+$/;
+  var cardSeq = 0;
 
   function renderCard(it, now) {
     var r = it.row;
-    var card = el('article', 'lv-card' + (it.isNew ? ' is-new' : '') + (it.bot ? ' is-bot' : ''));
+    var card = el('article', 'lv-card' + (it.isNew ? ' is-new' : '') + (it.bot ? ' is-bot' : '') + (it.demo ? ' is-demo' : ''));
+    card.dataset.status = statusOf(r);
 
     var top = el('div', 'lv-card-top');
     var nameWrap = el('div', 'lv-name' + (r.name && String(r.name).trim() ? '' : ' is-empty'));
@@ -156,14 +230,20 @@
 
     var badges = el('div', 'lv-badges');
     badges.appendChild(el('span', 'lv-badge src', CHIP_LABELS[it.chip] + (it.chip === 'other' && r.source ? ': ' + r.source : '')));
+    if (it.demo) badges.appendChild(el('span', 'lv-badge demo', 'Demo'));
     if (it.internal) badges.appendChild(el('span', 'lv-badge', 'Internal test'));
     card.appendChild(badges);
 
-    if (it.bot) card.appendChild(el('p', 'lv-bot', 'Likely bot: ' + it.reasons.join(', ')));
+    var auto = autoFlagReasons(r);
+    if (auto.length) card.appendChild(el('p', 'lv-bot', 'Auto-flagged as likely bot: ' + auto.join(', ')));
+    else if (it.bot) card.appendChild(el('p', 'lv-bot', 'Likely bot: ' + it.reasons.join(', ')));
 
     if (it.chip === 'scorecard') renderScorecard(card, r);
+    else if (it.chip === 'booking') renderBookingDetail(card, r);
     else if (DETAIL_SOURCES.indexOf(it.chip) !== -1) { renderFields(card, r); renderMessage(card, r.message); }
     else if (it.chip !== 'kpi_template') renderMessage(card, r.message);
+
+    if (state.v2) renderPipeline(card, it);
     return card;
   }
 
@@ -203,6 +283,22 @@
     card.appendChild(box);
   }
 
+  function renderBookingDetail(card, r) {
+    var b = parseBooking(r.message);
+    if (!b) { renderMessage(card, r.message); return; }
+    if (b.cancelled) card.querySelector('.lv-badges').appendChild(el('span', 'lv-badge warn', 'Cancelled'));
+    else if (b.rescheduled) card.querySelector('.lv-badges').appendChild(el('span', 'lv-badge', 'Rescheduled'));
+    var box = el('div', 'lv-booking');
+    var when = el('p', 'lv-call' + (b.cancelled ? ' is-cancelled' : ''));
+    when.appendChild(el('span', 'lv-call-label', 'Call'));
+    when.appendChild(el('b', null, b.time));
+    box.appendChild(when);
+    if (b.question) box.appendChild(el('p', 'lv-q', b.question));
+    card.appendChild(box);
+    if (b.answer) renderMessage(card, b.answer);
+    else box.appendChild(el('p', 'lv-muted lv-q', 'No answer to the booking question.'));
+  }
+
   function renderFields(card, r) {
     var dl = el('dl', 'lv-fields');
     [['Service', r.service || r.project_type], ['Budget', r.budget], ['Timeline', r.timeline]].forEach(function (f) {
@@ -233,10 +329,181 @@
     card.appendChild(btn);
   }
 
+  // Status select + notes, saved straight to Supabase. Optimistic, rolled back on error.
+  function renderPipeline(card, it) {
+    var r = it.row;
+    var id = 'c' + (++cardSeq);
+    var box = el('div', 'lv-pipe');
+
+    var row1 = el('div', 'lv-pipe-row');
+    var lab = el('label', 'lv-pipe-label', 'Status');
+    lab.htmlFor = id + 's';
+    var sel = el('select', 'lv-select lv-status');
+    sel.id = id + 's';
+    STATUSES.forEach(function (s) {
+      var o = el('option', null, STATUS_LABELS[s]);
+      o.value = s;
+      sel.appendChild(o);
+    });
+    sel.value = statusOf(r);
+    sel.dataset.status = sel.value;
+    var stamp = el('span', 'lv-stamp');
+    var msg = el('span', 'lv-save-msg');
+    msg.setAttribute('role', 'status');
+    function paintStamp() {
+      var t = Date.parse(r.status_updated_at);
+      stamp.textContent = isNaN(t) ? '' : 'Status set ' + timeAgo(t, Date.now());
+      if (!isNaN(t)) stamp.title = new Date(t).toLocaleString();
+    }
+    paintStamp();
+    row1.appendChild(lab);
+    row1.appendChild(sel);
+    row1.appendChild(stamp);
+    box.appendChild(row1);
+
+    // Server-confirmed: the card, counts and chips change only after the database returns the
+    // updated row. While saving, the select shows the choice but is disabled.
+    sel.addEventListener('change', async function () {
+      var prev = statusOf(r);
+      var next = sel.value;
+      if (next === prev) return;
+      msg.textContent = 'Saving...';
+      msg.className = 'lv-save-msg';
+      sel.disabled = true;
+      var res = await saveFields(r.id, { status: next }, 'id,status,status_updated_at');
+      sel.disabled = false;
+      if (res.error) {
+        sel.value = prev;
+        msg.textContent = res.error;
+        msg.className = 'lv-save-msg is-err';
+      } else {
+        setRowStatus(it, card, sel, statusOf(res.row));
+        r.status_updated_at = res.row.status_updated_at;
+        msg.textContent = 'Saved';
+        msg.className = 'lv-save-msg is-ok';
+      }
+      paintStamp();
+      renderSummary();
+      renderChips();
+    });
+
+    var nlab = el('label', 'lv-pipe-label', 'Notes');
+    nlab.htmlFor = id + 'n';
+    box.appendChild(nlab);
+    var ta = el('textarea', 'lv-notes');
+    ta.id = id + 'n';
+    ta.maxLength = NOTES_MAX;
+    ta.value = r.notes || '';
+    // Grow with the text (rough wrap estimate at phone width), 2 to 10 rows.
+    function fitRows() {
+      var v = ta.value;
+      var est = v.split('\n').reduce(function (n, line) { return n + 1 + Math.floor(line.length / 38); }, 0);
+      ta.rows = Math.min(10, Math.max(2, est));
+    }
+    fitRows();
+    box.appendChild(ta);
+
+    var row2 = el('div', 'lv-pipe-row');
+    var save = el('button', 'lv-btn-ghost lv-save', 'Save notes');
+    save.type = 'button';
+    save.disabled = true;
+    var count = el('span', 'lv-count');
+    function paintCount() {
+      count.textContent = ta.value.length > NOTES_MAX - 500 ? ta.value.length + ' / ' + NOTES_MAX : '';
+      save.disabled = ta.value === (r.notes || '');
+    }
+    ta.addEventListener('input', function () { paintCount(); fitRows(); });
+    // Server-confirmed too. On failure the typed text stays in the box (so nothing is lost)
+    // and "Save notes" stays enabled for a retry.
+    save.addEventListener('click', async function () {
+      var next = ta.value.trim() ? ta.value : '';
+      save.disabled = true;
+      ta.readOnly = true;
+      msg.textContent = 'Saving...';
+      msg.className = 'lv-save-msg';
+      var res = await saveFields(r.id, { notes: next || null }, 'id,notes');
+      ta.readOnly = false;
+      if (res.error) {
+        msg.textContent = res.error;
+        msg.className = 'lv-save-msg is-err';
+      } else {
+        r.notes = res.row.notes;
+        ta.value = r.notes || '';
+        fitRows();
+        msg.textContent = 'Saved';
+        msg.className = 'lv-save-msg is-ok';
+      }
+      paintCount();
+    });
+    row2.appendChild(save);
+    row2.appendChild(count);
+    row2.appendChild(msg);
+    box.appendChild(row2);
+    card.appendChild(box);
+  }
+
+  function setRowStatus(it, card, sel, status) {
+    it.row.status = status;
+    it.spam = status === 'spam';
+    it.real = !it.internal && !it.bot && !it.demo && !it.spam;
+    if (it.spam) it.isNew = false;
+    sel.value = status;
+    sel.dataset.status = status;
+    card.dataset.status = status;
+  }
+
+  var SAVE_TIMEOUT_MS = 15000;
+
+  // Turns a save outcome into the message shown under the card. Pure, so it is unit tested.
+  // outcome: { timedOut, status (HTTP, 0 if none), code, message, rows (count returned) }
+  function saveErrorText(o) {
+    if (o.timedOut) return 'Not confirmed: no response from the server in ' + Math.round(SAVE_TIMEOUT_MS / 1000) + ' s. Refresh to check whether it saved.';
+    var bits = [];
+    if (o.status) bits.push('HTTP ' + o.status);
+    if (o.code) bits.push('code ' + o.code);
+    var tail = bits.length ? ' (' + bits.join(', ') + ')' : '';
+    if (o.message) return 'Not saved: ' + o.message + tail + '.';
+    // RLS returns zero rows, not an error, when an update is not allowed.
+    if (o.rows === 0) return 'Not saved: the server changed 0 rows' + tail + '. Sign in again (with your code if you use one).';
+    if (typeof o.rows === 'number') return 'Not saved: expected 1 row back, got ' + o.rows + tail + '.';
+    return 'Not saved: unknown error' + tail + '.';
+  }
+
+  // One row back is the only success. Every failure is logged (lead id and field names only,
+  // never lead data) and returned as a message for the card.
+  async function saveFields(id, fields, cols) {
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timedOut = false;
+    var timer = setTimeout(function () { timedOut = true; if (ctrl) ctrl.abort(); }, SAVE_TIMEOUT_MS);
+    var outcome;
+    try {
+      var q = sb.from('leads').update(fields).eq('id', id).select(cols);
+      if (ctrl && typeof q.abortSignal === 'function') q = q.abortSignal(ctrl.signal);
+      // The race also covers a request that never settles even after abort.
+      var res = await Promise.race([q, new Promise(function (resolve) {
+        setTimeout(function () { resolve({ __timeout: true }); }, SAVE_TIMEOUT_MS + 1000);
+      })]);
+      if (res && res.__timeout) outcome = { timedOut: true };
+      else if (timedOut) outcome = { timedOut: true };
+      else if (res.error) outcome = { status: res.status, code: res.error.code, message: res.error.message || '' };
+      else if (!res.data || res.data.length !== 1) outcome = { status: res.status, rows: res.data ? res.data.length : 0 };
+      else { clearTimeout(timer); return { row: res.data[0] }; }
+    } catch (e) {
+      outcome = timedOut ? { timedOut: true } : { message: (e && e.message) || 'network error' };
+    }
+    clearTimeout(timer);
+    try { console.error('[leads] save failed', { lead: id, fields: Object.keys(fields), outcome: outcome }); } catch (e) {}
+    return { error: saveErrorText(outcome) };
+  }
+
   // ── App ──
 
-  var state = { items: [], chip: 'all', showInternal: false, now: Date.now() };
+  var state = { items: [], chip: 'all', status: 'all', showInternal: false, showDemo: false, demoTouched: false, showSpam: false, v2: true, now: Date.now() };
   var sb = null;
+
+  function filters() {
+    return { chip: state.chip, status: state.status, showInternal: state.showInternal, showDemo: state.showDemo, showSpam: state.showSpam };
+  }
 
   function setStatus(text) {
     var s = $('statusLine');
@@ -249,11 +516,15 @@
     $('cards').replaceChildren();
     $('stat30').replaceChildren();
     $('chips').replaceChildren();
+    $('statusChips').replaceChildren();
+    $('factorList').replaceChildren();
+    resetEnroll();
   }
 
   function showSignIn(notice) {
     clearData();
     show($('dashView'), false);
+    show($('mfaView'), false);
     show($('signOutBtn'), false);
     setStatus('');
     show($('signInView'), true);
@@ -282,55 +553,111 @@
     if (!any) ul.appendChild(el('li', null, 'None yet'));
   }
 
+  function chipButton(label, pressed, count, onClick, extraCls) {
+    var b = el('button', 'lv-chip' + (extraCls ? ' ' + extraCls : ''), label);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', String(pressed));
+    b.appendChild(el('span', 'n', count || 0));
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
   function renderChips() {
+    var f = filters();
+    var src = { all: 0 }, st = { all: 0 };
+    state.items.forEach(function (it) {
+      if (isVisible(it, Object.assign({}, f, { chip: 'all' }))) { src.all++; src[it.chip] = (src[it.chip] || 0) + 1; }
+      if (isVisible(it, Object.assign({}, f, { status: 'all' }))) { st.all++; }
+      // Status counts ignore the spam toggle so the Spam chip always shows how many there are.
+      if (isVisible(it, Object.assign({}, f, { status: 'all', showSpam: true }))) { var s = statusOf(it.row); st[s] = (st[s] || 0) + 1; }
+    });
+
+    var sw = $('statusChips');
+    sw.replaceChildren();
+    show(sw, state.v2);
+    if (state.v2) {
+      ['all'].concat(STATUSES).forEach(function (s) {
+        sw.appendChild(chipButton(s === 'all' ? 'All' : STATUS_LABELS[s], state.status === s, st[s], function () {
+          state.status = s; renderChips(); renderCards();
+        }, s === 'all' ? '' : 'st-' + s));
+      });
+    }
+
     var wrap = $('chips');
     wrap.replaceChildren();
-    var counts = { all: 0 };
-    state.items.forEach(function (it) {
-      if (it.internal && !state.showInternal) return;
-      counts.all++;
-      counts[it.chip] = (counts[it.chip] || 0) + 1;
-    });
     ['all'].concat(CHIPS).forEach(function (c) {
-      var b = el('button', 'lv-chip', c === 'all' ? 'All' : CHIP_LABELS[c]);
-      b.type = 'button';
-      b.setAttribute('aria-pressed', String(state.chip === c));
-      b.appendChild(el('span', 'n', counts[c] || 0));
-      b.addEventListener('click', function () { state.chip = c; renderChips(); renderCards(); });
-      wrap.appendChild(b);
+      wrap.appendChild(chipButton(c === 'all' ? 'All sources' : CHIP_LABELS[c], state.chip === c, src[c], function () {
+        state.chip = c; renderChips(); renderCards();
+      }));
     });
   }
 
   function renderCards() {
     var wrap = $('cards');
     wrap.replaceChildren();
-    var hiddenInternal = 0;
+    var f = filters();
+    var hiddenInternal = 0, hiddenSpam = 0, demoShown = 0;
     var visible = state.items.filter(function (it) {
-      if (state.chip !== 'all' && it.chip !== state.chip) return false;
-      if (it.internal && !state.showInternal) { hiddenInternal++; return false; }
-      return true;
+      var ok = isVisible(it, f);
+      if (!ok && isVisible(it, Object.assign({}, f, { showInternal: true, showSpam: true }))) {
+        if (it.internal && !f.showInternal) hiddenInternal++;
+        else if (it.spam) hiddenSpam++;
+      }
+      if (ok && it.demo) demoShown++;
+      return ok;
     });
     visible.forEach(function (it) { wrap.appendChild(renderCard(it, state.now)); });
     var none = state.items.length === 0;
     show($('emptyAll'), none);
     show($('emptyFiltered'), !none && visible.length === 0);
+    show($('demoBanner'), demoShown > 0);
+    var parts = [];
+    if (hiddenInternal) parts.push(hiddenInternal + (hiddenInternal === 1 ? ' internal test hidden.' : ' internal tests hidden.'));
+    if (hiddenSpam) parts.push(hiddenSpam + ' marked spam, hidden.');
     var note = $('hiddenNote');
-    note.textContent = hiddenInternal ? hiddenInternal + (hiddenInternal === 1 ? ' internal test hidden.' : ' internal tests hidden.') : '';
-    show(note, hiddenInternal > 0);
+    note.textContent = parts.join(' ');
+    show(note, parts.length > 0);
   }
 
-  function renderAll() { renderSummary(); renderChips(); renderCards(); }
+  function renderAll() {
+    var anyDemo = state.items.some(function (it) { return it.demo; });
+    if (!state.demoTouched) state.showDemo = anyDemo && !hasRealLeads(state.items);
+    $('showDemo').checked = state.showDemo;
+    show($('showDemo').parentNode, anyDemo);
+    show($('showSpam').parentNode, state.v2);
+    show($('v1Note'), !state.v2);
+    renderSummary(); renderChips(); renderCards();
+  }
 
-  async function loadDashboard(session) {
-    show($('signInView'), false);
-    show($('signOutBtn'), true);
-    setStatus('Loading leads...');
+  function missingColumn(res) {
+    return !!(res.error && (res.error.code === '42703' || /does not exist/i.test(res.error.message || '')));
+  }
+
+  async function fetchLeads() {
     var res;
     try {
-      res = await sb.from('leads').select(COLUMNS).order('created_at', { ascending: false }).limit(2000);
+      res = await sb.from('leads').select(COLUMNS_BOT).order('created_at', { ascending: false }).limit(2000);
+      // Before the bot-flag migration runs, bot_reasons does not exist (42703). Retry without it.
+      if (missingColumn(res)) res = await sb.from('leads').select(COLUMNS).order('created_at', { ascending: false }).limit(2000);
+      // Before the v2 migrations run, the new columns do not exist (42703). Fall back to v1.
+      if (missingColumn(res)) {
+        res = await sb.from('leads').select(COLUMNS_V1).order('created_at', { ascending: false }).limit(2000);
+        state.v2 = false;
+      } else {
+        state.v2 = true;
+      }
     } catch (e) {
       res = { data: null, error: e };
     }
+    return res;
+  }
+
+  async function loadDashboard(session) {
+    show($('signInView'), false);
+    show($('mfaView'), false);
+    show($('signOutBtn'), true);
+    setStatus('Loading leads...');
+    var res = await fetchLeads();
     if (res.error) {
       show($('dashView'), false);
       setStatus('Could not load leads: ' + (res.error.message || 'unknown error'));
@@ -348,16 +675,182 @@
     setStatus('');
     show($('dashView'), true);
     renderAll();
+    refreshSecurity();
   }
 
   function markAllSeen() {
     var max = 0;
-    state.items.forEach(function (it) { if (!isNaN(it.t) && it.t > max) max = it.t; });
+    state.items.forEach(function (it) { if (!it.demo && !isNaN(it.t) && it.t > max) max = it.t; });
     if (!max) return;
     var iso = new Date(max).toISOString();
     if (!writeLastSeen(iso)) setStatus('Could not save "seen" in this browser (storage blocked).');
     state.items = classify(state.items.map(function (it) { return it.row; }), iso, state.now);
     renderAll();
+  }
+
+  // ── MFA (TOTP) ──
+  // The aal2 policy migration is the real control. The client only asks for the code when the
+  // account has a verified factor and the session is still aal1.
+
+  async function needsCode() {
+    try {
+      var r = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (r.error || !r.data) return false;
+      return r.data.nextLevel === 'aal2' && r.data.currentLevel !== 'aal2';
+    } catch (e) { return false; }
+  }
+
+  async function verifiedFactors() {
+    var r = await sb.auth.mfa.listFactors();
+    if (r.error) throw r.error;
+    return ((r.data && r.data.totp) || []).filter(function (f) { return f.status === 'verified'; });
+  }
+
+  async function afterSignIn(session) {
+    if (await needsCode()) { showMfa(); return; }
+    loadDashboard(session);
+  }
+
+  async function showMfa() {
+    show($('signInView'), false);
+    show($('dashView'), false);
+    show($('signOutBtn'), true);
+    setStatus('');
+    show($('mfaView'), true);
+    var sel = $('mfaFactor');
+    sel.replaceChildren();
+    try {
+      var factors = await verifiedFactors();
+      factors.forEach(function (f) {
+        var o = el('option', null, f.friendly_name || 'Authenticator');
+        o.value = f.id;
+        sel.appendChild(o);
+      });
+      show(sel, factors.length > 1);
+      show($('mfaFactorLabel'), factors.length > 1);
+    } catch (e) {
+      $('mfaErr').textContent = 'Could not list authenticators: ' + ((e && e.message) || 'unknown error');
+      show($('mfaErr'), true);
+    }
+    $('mfaCode').value = '';
+    $('mfaCode').focus();
+  }
+
+  function resetEnroll() {
+    state.enrolling = null;
+    show($('enrollStep'), false);
+    show($('enrollForm'), true);
+    $('enrollSecret').textContent = '';
+    var box = $('enrollQr');
+    box.replaceChildren();
+    show(box, false);
+    $('enrollCode').value = '';
+  }
+
+  function securityMsg(err, ok) {
+    $('securityErr').textContent = err || '';
+    show($('securityErr'), !!err);
+    $('securityOk').textContent = ok || '';
+    show($('securityOk'), !!ok);
+  }
+
+  async function refreshSecurity() {
+    var list = $('factorList');
+    list.replaceChildren();
+    try {
+      var aal = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+      var lvl = aal.data && aal.data.currentLevel;
+      $('aalLine').textContent = lvl === 'aal2' ? 'This session passed two-step sign-in (aal2).' : 'This session used a password only (aal1).';
+      var r = await sb.auth.mfa.listFactors();
+      if (r.error) throw r.error;
+      var all = (r.data && r.data.all) || [];
+      var totp = all.filter(function (f) { return f.factor_type === 'totp'; });
+      if (!totp.length) list.appendChild(el('li', 'lv-muted', 'None yet.'));
+      totp.forEach(function (f) {
+        var li = el('li', null);
+        li.appendChild(el('b', null, f.friendly_name || 'Authenticator'));
+        li.appendChild(el('span', 'lv-badge' + (f.status === 'verified' ? ' ok' : ' warn'), f.status === 'verified' ? 'Verified' : 'Not finished'));
+        var t = Date.parse(f.created_at);
+        if (!isNaN(t)) li.appendChild(el('span', 'lv-muted', 'added ' + timeAgo(t, Date.now())));
+        if (f.status !== 'verified') {
+          var rm = el('button', 'lv-btn-ghost lv-small', 'Remove');
+          rm.type = 'button';
+          rm.addEventListener('click', async function () {
+            var u = await sb.auth.mfa.unenroll({ factorId: f.id });
+            if (u.error) securityMsg('Could not remove: ' + u.error.message); else refreshSecurity();
+          });
+          li.appendChild(rm);
+        }
+        list.appendChild(li);
+      });
+      var verified = totp.filter(function (f) { return f.status === 'verified'; }).length;
+      if (verified === 1) list.appendChild(el('li', 'lv-muted', 'Add a second one (a password manager works) before the aal2 policy is applied.'));
+    } catch (e) {
+      list.appendChild(el('li', 'lv-err', 'Could not load authenticators: ' + ((e && e.message) || 'unknown error')));
+    }
+  }
+
+  function initSecurity() {
+    $('enrollForm').addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      securityMsg('');
+      var name = $('enrollName').value.trim();
+      if (!name) { securityMsg('Give it a name, like "Phone app" or "Password manager".'); return; }
+      var btn = $('enrollBtn');
+      btn.disabled = true;
+      try {
+        var r = await sb.auth.mfa.enroll({ factorType: 'totp', friendlyName: name });
+        if (r.error) throw r.error;
+        state.enrolling = r.data.id;
+        $('enrollSecret').textContent = r.data.totp.secret;
+        var qr = String(r.data.totp.qr_code || '');
+        var box = $('enrollQr');
+        box.replaceChildren();
+        if (qr.indexOf('data:image/svg+xml') === 0) {
+          var img = el('img');
+          img.alt = 'QR code for the authenticator app';
+          img.width = 180;
+          img.height = 180;
+          img.src = qr;
+          box.appendChild(img);
+        }
+        show(box, box.childNodes.length > 0);
+        show($('enrollForm'), false);
+        show($('enrollStep'), true);
+        $('enrollCode').focus();
+        refreshSecurity();
+      } catch (e) {
+        securityMsg('Could not start enrollment: ' + ((e && e.message) || 'unknown error'));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    $('enrollVerifyForm').addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      securityMsg('');
+      var code = $('enrollCode').value.replace(/\s/g, '');
+      if (!/^\d{6}$/.test(code)) { securityMsg('Enter the 6-digit code.'); return; }
+      var btn = $('enrollVerifyBtn');
+      btn.disabled = true;
+      try {
+        var r = await sb.auth.mfa.challengeAndVerify({ factorId: state.enrolling, code: code });
+        if (r.error) throw r.error;
+        resetEnroll();
+        $('enrollName').value = '';
+        securityMsg('', 'Saved. This authenticator now works for sign-in.');
+        refreshSecurity();
+      } catch (e) {
+        securityMsg('That code did not work: ' + ((e && e.message) || 'unknown error'));
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    $('enrollCancelBtn').addEventListener('click', async function () {
+      var id = state.enrolling;
+      resetEnroll();
+      if (id) { try { await sb.auth.mfa.unenroll({ factorId: id }); } catch (e) {} }
+      refreshSecurity();
+    });
   }
 
   function initTheme() {
@@ -393,9 +886,34 @@
         if (r.error || !r.data || !r.data.session) throw r.error || new Error('No session returned');
         $('siPassword').value = '';
         show($('signInNotice'), false);
-        await loadDashboard(r.data.session);
+        await afterSignIn(r.data.session);
       } catch (e) {
         err.textContent = 'Sign-in failed: ' + ((e && e.message) || 'unknown error');
+        show(err, true);
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    $('mfaForm').addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      var err = $('mfaErr');
+      show(err, false);
+      var code = $('mfaCode').value.replace(/\s/g, '');
+      if (!/^\d{6}$/.test(code)) { err.textContent = 'Enter the 6-digit code.'; show(err, true); return; }
+      var btn = $('mfaBtn');
+      btn.disabled = true;
+      try {
+        var factorId = $('mfaFactor').value;
+        if (!factorId) { var fs = await verifiedFactors(); factorId = fs[0] && fs[0].id; }
+        if (!factorId) throw new Error('No authenticator found');
+        var r = await sb.auth.mfa.challengeAndVerify({ factorId: factorId, code: code });
+        if (r.error) throw r.error;
+        $('mfaCode').value = '';
+        var s = await sb.auth.getSession();
+        if (s.data && s.data.session) loadDashboard(s.data.session); else showSignIn('');
+      } catch (e) {
+        err.textContent = 'That code did not work: ' + ((e && e.message) || 'unknown error');
         show(err, true);
       } finally {
         btn.disabled = false;
@@ -409,20 +927,29 @@
     $('markSeenBtn').addEventListener('click', markAllSeen);
     $('refreshBtn').addEventListener('click', async function () {
       var r = await sb.auth.getSession();
-      if (r.data && r.data.session) loadDashboard(r.data.session); else showSignIn('');
+      if (r.data && r.data.session) afterSignIn(r.data.session); else showSignIn('');
     });
     $('showInternal').addEventListener('change', function (e) {
       state.showInternal = e.target.checked;
-      renderChips();
-      renderCards();
+      renderChips(); renderCards();
     });
+    $('showDemo').addEventListener('change', function (e) {
+      state.showDemo = e.target.checked;
+      state.demoTouched = true;
+      renderChips(); renderCards();
+    });
+    $('showSpam').addEventListener('change', function (e) {
+      state.showSpam = e.target.checked;
+      renderChips(); renderCards();
+    });
+    initSecurity();
 
     var s = await sb.auth.getSession();
-    if (s.data && s.data.session) loadDashboard(s.data.session); else showSignIn('');
+    if (s.data && s.data.session) afterSignIn(s.data.session); else showSignIn('');
   }
 
   if (typeof module === 'object' && module.exports) {
-    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, parseScorecard: parseScorecard, classify: classify, summarize: summarize, chipFor: chipFor };
+    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, autoFlagReasons: autoFlagReasons, saveErrorText: saveErrorText, parseScorecard: parseScorecard, parseBooking: parseBooking, classify: classify, summarize: summarize, chipFor: chipFor, isVisible: isVisible, hasRealLeads: hasRealLeads, statusOf: statusOf };
   } else {
     init();
   }
