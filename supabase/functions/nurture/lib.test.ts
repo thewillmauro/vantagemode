@@ -67,6 +67,14 @@ assert.deepEqual(dueSends([a], [], new Set(), [aBooked], day(2, 2), start), []);
 // a demo "conversion" with a real lead's email does not stop the real lead's sequence
 assert.equal(dueSends([a], [], new Set(), [{ ...aBooked, is_demo: true }], day(0, 5), start).length, 1);
 
+// Spam rows (auto-flagged bots, or marked on /leads) never get the sequence, and a spam
+// "conversion" with a real lead's email does not stop the real lead's sequence
+const spam = { ...lead("s", "s@x.com", "kpi_template", day(0, 1)), status: "spam" };
+assert.equal(nurtureEligible(spam), false);
+assert.equal(nurtureEligible({ ...spam, status: "new" }), true);
+assert.deepEqual(dueSends([spam], [], new Set(), [], day(0, 5), start), []);
+assert.equal(dueSends([a], [], new Set(), [{ ...aBooked, status: "spam" }], day(0, 5), start).length, 1);
+
 // Tokens are stable, case-insensitive, and differ by secret
 assert.equal(await unsubToken("Ada@X.com", "s1"), await unsubToken("ada@x.com", "s1"));
 assert.notEqual(await unsubToken("ada@x.com", "s1"), await unsubToken("ada@x.com", "s2"));

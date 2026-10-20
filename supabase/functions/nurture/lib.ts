@@ -19,6 +19,7 @@ export type Lead = {
   source: string | null;
   created_at: string;
   is_demo?: boolean;
+  status?: string | null;
 };
 export type Send = { lead_id: string; step: number; sent_at: string };
 
@@ -54,10 +55,11 @@ export function parseScorecard(message: string | null): Scorecard | null {
   };
 }
 
-/** Only real scorecard/KPI leads get the sequence: never demo rows, and never bookings
- * (a booker has not opted in to marketing email). */
+/** Only real scorecard/KPI leads get the sequence: never demo rows, never rows with status spam
+ * (auto-flagged likely bots or marked on /leads), and never bookings (a booker has not opted in
+ * to marketing email). */
 export function nurtureEligible(l: Lead): boolean {
-  return l.is_demo !== true && l.source !== "booking" && SOURCES.includes(l.source as typeof SOURCES[number]);
+  return l.is_demo !== true && l.status !== "spam" && l.source !== "booking" && SOURCES.includes(l.source as typeof SOURCES[number]);
 }
 
 /**
@@ -83,7 +85,7 @@ export function dueSends(
     if (seen.has(email)) continue;
     seen.add(email);
     if (unsubscribed.has(email)) continue;
-    if (converted.some((c) => c.is_demo !== true && c.email.trim().toLowerCase() === email && c.created_at > lead.created_at)) continue;
+    if (converted.some((c) => c.is_demo !== true && c.status !== "spam" && c.email.trim().toLowerCase() === email && c.created_at > lead.created_at)) continue;
     const mine = sends.filter((s) => s.lead_id === lead.id);
     const step = mine.length ? Math.max(...mine.map((s) => s.step)) + 1 : 0;
     if (step >= OFFSETS_DAYS.length) continue;
