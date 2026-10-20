@@ -17,6 +17,8 @@
   var DAY = 86400000;
   var COLUMNS_V1 = 'id,created_at,name,email,company,brand,service,project_type,budget,timeline,message,source';
   var COLUMNS = COLUMNS_V1 + ',status,notes,status_updated_at,is_demo,booking_uid';
+  // bot_reasons comes from 20261019120000_leads_bot_flag.sql; until it is applied, fetchLeads drops it.
+  var COLUMNS_BOT = COLUMNS + ',bot_reasons';
   var NOTES_MAX = 5000;
 
   var CHIPS = ['scorecard', 'kpi_template', 'sdr_calculator', 'booking', 'teardown', 'project_wizard', 'contact', 'sow_form', 'other'];
@@ -52,6 +54,17 @@
     if (!(lead.name && String(lead.name).trim())) out.push('empty name');
     if (lead.source === 'sdr_calculator' && /^\[SDR calculator\] 5 SDRs × \$95K × 60% outbound/.test(lead.message || '')) out.push('calculator at defaults');
     return out;
+  }
+
+  // Rules the database recorded when it auto-flagged the row as spam (private.lead_bot_reasons).
+  var BOT_REASON_LABELS = {
+    name_mixed_case: 'mixed-case noise in name', name_consonant_run: 'unpronounceable name',
+    company_mixed_case: 'mixed-case noise in company', company_consonant_run: 'unpronounceable company',
+    gmail_dots: 'dot-split gmail'
+  };
+  function autoFlagReasons(row) {
+    if (!Array.isArray(row.bot_reasons)) return [];
+    return row.bot_reasons.map(function (k) { return BOT_REASON_LABELS[k] || String(k); });
   }
 
   function chipFor(source) {
@@ -221,7 +234,9 @@
     if (it.internal) badges.appendChild(el('span', 'lv-badge', 'Internal test'));
     card.appendChild(badges);
 
-    if (it.bot) card.appendChild(el('p', 'lv-bot', 'Likely bot: ' + it.reasons.join(', ')));
+    var auto = autoFlagReasons(r);
+    if (auto.length) card.appendChild(el('p', 'lv-bot', 'Auto-flagged as likely bot: ' + auto.join(', ')));
+    else if (it.bot) card.appendChild(el('p', 'lv-bot', 'Likely bot: ' + it.reasons.join(', ')));
 
     if (it.chip === 'scorecard') renderScorecard(card, r);
     else if (it.chip === 'booking') renderBookingDetail(card, r);
@@ -580,12 +595,18 @@
     renderSummary(); renderChips(); renderCards();
   }
 
+  function missingColumn(res) {
+    return !!(res.error && (res.error.code === '42703' || /does not exist/i.test(res.error.message || '')));
+  }
+
   async function fetchLeads() {
     var res;
     try {
-      res = await sb.from('leads').select(COLUMNS).order('created_at', { ascending: false }).limit(2000);
+      res = await sb.from('leads').select(COLUMNS_BOT).order('created_at', { ascending: false }).limit(2000);
+      // Before the bot-flag migration runs, bot_reasons does not exist (42703). Retry without it.
+      if (missingColumn(res)) res = await sb.from('leads').select(COLUMNS).order('created_at', { ascending: false }).limit(2000);
       // Before the v2 migrations run, the new columns do not exist (42703). Fall back to v1.
-      if (res.error && (res.error.code === '42703' || /does not exist/i.test(res.error.message || ''))) {
+      if (missingColumn(res)) {
         res = await sb.from('leads').select(COLUMNS_V1).order('created_at', { ascending: false }).limit(2000);
         state.v2 = false;
       } else {
@@ -894,7 +915,7 @@
   }
 
   if (typeof module === 'object' && module.exports) {
-    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, parseScorecard: parseScorecard, parseBooking: parseBooking, classify: classify, summarize: summarize, chipFor: chipFor, isVisible: isVisible, hasRealLeads: hasRealLeads, statusOf: statusOf };
+    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, autoFlagReasons: autoFlagReasons, parseScorecard: parseScorecard, parseBooking: parseBooking, classify: classify, summarize: summarize, chipFor: chipFor, isVisible: isVisible, hasRealLeads: hasRealLeads, statusOf: statusOf };
   } else {
     init();
   }
