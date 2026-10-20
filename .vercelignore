@@ -1,0 +1,13 @@
+# Repo-only files. Vercel serves every deployed file publicly, so keep
+# tooling, tests, database source and agent notes off the live site.
+# Keep vercel.json deployed: it holds the /leads headers.
+/tests
+/scripts
+/supabase
+/.claude
+/.github
+/CLAUDE.md
+/.htmlvalidate.json
+node_modules
+package.json
+package-lock.json
