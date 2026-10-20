@@ -361,22 +361,23 @@
     row1.appendChild(stamp);
     box.appendChild(row1);
 
+    // Server-confirmed: the card, counts and chips change only after the database returns the
+    // updated row. While saving, the select shows the choice but is disabled.
     sel.addEventListener('change', async function () {
       var prev = statusOf(r);
-      var prevStamp = r.status_updated_at;
       var next = sel.value;
-      setRowStatus(it, card, sel, next);
+      if (next === prev) return;
       msg.textContent = 'Saving...';
       msg.className = 'lv-save-msg';
       sel.disabled = true;
       var res = await saveFields(r.id, { status: next }, 'id,status,status_updated_at');
       sel.disabled = false;
       if (res.error) {
-        setRowStatus(it, card, sel, prev);
-        r.status_updated_at = prevStamp;
-        msg.textContent = 'Not saved: ' + res.error;
+        sel.value = prev;
+        msg.textContent = res.error;
         msg.className = 'lv-save-msg is-err';
       } else {
+        setRowStatus(it, card, sel, statusOf(res.row));
         r.status_updated_at = res.row.status_updated_at;
         msg.textContent = 'Saved';
         msg.className = 'lv-save-msg is-ok';
@@ -412,21 +413,23 @@
       save.disabled = ta.value === (r.notes || '');
     }
     ta.addEventListener('input', function () { paintCount(); fitRows(); });
+    // Server-confirmed too. On failure the typed text stays in the box (so nothing is lost)
+    // and "Save notes" stays enabled for a retry.
     save.addEventListener('click', async function () {
-      var prev = r.notes || '';
       var next = ta.value.trim() ? ta.value : '';
-      r.notes = next || null;
       save.disabled = true;
+      ta.readOnly = true;
       msg.textContent = 'Saving...';
       msg.className = 'lv-save-msg';
       var res = await saveFields(r.id, { notes: next || null }, 'id,notes');
+      ta.readOnly = false;
       if (res.error) {
-        r.notes = prev || null;
-        ta.value = prev;
-        fitRows();
-        msg.textContent = 'Not saved: ' + res.error;
+        msg.textContent = res.error;
         msg.className = 'lv-save-msg is-err';
       } else {
+        r.notes = res.row.notes;
+        ta.value = r.notes || '';
+        fitRows();
         msg.textContent = 'Saved';
         msg.className = 'lv-save-msg is-ok';
       }
@@ -449,17 +452,48 @@
     card.dataset.status = status;
   }
 
-  // RLS returns zero rows (not an error) when an update is not allowed, so one row back is the
-  // only success.
+  var SAVE_TIMEOUT_MS = 15000;
+
+  // Turns a save outcome into the message shown under the card. Pure, so it is unit tested.
+  // outcome: { timedOut, status (HTTP, 0 if none), code, message, rows (count returned) }
+  function saveErrorText(o) {
+    if (o.timedOut) return 'Not confirmed: no response from the server in ' + Math.round(SAVE_TIMEOUT_MS / 1000) + ' s. Refresh to check whether it saved.';
+    var bits = [];
+    if (o.status) bits.push('HTTP ' + o.status);
+    if (o.code) bits.push('code ' + o.code);
+    var tail = bits.length ? ' (' + bits.join(', ') + ')' : '';
+    if (o.message) return 'Not saved: ' + o.message + tail + '.';
+    // RLS returns zero rows, not an error, when an update is not allowed.
+    if (o.rows === 0) return 'Not saved: the server changed 0 rows' + tail + '. Sign in again (with your code if you use one).';
+    if (typeof o.rows === 'number') return 'Not saved: expected 1 row back, got ' + o.rows + tail + '.';
+    return 'Not saved: unknown error' + tail + '.';
+  }
+
+  // One row back is the only success. Every failure is logged (lead id and field names only,
+  // never lead data) and returned as a message for the card.
   async function saveFields(id, fields, cols) {
+    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+    var timedOut = false;
+    var timer = setTimeout(function () { timedOut = true; if (ctrl) ctrl.abort(); }, SAVE_TIMEOUT_MS);
+    var outcome;
     try {
-      var res = await sb.from('leads').update(fields).eq('id', id).select(cols);
-      if (res.error) return { error: res.error.message || 'unknown error' };
-      if (!res.data || res.data.length !== 1) return { error: 'not allowed. Sign in again (with your code if you use one).' };
-      return { row: res.data[0] };
+      var q = sb.from('leads').update(fields).eq('id', id).select(cols);
+      if (ctrl && typeof q.abortSignal === 'function') q = q.abortSignal(ctrl.signal);
+      // The race also covers a request that never settles even after abort.
+      var res = await Promise.race([q, new Promise(function (resolve) {
+        setTimeout(function () { resolve({ __timeout: true }); }, SAVE_TIMEOUT_MS + 1000);
+      })]);
+      if (res && res.__timeout) outcome = { timedOut: true };
+      else if (timedOut) outcome = { timedOut: true };
+      else if (res.error) outcome = { status: res.status, code: res.error.code, message: res.error.message || '' };
+      else if (!res.data || res.data.length !== 1) outcome = { status: res.status, rows: res.data ? res.data.length : 0 };
+      else { clearTimeout(timer); return { row: res.data[0] }; }
     } catch (e) {
-      return { error: (e && e.message) || 'network error' };
+      outcome = timedOut ? { timedOut: true } : { message: (e && e.message) || 'network error' };
     }
+    clearTimeout(timer);
+    try { console.error('[leads] save failed', { lead: id, fields: Object.keys(fields), outcome: outcome }); } catch (e) {}
+    return { error: saveErrorText(outcome) };
   }
 
   // ── App ──
@@ -915,7 +949,7 @@
   }
 
   if (typeof module === 'object' && module.exports) {
-    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, autoFlagReasons: autoFlagReasons, parseScorecard: parseScorecard, parseBooking: parseBooking, classify: classify, summarize: summarize, chipFor: chipFor, isVisible: isVisible, hasRealLeads: hasRealLeads, statusOf: statusOf };
+    module.exports = { parseEmail: parseEmail, isInternal: isInternal, botSignals: botSignals, autoFlagReasons: autoFlagReasons, saveErrorText: saveErrorText, parseScorecard: parseScorecard, parseBooking: parseBooking, classify: classify, summarize: summarize, chipFor: chipFor, isVisible: isVisible, hasRealLeads: hasRealLeads, statusOf: statusOf };
   } else {
     init();
   }
