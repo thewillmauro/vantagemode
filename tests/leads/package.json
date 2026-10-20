@@ -1,0 +1,12 @@
+{
+  "name": "vantagemode-leads-e2e",
+  "private": true,
+  "description": "Browser tests for /leads. Serves the local leads/ files to Chrome with every Supabase call mocked; nothing reaches the real project.",
+  "type": "module",
+  "scripts": {
+    "test": "node save.e2e.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.59.1"
+  }
+}
